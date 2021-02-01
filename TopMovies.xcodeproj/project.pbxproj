@@ -11,15 +11,20 @@
 		52A4D8D925C308E500810667 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A4D8D825C308E500810667 /* AppDelegate.swift */; };
 		52A4D8E225C308E900810667 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52A4D8E125C308E900810667 /* Assets.xcassets */; };
 		52A4D8E525C308E900810667 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A4D8E325C308E900810667 /* LaunchScreen.storyboard */; };
+		C3B2B242157C198AC014AAA8 /* Pods_TopMovies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ECE3AF53A67C6DBB85E6C37 /* Pods_TopMovies.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0653D1B8C665C67DD39443FA /* Pods-TopMovies.stage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopMovies.stage.xcconfig"; path = "Target Support Files/Pods-TopMovies/Pods-TopMovies.stage.xcconfig"; sourceTree = "<group>"; };
+		0ECE3AF53A67C6DBB85E6C37 /* Pods_TopMovies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TopMovies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F11A4FA5D52C68416AB823F /* Pods-TopMovies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopMovies.debug.xcconfig"; path = "Target Support Files/Pods-TopMovies/Pods-TopMovies.debug.xcconfig"; sourceTree = "<group>"; };
 		5256803525C35B660089E6F6 /* ANViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANViewController.swift; sourceTree = "<group>"; };
 		52A4D8D525C308E500810667 /* TopMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A4D8D825C308E500810667 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52A4D8E125C308E900810667 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52A4D8E425C308E900810667 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52A4D8E625C308E900810667 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF4B53E8B2772B8A2510B0BE /* Pods-TopMovies.prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopMovies.prod.xcconfig"; path = "Target Support Files/Pods-TopMovies/Pods-TopMovies.prod.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3B2B242157C198AC014AAA8 /* Pods_TopMovies.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +44,8 @@
 			children = (
 				52A4D8D725C308E500810667 /* TopMovies */,
 				52A4D8D625C308E500810667 /* Products */,
+				CF29E6860A25739B718AC787 /* Pods */,
+				89E434038CD2EC5864C52138 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,6 +125,24 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		89E434038CD2EC5864C52138 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0ECE3AF53A67C6DBB85E6C37 /* Pods_TopMovies.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CF29E6860A25739B718AC787 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1F11A4FA5D52C68416AB823F /* Pods-TopMovies.debug.xcconfig */,
+				0653D1B8C665C67DD39443FA /* Pods-TopMovies.stage.xcconfig */,
+				BF4B53E8B2772B8A2510B0BE /* Pods-TopMovies.prod.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -124,6 +150,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 52A4D8E925C308E900810667 /* Build configuration list for PBXNativeTarget "TopMovies" */;
 			buildPhases = (
+				835E3AC482783F25F6848E99 /* [CP] Check Pods Manifest.lock */,
+				5278AEBC25C43FEF00286566 /* SwiftLint */,
 				52A4D8D125C308E500810667 /* Sources */,
 				52A4D8D225C308E500810667 /* Frameworks */,
 				52A4D8D325C308E500810667 /* Resources */,
@@ -180,6 +208,49 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5278AEBC25C43FEF00286566 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nif which swiftlint >/dev/null; then\nswiftlint --config \"$SRCROOT/swiftlint.yml\"\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\nfi\n";
+		};
+		835E3AC482783F25F6848E99 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TopMovies-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		52A4D8D125C308E500810667 /* Sources */ = {
@@ -323,6 +394,7 @@
 		};
 		52A4D8EA25C308E900810667 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F11A4FA5D52C68416AB823F /* Pods-TopMovies.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -342,6 +414,7 @@
 		};
 		52A4D8EB25C308E900810667 /* Prod */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF4B53E8B2772B8A2510B0BE /* Pods-TopMovies.prod.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -422,6 +495,7 @@
 		};
 		52A4D8EE25C3091700810667 /* Stage */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0653D1B8C665C67DD39443FA /* Pods-TopMovies.stage.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -450,7 +524,7 @@
 				52A4D8E825C308E900810667 /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Prod;
+			defaultConfigurationName = Debug;
 		};
 		52A4D8E925C308E900810667 /* Build configuration list for PBXNativeTarget "TopMovies" */ = {
 			isa = XCConfigurationList;
@@ -460,7 +534,7 @@
 				52A4D8EB25C308E900810667 /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Prod;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
