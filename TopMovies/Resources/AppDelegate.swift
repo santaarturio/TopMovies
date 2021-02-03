@@ -5,7 +5,10 @@
 //  Created by Macbook Pro  on 28.01.2021.
 //
 
-import UIKit
+import ReSwift
+
+typealias MainStore = Store<MainState>
+let mainStore = MainStore(reducer: mainReducer, state: nil) // state is required to be optional
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +21,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.rootViewController = ANViewController() // replace it later
         window.makeKeyAndVisible()
         self.window = window
+        
+        let movieAPI = MovieAPI()
+        let movieService = MovieService(movieAPI: movieAPI)
+        mainStore.dispatch(MoviesListAction.request)
+        movieService.getMovies { (result) in
+            mainStore.dispatch(MoviesListAction.downloading)
+            switch result {
+            case .success(let movies):
+                mainStore.dispatch(MoviesListAction.completed(movies: movies))
+            case .failure(let error):
+                mainStore.dispatch(MoviesListAction.failed(error: error))
+            }
+        }
         return true
+    }
+    
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        mainStore.dispatch(AppFlowAction.applicationDidFinishLaunching)
+    }
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        mainStore.dispatch(AppFlowAction.applicationWillEnterForeground)
+    }
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        mainStore.dispatch(AppFlowAction.applicationDidEnterBackground)
+    }
+    func applicationWillTerminate(_ application: UIApplication) {
+        mainStore.dispatch(AppFlowAction.applicationWillTerminate)
     }
 }
