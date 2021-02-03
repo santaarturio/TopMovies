@@ -7,9 +7,11 @@
 
 import ReSwift
 
+typealias MoviesRelational = [Movie.ID: Movie]
+
 struct MoviesListState: StateType {
      let moviesList: RequestState<[Movie.ID]>
-     let relational: MoviesRelational // which is [Movie.ID: Movie]
+     let relational: MoviesRelational 
 }
 
 extension MoviesListState {
@@ -21,9 +23,10 @@ extension MoviesListState {
         case MoviesListAction.downloading:
             return MoviesListState(moviesList: .downloading,
                                    relational: state.relational)
-        case let MoviesListAction.completed(data):
-            return MoviesListState(moviesList: .completed(data: Array(data.keys)),
-                                   relational: data)
+        case let MoviesListAction.completed(movies):
+            let moviesIDArray = movies.map({ $0.id })
+            return MoviesListState(moviesList: .completed(data: moviesIDArray),
+                                   relational: Dictionary(uniqueKeysWithValues: zip(moviesIDArray, movies)))
         case let MoviesListAction.failed(error):
             return MoviesListState(moviesList: .failed(error: error),
                                    relational: state.relational)

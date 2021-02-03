@@ -10,6 +10,6 @@ import ReSwift
 enum MoviesListAction: Action {
   case request
   case downloading
-  case completed(movies: MoviesRelational)
+  case completed(movies: [Movie])
   case failed(error: Error)
 }
