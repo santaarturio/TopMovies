@@ -8,11 +8,11 @@
 import Foundation
 
 protocol MovieAPIProtocol {
-    func topMovies(_ movies: @escaping (Result<MoviesList, Error>) -> ())
+    func topMovies(_ movies: @escaping (Result<MoviesRelational, Error>) -> ())
 }
 
 struct MovieAPI: MovieAPIProtocol {
-    func topMovies(_ movies: @escaping (Result<MoviesList, Error>) -> ()) {
+    func topMovies(_ movies: @escaping (Result<MoviesRelational, Error>) -> ()) {
         movies(.failure(URLError(.badURL)))
     }
 }

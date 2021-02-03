@@ -25,15 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let movieAPI = MovieAPI()
         let movieService = MovieService(movieAPI: movieAPI)
         mainStore.dispatch(MoviesListAction.request)
-        movieService.getMovies { (result) in
-            mainStore.dispatch(MoviesListAction.downloading)
-            switch result {
-            case .success(let movies):
-                mainStore.dispatch(MoviesListAction.completed(movies: movies))
-            case .failure(let error):
-                mainStore.dispatch(MoviesListAction.failed(error: error))
-            }
-        }
         return true
     }
     

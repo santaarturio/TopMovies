@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias MoviesList = [Movie.ID: Movie]
+typealias MoviesRelational = [Movie.ID: Movie]
 
 struct Movie {
     let id: ID

@@ -6,17 +6,30 @@
 //
 
 import Foundation
+import ReSwift
 
-struct MovieService {
+class MovieService: StoreSubscriber {
+    typealias StoreSubscriberStateType = MoviesListState
+
     private let movieAPI: MovieAPIProtocol
     
     public init(movieAPI: MovieAPIProtocol) {
         self.movieAPI = movieAPI
     }
     
-    public func getMovies(result: @escaping (Result<MoviesList, Error>) -> ()) {
-        movieAPI.topMovies { (resultAPI) in
-            result(resultAPI)
+    func newState(state: MoviesListState) {
+        switch state.moviesList {
+        case .requested:
+            mainStore.dispatch(MoviesListAction.downloading)
+            movieAPI.topMovies { (result) in
+                switch result {
+                case let .success(data):
+                    mainStore.dispatch(MoviesListAction.completed(movies: data))
+                case let .failure(error):
+                    mainStore.dispatch(MoviesListAction.failed(error: error))
+                }
+            }
+        default: break
         }
     }
 }
