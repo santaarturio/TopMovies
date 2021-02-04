@@ -16,8 +16,7 @@ struct MovieAPI: MovieAPIProtocol {
     private let provider = MoyaProvider<MovieTarget>()
     
     public func topMovies(_ movies: @escaping (Result<[Movie], Error>) -> Void) {
-        movies(.failure(URLError(.badURL)))
-        provider.request(.marvelMovies) { (result) in
+        provider.request(.init(target: .marvelMovies)) { (result) in
             switch result {
             case let .success(data):
                 print(data)

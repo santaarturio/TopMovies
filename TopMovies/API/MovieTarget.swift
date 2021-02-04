@@ -4,14 +4,29 @@
 //
 //  Created by anikolaenko on 04.02.2021.
 //
-
+import ReSwift
 import Moya
 
-enum MovieTarget {
-    static private let apiKey = "4c863658028fbff309081bee90439c33"
-    static private let apiReadAccessToke = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0Yzg2MzY1ODAyOGZiZmYzMDkwODFiZWU5MDQzOWMzMyIsInN1YiI6IjYwMWJjMGQyMTEwOGE4MDAzZWMyY2I0MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TDPNBw8bMqPVG8LuzFFJdpKX0PIi-pWoamoXs5_r150"
+class MovieTarget: StoreSubscriber {
+    typealias StoreSubscriberStateType = MainState
+    private let target: Target
+    private var key = ""
+    
+    init(target: Target) {
+        self.target = target
+        mainStore.subscribe(self)
+    }
+    
+    enum Target {
+        case marvelMovies
+    }
 
-    case marvelMovies
+    func newState(state: MainState) {
+        switch state.configurationState {
+        case let .configuredAPIKey(key): self.key = key
+        default: break
+        }
+    }
 }
 
 extension MovieTarget: TargetType {
@@ -21,16 +36,16 @@ extension MovieTarget: TargetType {
     var path: String {
         "/list/1"
     }
-    var method: Method {
-        switch self {
-        case .marvelMovies: return .get
+    var method: Moya.Method {
+        switch target {
+        case.marvelMovies: return .get
         }
     }
     var sampleData: Data {
         Data()
     }
     var task: Task {
-        .requestParameters(parameters: ["page": 1, "api_key": MovieTarget.apiKey], encoding: URLEncoding.default)
+        .requestParameters(parameters: ["page": 1, "api_key": key], encoding: URLEncoding.default)
     }
     var headers: [String : String]? {
         ["Content-Type": "application/json;charset=utf-8"]
