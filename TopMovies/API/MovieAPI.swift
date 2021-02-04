@@ -6,13 +6,24 @@
 //
 
 import Foundation
+import Moya
 
 protocol MovieAPIProtocol {
-    func topMovies(_ movies: @escaping (Result<[Movie], Error>) -> ())
+    func topMovies(_ movies: @escaping (Result<[Movie], Error>) -> Void)
 }
 
 struct MovieAPI: MovieAPIProtocol {
-    func topMovies(_ movies: @escaping (Result<[Movie], Error>) -> ()) {
+    private let provider = MoyaProvider<MovieTarget>()
+    
+    public func topMovies(_ movies: @escaping (Result<[Movie], Error>) -> Void) {
         movies(.failure(URLError(.badURL)))
+        provider.request(.marvelMovies) { (result) in
+            switch result {
+            case let .success(data):
+                print(data)
+            case let .failure(error):
+                movies(.failure(error))
+            }
+        }
     }
 }

@@ -9,16 +9,17 @@ import Foundation
 import ReSwift
 
 class MovieService: StoreSubscriber {
-    typealias StoreSubscriberStateType = MoviesListState
+    typealias StoreSubscriberStateType = MainState
 
     private let movieAPI: MovieAPIProtocol
     
-    public init(movieAPI: MovieAPIProtocol) {
+    init(movieAPI: MovieAPIProtocol) {
         self.movieAPI = movieAPI
+        mainStore.subscribe(self)
     }
     
-    func newState(state: MoviesListState) {
-        switch state.moviesList {
+    func newState(state: MainState) {
+        switch state.moviesListState.moviesList {
         case .requested:
             mainStore.dispatch(MoviesListAction.downloading)
             movieAPI.topMovies { (result) in

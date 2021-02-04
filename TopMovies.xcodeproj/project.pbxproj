@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		26448B5525CA96DC00D240E7 /* RequestState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448B5425CA96DC00D240E7 /* RequestState.swift */; };
+		26448B7925CC102B00D240E7 /* MovieTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448B7825CC102B00D240E7 /* MovieTarget.swift */; };
 		2669922825C9BC6800D88EB8 /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669922725C9BC6800D88EB8 /* MovieModel.swift */; };
 		2669922F25C9BDA500D88EB8 /* MainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669922C25C9BDA500D88EB8 /* MainState.swift */; };
 		2669923025C9BDA500D88EB8 /* MoviesListState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669922D25C9BDA500D88EB8 /* MoviesListState.swift */; };
@@ -29,6 +30,7 @@
 		0ECE3AF53A67C6DBB85E6C37 /* Pods_TopMovies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TopMovies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F11A4FA5D52C68416AB823F /* Pods-TopMovies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopMovies.debug.xcconfig"; path = "Target Support Files/Pods-TopMovies/Pods-TopMovies.debug.xcconfig"; sourceTree = "<group>"; };
 		26448B5425CA96DC00D240E7 /* RequestState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestState.swift; sourceTree = "<group>"; };
+		26448B7825CC102B00D240E7 /* MovieTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTarget.swift; sourceTree = "<group>"; };
 		2669922725C9BC6800D88EB8 /* MovieModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieModel.swift; path = TopMovies/Model/MovieModel.swift; sourceTree = SOURCE_ROOT; };
 		2669922C25C9BDA500D88EB8 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainState.swift; path = TopMovies/Core/State/MainState.swift; sourceTree = SOURCE_ROOT; };
 		2669922D25C9BDA500D88EB8 /* MoviesListState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoviesListState.swift; path = TopMovies/Core/State/MoviesListState.swift; sourceTree = SOURCE_ROOT; };
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				2669924125C9BDD500D88EB8 /* MovieAPI.swift */,
+				26448B7825CC102B00D240E7 /* MovieTarget.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				2669924225C9BDD500D88EB8 /* MovieAPI.swift in Sources */,
 				2669922F25C9BDA500D88EB8 /* MainState.swift in Sources */,
 				2669923625C9BDB500D88EB8 /* AppFlowAction.swift in Sources */,
+				26448B7925CC102B00D240E7 /* MovieTarget.swift in Sources */,
 				2669923E25C9BDC900D88EB8 /* MovieService.swift in Sources */,
 				2669923A25C9BDBE00D88EB8 /* MainReducer.swift in Sources */,
 				52A4D8D925C308E500810667 /* AppDelegate.swift in Sources */,
