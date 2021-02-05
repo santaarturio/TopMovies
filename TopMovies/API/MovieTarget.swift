@@ -20,7 +20,7 @@ class MovieTarget: StoreSubscriber {
     enum Target {
         case marvelMovies
     }
-
+    
     func newState(state: MainState) {
         switch state.configurationState {
         case let .configuredAPIKey(key): self.key = key
@@ -45,7 +45,13 @@ extension MovieTarget: TargetType {
         Data()
     }
     var task: Task {
-        .requestParameters(parameters: ["page": 1, "api_key": key], encoding: URLEncoding.default)
+        switch target {
+        case.marvelMovies:
+            return .requestParameters(parameters: ["page": 1,
+                                                   "api_key": key,
+                                                   "sort_by": "vote_average.desc"],
+                                      encoding: URLEncoding.default)
+        }
     }
     var headers: [String : String]? {
         ["Content-Type": "application/json;charset=utf-8"]

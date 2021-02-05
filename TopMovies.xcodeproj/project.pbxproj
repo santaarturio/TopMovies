@@ -12,6 +12,11 @@
 		26448B8425CC3B2400D240E7 /* TMDB-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26448B8325CC3B2400D240E7 /* TMDB-Info.plist */; };
 		26448B8725CC3C6B00D240E7 /* UpdateConfigurationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448B8625CC3C6B00D240E7 /* UpdateConfigurationAction.swift */; };
 		26448B8D25CC3E3300D240E7 /* ConfigurationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448B8C25CC3E3300D240E7 /* ConfigurationState.swift */; };
+		26448BA525CD52FE00D240E7 /* MoviesListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BA425CD52FE00D240E7 /* MoviesListDTO.swift */; };
+		26448BA925CD546E00D240E7 /* DataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BA825CD546E00D240E7 /* DataDecoder.swift */; };
+		26448BAC25CD577000D240E7 /* MoviesDTOMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BAB25CD577000D240E7 /* MoviesDTOMapper.swift */; };
+		26448BAF25CD580200D240E7 /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BAE25CD580200D240E7 /* MovieDTO.swift */; };
+		26448BB225CD5CF200D240E7 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BB125CD5CF200D240E7 /* URLManager.swift */; };
 		2669922825C9BC6800D88EB8 /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669922725C9BC6800D88EB8 /* MovieModel.swift */; };
 		2669922F25C9BDA500D88EB8 /* MainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669922C25C9BDA500D88EB8 /* MainState.swift */; };
 		2669923025C9BDA500D88EB8 /* MoviesListState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669922D25C9BDA500D88EB8 /* MoviesListState.swift */; };
@@ -37,6 +42,11 @@
 		26448B8325CC3B2400D240E7 /* TMDB-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TMDB-Info.plist"; sourceTree = "<group>"; };
 		26448B8625CC3C6B00D240E7 /* UpdateConfigurationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateConfigurationAction.swift; sourceTree = "<group>"; };
 		26448B8C25CC3E3300D240E7 /* ConfigurationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationState.swift; sourceTree = "<group>"; };
+		26448BA425CD52FE00D240E7 /* MoviesListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListDTO.swift; sourceTree = "<group>"; };
+		26448BA825CD546E00D240E7 /* DataDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDecoder.swift; sourceTree = "<group>"; };
+		26448BAB25CD577000D240E7 /* MoviesDTOMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDTOMapper.swift; sourceTree = "<group>"; };
+		26448BAE25CD580200D240E7 /* MovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDTO.swift; sourceTree = "<group>"; };
+		26448BB125CD5CF200D240E7 /* URLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
 		2669922725C9BC6800D88EB8 /* MovieModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieModel.swift; path = TopMovies/Model/MovieModel.swift; sourceTree = SOURCE_ROOT; };
 		2669922C25C9BDA500D88EB8 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainState.swift; path = TopMovies/Core/State/MainState.swift; sourceTree = SOURCE_ROOT; };
 		2669922D25C9BDA500D88EB8 /* MoviesListState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoviesListState.swift; path = TopMovies/Core/State/MoviesListState.swift; sourceTree = SOURCE_ROOT; };
@@ -67,6 +77,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26448B9F25CD4D2000D240E7 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				26448BA425CD52FE00D240E7 /* MoviesListDTO.swift */,
+				26448BAE25CD580200D240E7 /* MovieDTO.swift */,
+				26448BAB25CD577000D240E7 /* MoviesDTOMapper.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
 		264AA3FF25C853290095D22D /* Reducer */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +128,8 @@
 			children = (
 				2669924125C9BDD500D88EB8 /* MovieAPI.swift */,
 				26448B7825CC102B00D240E7 /* MovieTarget.swift */,
+				26448BA825CD546E00D240E7 /* DataDecoder.swift */,
+				26448BB125CD5CF200D240E7 /* URLManager.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -160,6 +182,7 @@
 				26568AF625C9B74500EA2E99 /* Core */,
 				26DF774B25C9BA4300A82A36 /* Service */,
 				2669922B25C9BCA800D88EB8 /* API */,
+				26448B9F25CD4D2000D240E7 /* DTO */,
 				52BFC85F25C33BFE001B9F19 /* Resources */,
 				52A4D8E125C308E900810667 /* Assets.xcassets */,
 			);
@@ -351,19 +374,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26448BA925CD546E00D240E7 /* DataDecoder.swift in Sources */,
 				2669922825C9BC6800D88EB8 /* MovieModel.swift in Sources */,
 				26448B8725CC3C6B00D240E7 /* UpdateConfigurationAction.swift in Sources */,
+				26448BAC25CD577000D240E7 /* MoviesDTOMapper.swift in Sources */,
 				2669923125C9BDA500D88EB8 /* AppFlowState.swift in Sources */,
 				2669923025C9BDA500D88EB8 /* MoviesListState.swift in Sources */,
 				26448B5525CA96DC00D240E7 /* RequestState.swift in Sources */,
+				26448BA525CD52FE00D240E7 /* MoviesListDTO.swift in Sources */,
 				2669924225C9BDD500D88EB8 /* MovieAPI.swift in Sources */,
 				2669922F25C9BDA500D88EB8 /* MainState.swift in Sources */,
 				2669923625C9BDB500D88EB8 /* AppFlowAction.swift in Sources */,
 				26448B7925CC102B00D240E7 /* MovieTarget.swift in Sources */,
 				2669923E25C9BDC900D88EB8 /* MovieService.swift in Sources */,
+				26448BB225CD5CF200D240E7 /* URLManager.swift in Sources */,
 				2669923A25C9BDBE00D88EB8 /* MainReducer.swift in Sources */,
 				26448B8D25CC3E3300D240E7 /* ConfigurationState.swift in Sources */,
 				52A4D8D925C308E500810667 /* AppDelegate.swift in Sources */,
+				26448BAF25CD580200D240E7 /* MovieDTO.swift in Sources */,
 				2669923525C9BDB500D88EB8 /* MoviesListAction.swift in Sources */,
 				5256803625C35B660089E6F6 /* ANViewController.swift in Sources */,
 			);
