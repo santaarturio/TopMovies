@@ -47,10 +47,13 @@ extension MovieTarget: TargetType {
     var task: Task {
         switch target {
         case.marvelMovies:
-            return .requestParameters(parameters: ["page": 1,
-                                                   "api_key": key,
-                                                   "sort_by": "vote_average.desc"],
-                                      encoding: URLEncoding.default)
+            return .requestParameters(
+                parameters: [
+                    "page": 1,
+                    "api_key": key,
+                    "sort_by": "vote_average.desc"
+                ],
+                encoding: URLEncoding.default)
         }
     }
     var headers: [String : String]? {

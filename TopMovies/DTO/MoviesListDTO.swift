@@ -8,17 +8,33 @@
 import Foundation
 
 struct MoviesListDTO: Decodable {
-    let average_rating: Double
-    let backdrop_path: String
+    let averageRating: Double
+    let backdropPath: String
     let comments: [String: String?]
-    let description: String
+    let listDescription: String
     let id: Int
     let name: String
-    let object_ids: [String: String?]
+    let objectIDS: [String: String?]
     let page: Int
-    let poster_path: String
+    let posterPath: String
     let results: [MovieDTO]
     let revenue, runtime: Int
-    let sort_by: String
-    let total_pages, total_results: Int
+    let sortBy: String
+    let totalPages, totalResults: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case averageRating = "average_rating"
+        case backdropPath = "backdrop_path"
+        case comments
+        case listDescription = "description"
+        case id
+        case name
+        case objectIDS = "object_ids"
+        case page
+        case posterPath = "poster_path"
+        case results, revenue, runtime
+        case sortBy = "sort_by"
+        case totalPages = "total_pages"
+        case totalResults = "total_results"
+    }
 }

@@ -16,6 +16,6 @@ struct Movie {
     let poster: URL?
     
     struct ID: Hashable {
-        let value: Int
+        let value: String
     }
 }

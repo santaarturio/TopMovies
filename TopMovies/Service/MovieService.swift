@@ -10,7 +10,7 @@ import ReSwift
 
 class MovieService: StoreSubscriber {
     typealias StoreSubscriberStateType = MainState
-
+    
     private let movieAPI: MovieAPIProtocol
     
     init(movieAPI: MovieAPIProtocol) {
@@ -26,7 +26,7 @@ class MovieService: StoreSubscriber {
                 switch result {
                 case let .success(moviesList):
                     mainStore.dispatch(MoviesListAction
-                                        .completed(movies: moviesList.results.map(MoviesDTOMapper.map(_:))))
+                                        .completed(movies: moviesList.results.map { Movie(dto: $0) }))
                 case let .failure(error):
                     mainStore.dispatch(MoviesListAction.failed(error: error))
                 }

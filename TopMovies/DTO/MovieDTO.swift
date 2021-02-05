@@ -9,13 +9,38 @@ import Foundation
 
 struct MovieDTO: Decodable {
     let adult: Bool
-    let backdrop_path: String
-    let genre_ids: [Int]
+    let backdropPath: String
+    let genreIds: [Int]
     let id: Int
-    let original_title, overview: String
+    let originalTitle, overview: String
     let popularity: Double
-    let poster_path, release_date, title: String
+    let posterPath, releaseDate, title: String
     let video: Bool
-    let vote_average: Double
-    let vote_count: Int
+    let voteAverage: Double
+    let voteCount: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case adult
+        case backdropPath = "backdrop_path"
+        case genreIds = "genre_ids"
+        case id
+        case originalTitle = "original_title"
+        case overview, popularity
+        case posterPath = "poster_path"
+        case releaseDate = "release_date"
+        case title, video
+        case voteAverage = "vote_average"
+        case voteCount = "vote_count"
+    }
+}
+
+extension Movie {
+    init(dto: MovieDTO) {
+        id = ID(value: String(dto.id))
+        adult = dto.adult
+        title = dto.title
+        description = dto.overview
+        rating = dto.voteAverage
+        poster = URLManager.moviePosterURLFor(path: dto.posterPath)
+    }
 }
