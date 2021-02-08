@@ -8,8 +8,10 @@
 import ReSwift
 
 func mainReducer(action: Action, state: MainState?) -> MainState {
-    let state = state ?? MainState(appFlowState: .launching,
+    let state = state ?? MainState(configurationState: .initial,
+                                   appFlowState: .launching,
                                    moviesListState: MoviesListState(moviesList: .initial, relational: [:]))
-    return MainState(appFlowState: AppFlowState.reduce(action: action, state: state.appFlowState),
+    return MainState(configurationState: ConfigurationState.reduce(action: action, state: state.configurationState),
+                     appFlowState: AppFlowState.reduce(action: action, state: state.appFlowState),
                      moviesListState: MoviesListState.reduce(action: action, state: state.moviesListState))
 }

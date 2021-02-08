@@ -22,6 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.makeKeyAndVisible()
         self.window = window
         
+        var apiKey: String {
+            guard let filePath = Bundle.main.path(forResource: "TMDB-Info", ofType: "plist"),
+                  let plist = NSDictionary(contentsOfFile: filePath),
+                  let key = plist.object(forKey: "API_KEY") as? String
+            else { fatalError("File \"TMDB-Info\" doesn`t exist") }
+            return key
+        }
+        mainStore.dispatch(UpdateConfigurationAction.configureAPIKey(apiKey))
+        
         let movieAPI = MovieAPI()
         let movieService = MovieService(movieAPI: movieAPI)
         mainStore.dispatch(MoviesListAction.request)
