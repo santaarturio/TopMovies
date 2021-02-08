@@ -9,49 +9,63 @@ import UIKit
 import SnapKit
 import Nuke
 
+// MARK: - Props struct -
+struct MovieCollectionProps {
+    let adultLabelText: String
+    let ratingLabelText: String
+    let titleLabelText: String
+    let descriptionLabeltext: String
+    let posterURL: URL?
+    let posterPlaceholderImage: UIImage
+}
+
+// MARK: - Cell class -
 class MovieCollectionViewCell: UICollectionViewCell {
-    private let posterImage = UIImageView()
+    private let posterImageView = UIImageView()
     private let adultLabel = UILabel()
     private let ratingLabel = UILabel()
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let shortInfoStackView = UIStackView()
     private let infoStackView = UIStackView()
-    
-    public func configureWith(movie: Movie) {
-        if let url = movie.poster { Nuke.loadImage(with: url, into: posterImage) }
-        adultLabel.text = "Adult: \(movie.adult ? "Yes" : "No")"
-        ratingLabel.text = String(movie.rating)
-        titleLabel.text = movie.title
-        descriptionLabel.text = movie.description
+    // MARK: - Cell configuration
+    public func configureWith(props: MovieCollectionProps) {
+        posterImageView.image = props.posterPlaceholderImage
+        if let url = props.posterURL {
+            let options = ImageLoadingOptions(placeholder: props.posterPlaceholderImage,
+                                              transition: .fadeIn(duration: 0.2))
+            Nuke.loadImage(with: url,
+                           options: options,
+                           into: posterImageView)
+        }
+        adultLabel.text = props.adultLabelText
+        ratingLabel.text = props.ratingLabelText
+        titleLabel.text = props.titleLabelText
+        descriptionLabel.text = props.descriptionLabeltext
     }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    // MARK: - UISetup
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupViewHierarchy()
         setupLayout()
         setupStyle()
     }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private func setupViewHierarchy() {
-        shortInfoStackView.addArrangedSubview(adultLabel)
-        shortInfoStackView.addArrangedSubview(ratingLabel)
-        
-        infoStackView.addArrangedSubview(posterImage)
-        infoStackView.addArrangedSubview(shortInfoStackView)
-        infoStackView.addArrangedSubview(titleLabel)
-        infoStackView.addArrangedSubview(descriptionLabel)
-        
+        [adultLabel, ratingLabel]
+            .forEach(shortInfoStackView.addArrangedSubview(_:))
+        [posterImageView, shortInfoStackView, titleLabel, descriptionLabel]
+            .forEach(infoStackView.addArrangedSubview(_:))
         addSubview(infoStackView)
     }
     private func setupLayout() {
-        infoStackView.axis = .vertical
-        shortInfoStackView.axis = .horizontal
-        
         infoStackView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        posterImage.snp.makeConstraints { (make) in
+        posterImageView.snp.makeConstraints { (make) in
             make.height.equalToSuperview().multipliedBy(0.6)
         }
         shortInfoStackView.snp.makeConstraints { (make) in
@@ -62,8 +76,12 @@ class MovieCollectionViewCell: UICollectionViewCell {
         }
     }
     private func setupStyle() {
-        posterImage.contentMode = .scaleAspectFill
-        posterImage.layer.cornerRadius = 15.0
+        infoStackView.axis = .vertical
+        shortInfoStackView.axis = .horizontal
+        
+        posterImageView.contentMode = .scaleAspectFill
+        posterImageView.layer.cornerRadius = 7.5
+        posterImageView.clipsToBounds = true
         
         adultLabel.textAlignment = .left
         adultLabel.font = .boldSystemFont(ofSize: 12)
@@ -76,5 +94,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
         
         descriptionLabel.textAlignment = .left
         descriptionLabel.font = .systemFont(ofSize: 12)
+        descriptionLabel.numberOfLines = 0
     }
 }
