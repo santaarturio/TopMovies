@@ -28,6 +28,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     private let descriptionLabel = UILabel()
     private let shortInfoStackView = UIStackView()
     private let infoStackView = UIStackView()
+    private let containerView = UIView()
     // MARK: - Cell configuration
     public func configureWith(props: MovieCollectionProps) {
         posterImageView.image = props.posterPlaceholderImage
@@ -55,23 +56,28 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupViewHierarchy() {
+        addSubview(containerView)
         [adultLabel, ratingLabel]
             .forEach(shortInfoStackView.addArrangedSubview(_:))
         [posterImageView, shortInfoStackView, titleLabel, descriptionLabel]
             .forEach(infoStackView.addArrangedSubview(_:))
-        addSubview(infoStackView)
+        containerView.addSubview(infoStackView)
     }
     private func setupLayout() {
-        infoStackView.snp.makeConstraints { (make) in
+        containerView.snp.makeConstraints { make in
+            make.center.height.equalToSuperview()
+            make.width.equalToSuperview().offset(-8.0)
+        }
+        infoStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        posterImageView.snp.makeConstraints { (make) in
+        posterImageView.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.6)
         }
-        shortInfoStackView.snp.makeConstraints { (make) in
+        shortInfoStackView.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.1)
         }
-        titleLabel.snp.makeConstraints { (make) in
+        titleLabel.snp.makeConstraints { make in
             make.height.equalTo(shortInfoStackView)
         }
     }
@@ -80,7 +86,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         shortInfoStackView.axis = .horizontal
         
         posterImageView.contentMode = .scaleAspectFill
-        posterImageView.layer.cornerRadius = 7.5
+        posterImageView.layer.cornerRadius = 5
         posterImageView.clipsToBounds = true
         
         adultLabel.textAlignment = .left
@@ -89,8 +95,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
         ratingLabel.textAlignment = .right
         ratingLabel.font = adultLabel.font
         
-        titleLabel.textAlignment = .center
-        titleLabel.font = .italicSystemFont(ofSize: 16)
+        titleLabel.textAlignment = .left
+        titleLabel.font = .boldSystemFont(ofSize: 14)
         
         descriptionLabel.textAlignment = .left
         descriptionLabel.font = .systemFont(ofSize: 12)
