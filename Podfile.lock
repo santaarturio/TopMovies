@@ -4,23 +4,31 @@ PODS:
     - Moya/Core (= 14.0.0)
   - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
+  - Nuke (9.2.4)
   - ReSwift (6.0.0)
+  - SnapKit (5.0.1)
 
 DEPENDENCIES:
-  - Moya (~> 14.0)
+  - Moya (~> 14.0.0)
+  - Nuke (~> 9.2.4)
   - ReSwift (~> 6.0.0)
+  - SnapKit (~> 5.0.0)
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - Moya
+    - Nuke
     - ReSwift
+    - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  Nuke: 44439f7a92e665a4f927ecd73cb51f91d93b0e0c
   ReSwift: 14e6f9409fe6bdc635e588208296a01f43b959c9
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 3c785fd5e577212d020b57845e122e4b8c8edf9e
+PODFILE CHECKSUM: 6cdf9efe108b91ea19393ce3672e32e362507697
 
 COCOAPODS: 1.10.1
