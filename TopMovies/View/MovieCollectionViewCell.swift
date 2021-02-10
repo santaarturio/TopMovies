@@ -19,6 +19,17 @@ struct MovieCollectionProps {
     let posterPlaceholderImage: UIImage
 }
 
+extension MovieCollectionProps {
+    init(movie: Movie) {
+        adultLabelText = "Adult: \(movie.adult ? "Yes" : "No")"
+        ratingLabelText = "Rating: \(movie.rating)"
+        titleLabelText = movie.title
+        descriptionLabeltext = movie.description
+        posterURL = movie.poster
+        posterPlaceholderImage = UIImage(named: "sadSmile") ?? UIImage()
+    }
+}
+
 // MARK: - Cell class -
 class MovieCollectionViewCell: UICollectionViewCell {
     private let posterImageView = UIImageView()

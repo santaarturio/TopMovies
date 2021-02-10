@@ -26,7 +26,8 @@ class MovieService: StoreSubscriber {
                 switch result {
                 case let .success(moviesList):
                     mainStore.dispatch(MoviesListAction
-                                        .completed(movies: moviesList.results.map { Movie(dto: $0) }))
+                                        .completed(categoryName: moviesList.name,
+                                                   movies: moviesList.results.map { Movie(dto: $0) }))
                 case let .failure(error):
                     mainStore.dispatch(MoviesListAction.failed(error: error))
                 }

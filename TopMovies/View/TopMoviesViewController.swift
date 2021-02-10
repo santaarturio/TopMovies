@@ -8,19 +8,44 @@
 import UIKit
 import SnapKit
 
+protocol PropsConnectable {
+  associatedtype Props
+  func connect(props: Props)
+}
+
+// MARK: - Props struct
 struct TopMoviesProps {
     let movieCategories: [MovieCategoryProps]
 }
+extension TopMoviesProps {
+    init() {
+        self.init(movieCategories: [])
+    }
+}
 
-class TopMoviesViewController: UIViewController {
+// MARK: - VC class
+class TopMoviesViewController: UIViewController, PropsConnectable {
+    
+    typealias Props = TopMoviesProps
+    
     private let movieCategoriesTableView = UITableView()
     private let movieCategoryCellIdentifier = String(describing: MovieCategoryTableViewCell.self)
     private let movieCategoryCellIHeight: CGFloat = 200.0
-    private var movieCategoriesProps = [MovieCategoryProps]()
-    
+    private var propsConnector: TopMoviesConnector?
+    private var movieCategoriesProps = TopMoviesProps() {
+        didSet {
+            movieCategoriesTableView.reloadData()
+        }
+    }
+
     // MARK: - VC configuration
-    public func configureWith(props: TopMoviesProps) {
-        movieCategoriesProps = props.movieCategories
+    public func configureConnection() {
+        propsConnector = TopMoviesConnector(updateProps: { [unowned self] props in
+            connect(props: props)
+        })
+    }
+    func connect(props: TopMoviesProps) {
+        movieCategoriesProps = TopMoviesProps(movieCategories: props.movieCategories)
     }
     
     // MARK: - UISetup
@@ -40,8 +65,6 @@ class TopMoviesViewController: UIViewController {
         }
     }
     private func setupStyle() {
-        view.backgroundColor = .white
-        
         movieCategoriesTableView.separatorStyle = .none
         movieCategoriesTableView.register(MovieCategoryTableViewCell.self,
                                           forCellReuseIdentifier: movieCategoryCellIdentifier)
@@ -49,16 +72,16 @@ class TopMoviesViewController: UIViewController {
         movieCategoriesTableView.delegate   = self
     }
 }
-// MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension TopMoviesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        movieCategoriesProps.count
+        movieCategoriesProps.movieCategories.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: movieCategoryCellIdentifier,
                                                        for: indexPath) as? MovieCategoryTableViewCell
         else { return UITableViewCell() }
-        cell.configureWith(props: movieCategoriesProps[indexPath.row])
+        cell.configureWith(props: movieCategoriesProps.movieCategories[indexPath.row])
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

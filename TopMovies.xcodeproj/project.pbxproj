@@ -16,6 +16,9 @@
 		26448BA925CD546E00D240E7 /* DataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BA825CD546E00D240E7 /* DataDecoder.swift */; };
 		26448BAF25CD580200D240E7 /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BAE25CD580200D240E7 /* MovieDTO.swift */; };
 		26448BB225CD5CF200D240E7 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BB125CD5CF200D240E7 /* URLManager.swift */; };
+		2657724D25D4079700A05CEE /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657724C25D4079700A05CEE /* Router.swift */; };
+		2657725825D40CBF00A05CEE /* BaseConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657725725D40CBF00A05CEE /* BaseConnector.swift */; };
+		2657725B25D40DD100A05CEE /* TopMoviesConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657725A25D40DD100A05CEE /* TopMoviesConnector.swift */; };
 		2669922825C9BC6800D88EB8 /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669922725C9BC6800D88EB8 /* MovieModel.swift */; };
 		2669922F25C9BDA500D88EB8 /* MainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669922C25C9BDA500D88EB8 /* MainState.swift */; };
 		2669923025C9BDA500D88EB8 /* MoviesListState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669922D25C9BDA500D88EB8 /* MoviesListState.swift */; };
@@ -48,6 +51,9 @@
 		26448BA825CD546E00D240E7 /* DataDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDecoder.swift; sourceTree = "<group>"; };
 		26448BAE25CD580200D240E7 /* MovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDTO.swift; sourceTree = "<group>"; };
 		26448BB125CD5CF200D240E7 /* URLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
+		2657724C25D4079700A05CEE /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		2657725725D40CBF00A05CEE /* BaseConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConnector.swift; sourceTree = "<group>"; };
+		2657725A25D40DD100A05CEE /* TopMoviesConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMoviesConnector.swift; sourceTree = "<group>"; };
 		2669922725C9BC6800D88EB8 /* MovieModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieModel.swift; path = TopMovies/Model/MovieModel.swift; sourceTree = SOURCE_ROOT; };
 		2669922C25C9BDA500D88EB8 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainState.swift; path = TopMovies/Core/State/MainState.swift; sourceTree = SOURCE_ROOT; };
 		2669922D25C9BDA500D88EB8 /* MoviesListState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoviesListState.swift; path = TopMovies/Core/State/MoviesListState.swift; sourceTree = SOURCE_ROOT; };
@@ -179,7 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				52A4D8F025C30ADF00810667 /* View */,
-				52A4D8F125C30AEE00810667 /* ViewModel */,
+				52A4D8F125C30AEE00810667 /* MoviesConnector */,
 				2669922625C9BB3E00D88EB8 /* Model */,
 				52A4D8F525C30B2400810667 /* Misc */,
 				26568AF625C9B74500EA2E99 /* Core */,
@@ -203,11 +209,13 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		52A4D8F125C30AEE00810667 /* ViewModel */ = {
+		52A4D8F125C30AEE00810667 /* MoviesConnector */ = {
 			isa = PBXGroup;
 			children = (
+				2657725725D40CBF00A05CEE /* BaseConnector.swift */,
+				2657725A25D40DD100A05CEE /* TopMoviesConnector.swift */,
 			);
-			path = ViewModel;
+			path = MoviesConnector;
 			sourceTree = "<group>";
 		};
 		52A4D8F525C30B2400810667 /* Misc */ = {
@@ -220,6 +228,7 @@
 		52BFC85F25C33BFE001B9F19 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2657724C25D4079700A05CEE /* Router.swift */,
 				52A4D8D825C308E500810667 /* AppDelegate.swift */,
 				52A4D8E325C308E900810667 /* LaunchScreen.storyboard */,
 				52A4D8E625C308E900810667 /* Info.plist */,
@@ -389,12 +398,15 @@
 				26448B5525CA96DC00D240E7 /* RequestState.swift in Sources */,
 				26448BA525CD52FE00D240E7 /* MoviesListDTO.swift in Sources */,
 				266B93AF25D1523300194050 /* MovieCollectionViewCell.swift in Sources */,
+				2657725B25D40DD100A05CEE /* TopMoviesConnector.swift in Sources */,
 				2669924225C9BDD500D88EB8 /* MovieAPI.swift in Sources */,
+				2657725825D40CBF00A05CEE /* BaseConnector.swift in Sources */,
 				266B93BC25D299AE00194050 /* MovieCategoryTableViewCell.swift in Sources */,
 				2669922F25C9BDA500D88EB8 /* MainState.swift in Sources */,
 				2669923625C9BDB500D88EB8 /* AppFlowAction.swift in Sources */,
 				26448B7925CC102B00D240E7 /* MovieTarget.swift in Sources */,
 				2669923E25C9BDC900D88EB8 /* MovieService.swift in Sources */,
+				2657724D25D4079700A05CEE /* Router.swift in Sources */,
 				26448BB225CD5CF200D240E7 /* URLManager.swift in Sources */,
 				2669923A25C9BDBE00D88EB8 /* MainReducer.swift in Sources */,
 				26448B8D25CC3E3300D240E7 /* ConfigurationState.swift in Sources */,
