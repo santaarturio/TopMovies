@@ -8,21 +8,21 @@
 import ReSwift
 
 class TopMoviesConnector: BaseConnector<TopMoviesProps> {
-    
-    required init(updateProps: @escaping (TopMoviesProps) -> Void) {
-        super.init(updateProps: updateProps)
+  
+  required init(updateProps: @escaping (TopMoviesProps) -> Void) {
+    super.init(updateProps: updateProps)
+  }
+  
+  override func newState(state: MainState) {
+    switch state.movieCategoriesState.categoriesList {
+    case let .completed(categoriesID):
+      let props =
+        TopMoviesProps(movieCategories: categoriesID
+                        .map{ MovieCategoryProps(categoryNameText: state.movieCategoriesState.relational[$0]!.title,
+                                                 movies: state.movieCategoriesState.relational[$0]!.movies
+                                                  .map{ MovieCollectionProps(movie: $0) }) })
+      _updateProps(props)
+    default: break
     }
-    
-    override func newState(state: MainState) {
-        switch state.moviesListState.moviesList {
-            case let .completed(moviesID):
-                let props =
-                    TopMoviesProps(movieCategories: [
-                        MovieCategoryProps(categoryNameText: state.moviesListState.moviesListName,
-                                           movies: moviesID.map{ MovieCollectionProps(movie: state.moviesListState.relational[$0]!) })
-                    ])
-                _updateProps(props)
-            default: break
-        }
-    }
+  }
 }

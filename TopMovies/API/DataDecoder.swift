@@ -8,7 +8,7 @@
 import Foundation
 
 struct DataDecoder {
-    static func decode<T: Decodable>(_ decodableType: T.Type, fromJSON data: Data) -> T? {
-        try? JSONDecoder().decode(decodableType, from: data)
-    }
+  static func decode<T: Decodable>(_ decodableType: T.Type, fromJSON data: Data) -> T? {
+    try? JSONDecoder().decode(decodableType, from: data)
+  }
 }

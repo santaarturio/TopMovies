@@ -9,10 +9,10 @@ import UIKit
 import ReSwift
 
 class ANViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.backgroundColor = .cyan
-    }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    view.backgroundColor = .cyan
+  }
 }

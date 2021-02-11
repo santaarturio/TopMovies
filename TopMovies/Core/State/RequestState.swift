@@ -6,9 +6,9 @@
 //
 
 enum RequestState<T> {
-    case initial
-    case requested
-    case downloading
-    case completed(data: T)
-    case failed(error: Error)
+  case initial
+  case requested
+  case downloading
+  case completed(data: T)
+  case failed(error: Error)
 }
