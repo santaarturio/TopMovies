@@ -17,10 +17,19 @@ class TopMoviesConnector: BaseConnector<TopMoviesProps> {
     switch state.movieCategoriesState.categoriesList {
     case let .completed(categoriesID):
       let props =
-        TopMoviesProps(movieCategories: categoriesID
-                        .map{ MovieCategoryProps(categoryNameText: state.movieCategoriesState.relational[$0]!.title,
-                                                 movies: state.movieCategoriesState.relational[$0]!.movies
-                                                  .map{ MovieCollectionProps(movie: $0) }) })
+        TopMoviesProps(
+          movieCategories:
+            categoriesID
+            .map{ MovieCategoryProps(
+              categoryNameText:
+                state.movieCategoriesState.relational[$0]?.title ?? "Category Name",
+              movies:
+                state.movieCategoriesState.relational[$0]?.movies
+                .map{ MovieCollectionProps(
+                  movie: state.moviesState.relational[$0] ?? Movie()
+                ) } ?? [] )
+            }
+        )
       _updateProps(props)
     default: break
     }

@@ -10,6 +10,6 @@ import ReSwift
 enum MovieCategoriesAction: Action {
   case request
   case downloading
-  case completed(categories: [MovieCategory])
+  case completed(categoriesDTO: [MoviesListDTO])
   case failed(error: Error)
 }

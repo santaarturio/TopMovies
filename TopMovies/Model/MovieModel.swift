@@ -19,3 +19,16 @@ struct Movie {
     let value: String
   }
 }
+
+extension Movie {
+  init() {
+    self.init(
+      id: ID(value: ""),
+      adult: false,
+      title: "",
+      description: "",
+      rating: 0,
+      poster: nil
+    )
+  }
+}

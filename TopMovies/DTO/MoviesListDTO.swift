@@ -44,6 +44,6 @@ extension MovieCategory {
     id = ID(value: "\(dto.id)")
     title = dto.name
     description = dto.listDescription
-    movies = dto.results.map{ Movie(dto: $0) }
+    movies = dto.results.map{ Movie(dto: $0).id }
   }
 }

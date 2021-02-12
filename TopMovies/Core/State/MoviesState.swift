@@ -18,7 +18,8 @@ extension MoviesState {
     switch action {
     case let MovieCategoriesAction.completed(categories):
       var relational = MoviesRelational()
-      categories.forEach{ $0.movies
+      categories
+        .forEach{ $0.results.map{ Movie(dto: $0) }
         .forEach{ relational[$0.id] = $0 } }
       return MoviesState(relational: relational)
     case let MoviesDownloadingAction.completed(_, movies):
