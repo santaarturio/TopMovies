@@ -12,6 +12,16 @@ struct MovieCategoryProps {
   let categoryNameText: String
   let movies: [MovieCollectionProps]
 }
+extension MovieCategoryProps {
+  init?(categoryNameText: String?, movies: [MovieCollectionProps]?) {
+    guard
+      let categoryNameText = categoryNameText,
+      let movies = movies
+    else { return nil }
+    self.categoryNameText = categoryNameText
+    self.movies = movies
+  }
+}
 // MARK: - Cell class -
 class MovieCategoryTableViewCell: UITableViewCell {
   private let categoryNameLabel = UILabel()
@@ -67,8 +77,8 @@ class MovieCategoryTableViewCell: UITableViewCell {
     categoryNameLabel.textAlignment = .left
     
     moviesCollectionView.backgroundColor = .clear
-    moviesCollectionView.dataSource      = self
-    moviesCollectionView.delegate        = self
+    moviesCollectionView.dataSource = self
+    moviesCollectionView.delegate = self
     moviesCollectionView.register(MovieCollectionViewCell.self,
                                   forCellWithReuseIdentifier: movieCollectionViewCellIdentifier)
     moviesCollectionView.showsHorizontalScrollIndicator = false

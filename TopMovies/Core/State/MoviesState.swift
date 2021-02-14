@@ -16,16 +16,13 @@ struct MoviesState: StateType {
 extension MoviesState {
   static func reduce(action: Action, state: MoviesState) -> MoviesState {
     switch action {
-    case let MovieCategoriesAction.completed(categories):
-      var relational = MoviesRelational()
-      categories
-        .forEach{ $0.results.map{ Movie(dto: $0) }
-        .forEach{ relational[$0.id] = $0 } }
-      return MoviesState(relational: relational)
     case let MoviesDownloadingAction.completed(_, movies):
       var relational = state.relational
-      movies.forEach{ relational[$0.id] = $0 }
-      return MoviesState(relational: relational)
+      return MoviesState(relational:
+                          relational.merge(dict: movies
+                                            .reduce(into: MoviesRelational()){ dict, movie in
+                                              dict[movie.id] = movie
+                                            }))
     default: return state
     }
   }

@@ -12,17 +12,12 @@ import SnapKit
 struct TopMoviesProps {
   let movieCategories: [MovieCategoryProps]
 }
-extension TopMoviesProps {
-  init() {
-    self.init(movieCategories: [])
-  }
-}
 
 // MARK: - VC class
 class TopMoviesViewController: UIViewController, PropsConnectable {
   typealias Props = TopMoviesProps
   internal var propsConnector: BaseConnector<Props>?
-  private var topMoviesProps = TopMoviesProps() {
+  private var topMoviesProps = TopMoviesProps(movieCategories: []) {
     didSet {
       movieCategoriesTableView.reloadData()
     }

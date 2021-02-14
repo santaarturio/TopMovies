@@ -20,7 +20,8 @@ struct MovieCollectionProps {
 }
 
 extension MovieCollectionProps {
-  init(movie: Movie) {
+  init?(movie: Movie?) {
+    guard let movie = movie else { return nil }
     adultLabelText = "Adult: \(movie.adult ? "Yes" : "No")"
     ratingLabelText = "Rating: \(movie.rating)"
     titleLabelText = movie.title

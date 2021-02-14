@@ -24,11 +24,18 @@ class MovieService: StoreSubscriber {
       mainStore.dispatch(MovieCategoriesAction.downloading)
       movieAPI.topMovies { (result) in
         switch result {
-        case let .success(categoriesList):
+        case let .success(categoriesList) where !categoriesList.isEmpty:
           mainStore.dispatch(MovieCategoriesAction
-                              .completed(categoriesDTO: [categoriesList]))
+                              .completed(categories: categoriesList.map { MovieCategory(dto: $0) }))
+          categoriesList.first.map { category in
+            MoviesDownloadingAction.completed(
+              MovieCategory.ID(value: String(category.id)),
+              category.results.map { Movie(dto: $0) }
+            )
+          }.map(mainStore.dispatch)
         case let .failure(error):
           mainStore.dispatch(MovieCategoriesAction.failed(error: error))
+        default: break
         }
       }
     default: break
