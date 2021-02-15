@@ -8,7 +8,9 @@
 import ReSwift
 
 struct MainState: StateType {
-    let configurationState: ConfigurationState
-    let appFlowState: AppFlowState
-    let moviesListState: MoviesListState
+  let configurationState: ConfigurationState
+  let appFlowState: AppFlowState
+  let movieCategoriesState: MovieCategoriesState
+  let categoryRequestsState: CategoryRequestsState
+  let moviesState: MoviesState
 }

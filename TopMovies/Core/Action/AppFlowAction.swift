@@ -8,8 +8,8 @@
 import ReSwift
 
 enum AppFlowAction: Action {
-    case applicationDidFinishLaunching
-    case applicationWillEnterForeground
-    case applicationDidEnterBackground
-    case applicationWillTerminate
+  case applicationDidFinishLaunching
+  case applicationWillEnterForeground
+  case applicationDidEnterBackground
+  case applicationWillTerminate
 }

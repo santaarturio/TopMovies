@@ -9,29 +9,36 @@ import Foundation
 import ReSwift
 
 class MovieService: StoreSubscriber {
-    typealias StoreSubscriberStateType = MainState
-    
-    private let movieAPI: MovieAPIProtocol
-    
-    init(movieAPI: MovieAPIProtocol) {
-        self.movieAPI = movieAPI
-        mainStore.subscribe(self)
-    }
-    
-    func newState(state: MainState) {
-        switch state.moviesListState.moviesList {
-        case .requested:
-            mainStore.dispatch(MoviesListAction.downloading)
-            movieAPI.topMovies { (result) in
-                switch result {
-                case let .success(moviesList):
-                    mainStore.dispatch(MoviesListAction
-                                        .completed(movies: moviesList.results.map { Movie(dto: $0) }))
-                case let .failure(error):
-                    mainStore.dispatch(MoviesListAction.failed(error: error))
-                }
-            }
+  typealias StoreSubscriberStateType = MainState
+  
+  private let movieAPI: MovieAPIProtocol
+  
+  init(movieAPI: MovieAPIProtocol) {
+    self.movieAPI = movieAPI
+    mainStore.subscribe(self)
+  }
+  
+  func newState(state: MainState) {
+    switch state.movieCategoriesState.categoriesList {
+    case .requested:
+      mainStore.dispatch(MovieCategoriesAction.downloading)
+      movieAPI.topMovies { (result) in
+        switch result {
+        case let .success(categoriesList) where !categoriesList.isEmpty:
+          mainStore.dispatch(MovieCategoriesAction
+                              .completed(categories: categoriesList.map { MovieCategory(dto: $0) }))
+          categoriesList.first.map { category in
+            MoviesDownloadingAction.completed(
+              MovieCategory.ID(value: String(category.id)),
+              category.results.map { Movie(dto: $0) }
+            )
+          }.map(mainStore.dispatch)
+        case let .failure(error):
+          mainStore.dispatch(MovieCategoriesAction.failed(error: error))
         default: break
         }
+      }
+    default: break
     }
+  }
 }

@@ -17,11 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = ANViewController() // replace it later
-        window.makeKeyAndVisible()
-        self.window = window
         
+        window = UIWindow(frame: UIScreen.main.bounds)
+        Router.shared.setup(with: window)
+        configureAPIKey()
+        createService()
+        
+        return true
+    }
+    
+    func configureAPIKey() {
         var apiKey: String {
             guard let filePath = Bundle.main.path(forResource: "TMDB-Info", ofType: "plist"),
                   let plist = NSDictionary(contentsOfFile: filePath),
@@ -30,13 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return key
         }
         mainStore.dispatch(UpdateConfigurationAction.configureAPIKey(apiKey))
-        
+    }
+    func createService() {
         let movieAPI = MovieAPI()
         let movieService = MovieService(movieAPI: movieAPI)
-        mainStore.dispatch(MoviesListAction.request)
-        return true
+      mainStore.dispatch(MovieCategoriesAction.request)
     }
-    
     func applicationDidFinishLaunching(_ application: UIApplication) {
         mainStore.dispatch(AppFlowAction.applicationDidFinishLaunching)
     }
