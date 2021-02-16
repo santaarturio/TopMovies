@@ -18,7 +18,10 @@ class MovieTarget: StoreSubscriber {
   }
   
   enum Target {
-    case marvelMovies
+    case nowPlaying(page: Int)
+    case popular(page: Int)
+    case topRated(page: Int)
+    case upcoming(page: Int)
   }
   
   func newState(state: MainState) {
@@ -31,27 +34,58 @@ class MovieTarget: StoreSubscriber {
 
 extension MovieTarget: TargetType {
   var baseURL: URL {
-    URL(string: "https://api.themoviedb.org/4")!
+    URL(string: "https://api.themoviedb.org/3/movie")!
   }
   var path: String {
-    "/list/1"
+    switch target {
+    case .nowPlaying:
+      return "now_playing"
+    case .popular:
+      return "popular"
+    case .topRated:
+      return "top_rated"
+    case .upcoming:
+      return "upcoming"
+    }
   }
   var method: Moya.Method {
-    switch target {
-    case.marvelMovies: return .get
-    }
+    .get
   }
   var sampleData: Data {
     Data()
   }
   var task: Task {
     switch target {
-    case.marvelMovies:
+    case let .nowPlaying(page):
       return .requestParameters(
         parameters: [
-          "page": 1,
           "api_key": key,
-          "sort_by": "vote_average.desc"
+          "language": "en",
+          "page": "\(page)"
+        ],
+        encoding: URLEncoding.default)
+    case let .popular(page):
+      return .requestParameters(
+        parameters: [
+          "api_key": key,
+          "language": "en",
+          "page": "\(page)"
+        ],
+        encoding: URLEncoding.default)
+    case let .topRated(page):
+      return .requestParameters(
+        parameters: [
+          "api_key": key,
+          "language": "en",
+          "page": "\(page)"
+        ],
+        encoding: URLEncoding.default)
+    case let .upcoming(page):
+      return .requestParameters(
+        parameters: [
+          "api_key": key,
+          "language": "en",
+          "page": "\(page)"
         ],
         encoding: URLEncoding.default)
     }

@@ -13,6 +13,7 @@ struct MovieCategoryProps {
   let movies: [MovieCollectionProps]
 }
 extension MovieCategoryProps {
+<<<<<<< ours
   init?(categoryNameText: String?, movies: [MovieCollectionProps]?) {
     guard
       let categoryNameText = categoryNameText,
@@ -20,6 +21,12 @@ extension MovieCategoryProps {
     else { return nil }
     self.categoryNameText = categoryNameText
     self.movies = movies
+=======
+  init?(categoryNameText: String?, movies: [MovieCollectionProps?]) {
+    guard let categoryNameText = categoryNameText else { return nil }
+    self.categoryNameText = categoryNameText
+    self.movies = movies.compactMap{ $0 }
+>>>>>>> theirs
   }
 }
 // MARK: - Cell class -

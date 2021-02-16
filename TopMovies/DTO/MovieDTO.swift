@@ -5,8 +5,6 @@
 //  Created by anikolaenko on 05.02.2021.
 //
 
-import Foundation
-
 struct MovieDTO: Decodable {
   let adult: Bool
   let backdropPath: String

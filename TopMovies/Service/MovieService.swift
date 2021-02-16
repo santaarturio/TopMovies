@@ -22,7 +22,7 @@ class MovieService: StoreSubscriber {
     switch state.movieCategoriesState.categoriesList {
     case .requested:
       mainStore.dispatch(MovieCategoriesAction.downloading)
-      movieAPI.topMovies { (result) in
+      movieAPI.topMovies({ (result) in
         switch result {
         case let .success(categoriesList) where !categoriesList.isEmpty:
           mainStore.dispatch(MovieCategoriesAction
@@ -37,7 +37,7 @@ class MovieService: StoreSubscriber {
           mainStore.dispatch(MovieCategoriesAction.failed(error: error))
         default: break
         }
-      }
+      }, category: nil)
     default: break
     }
   }
