@@ -18,10 +18,10 @@ class MovieTarget: StoreSubscriber {
   }
   
   enum Target {
-    case nowPlaying(page: Int)
-    case popular(page: Int)
-    case topRated(page: Int)
-    case upcoming(page: Int)
+    case nowPlaying(page: Int = 1)
+    case popular(page: Int = 1)
+    case topRated(page: Int = 1)
+    case upcoming(page: Int = 1)
   }
   
   func newState(state: MainState) {
