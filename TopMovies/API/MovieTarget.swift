@@ -9,19 +9,29 @@ import Moya
 
 class MovieTarget: StoreSubscriber {
   typealias StoreSubscriberStateType = MainState
-  private let target: Target
+  private let requestedCategory: RequestedCategory
   private var key = ""
   
-  init(target: Target) {
-    self.target = target
+  init(requestedCategory: RequestedCategory) {
+    self.requestedCategory = requestedCategory
     mainStore.subscribe(self)
   }
   
-  enum Target {
-    case nowPlaying(page: Int = 1)
-    case popular(page: Int = 1)
-    case topRated(page: Int = 1)
-    case upcoming(page: Int = 1)
+  enum RequestedCategory {
+    case nowPlaying(page: Int)
+    case popular(page: Int)
+    case topRated(page: Int)
+    case upcoming(page: Int)
+    
+    func requestedPage() -> Int {
+      switch self {
+      case let .nowPlaying(page),
+           let .popular(page),
+           let .topRated(page),
+           let .upcoming(page):
+        return page
+      }
+    }
   }
   
   func newState(state: MainState) {
@@ -37,7 +47,7 @@ extension MovieTarget: TargetType {
     URL(string: "https://api.themoviedb.org/3/movie")!
   }
   var path: String {
-    switch target {
+    switch requestedCategory {
     case .nowPlaying:
       return "now_playing"
     case .popular:
@@ -55,42 +65,17 @@ extension MovieTarget: TargetType {
     Data()
   }
   var task: Task {
-    switch target {
-    case let .nowPlaying(page):
-      return .requestParameters(
+    .requestParameters(
         parameters: [
           "api_key": key,
           "language": "en",
-          "page": "\(page)"
+          "page": "\(requestedCategory.requestedPage())"
         ],
         encoding: URLEncoding.default)
-    case let .popular(page):
-      return .requestParameters(
-        parameters: [
-          "api_key": key,
-          "language": "en",
-          "page": "\(page)"
-        ],
-        encoding: URLEncoding.default)
-    case let .topRated(page):
-      return .requestParameters(
-        parameters: [
-          "api_key": key,
-          "language": "en",
-          "page": "\(page)"
-        ],
-        encoding: URLEncoding.default)
-    case let .upcoming(page):
-      return .requestParameters(
-        parameters: [
-          "api_key": key,
-          "language": "en",
-          "page": "\(page)"
-        ],
-        encoding: URLEncoding.default)
-    }
   }
   var headers: [String : String]? {
     ["Content-Type": "application/json;charset=utf-8"]
   }
 }
+
+

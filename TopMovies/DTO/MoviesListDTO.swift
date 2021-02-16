@@ -6,7 +6,7 @@
 //
 
 struct MoviesListDTO: Decodable {
-  var name: String?
+  var name: String!
   let page: Int
   let results: [MovieDTO]
   let totalPages, totalResults: Int
@@ -21,8 +21,8 @@ struct MoviesListDTO: Decodable {
 
 extension MovieCategory {
   init(dto: MoviesListDTO) {
-    id = ID(value: "\(dto.name ?? "No Category Name")")
-    title = dto.name ?? "No Category Name"
+    id = ID(value: dto.name)
+    title = dto.name
     movies = dto.results.map{ Movie(dto: $0).id }
   }
 }

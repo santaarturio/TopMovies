@@ -42,7 +42,8 @@ class MovieService: StoreSubscriber {
       switch requestState {
       case .requested:
         mainStore.dispatch(MoviesDownloadingAction.downloading(category: categoryID))
-        movieAPI.category(with: CategoryNameCoder.decodeTarget(from: categoryID.value) ?? .nowPlaying())
+        // TODO: Fix force unwrap, get requested page from state
+        movieAPI.category(MovieCategoryRequest.init(rawValue: categoryID.value)!, page: 1)
         { (result) in
           switch result {
           case let .success(categoryDTO):
