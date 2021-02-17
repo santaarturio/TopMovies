@@ -24,5 +24,8 @@ extension MovieCategory {
     id = ID(value: dto.name)
     title = dto.name
     movies = dto.results.map{ Movie(dto: $0).id }
+    page = dto.page
+    totalPages = dto.totalPages
+    totalResults = dto.totalResults
   }
 }

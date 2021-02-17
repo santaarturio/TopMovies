@@ -27,7 +27,7 @@ class MovieService: StoreSubscriber {
         case let .success(categoriesList):
           categoriesList
             .map { MoviesDownloadingAction
-              .completed(MovieCategory(dto: $0).id,
+              .completed(MovieCategory(dto: $0),
                          $0.results.map { Movie(dto: $0) })}
             .forEach(mainStore.dispatch)
           mainStore.dispatch(MovieCategoriesAction
@@ -41,13 +41,18 @@ class MovieService: StoreSubscriber {
     state.categoryRequestsState.categoryRequests.forEach { categoryID, requestState in
       switch requestState {
       case .requested:
+        guard
+          let categoryRequest = MovieCategoryRequest.init(rawValue: categoryID.value),
+          let requestedPage = state.categoryRequestsState.requestedPages[categoryID]?.next
+        else {
+          mainStore.dispatch(MoviesDownloadingAction.allMoviesDownloaded)
+          break
+        }
         mainStore.dispatch(MoviesDownloadingAction.downloading(category: categoryID))
-        // TODO: Fix force unwrap, get requested page from state
-        movieAPI.category(MovieCategoryRequest.init(rawValue: categoryID.value)!, page: 1)
-        { (result) in
+        movieAPI.category(categoryRequest, page: requestedPage) { (result) in
           switch result {
           case let .success(categoryDTO):
-            mainStore.dispatch(MoviesDownloadingAction.completed(categoryID,
+            mainStore.dispatch(MoviesDownloadingAction.completed(MovieCategory(dto: categoryDTO),
                                                                  categoryDTO.results.map { Movie(dto: $0) }))
           case let .failure(error):
             mainStore.dispatch(MoviesDownloadingAction.failed(categoryID, error))
