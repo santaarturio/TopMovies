@@ -41,6 +41,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
   private let shortInfoStackView = UIStackView()
   private let infoStackView = UIStackView()
   private let containerView = UIView()
+  
   // MARK: - Cell configuration
   public func configureWith(props: MovieCollectionProps) {
     posterImageView.image = props.posterPlaceholderImage
@@ -56,6 +57,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     titleLabel.text = props.titleLabelText
     descriptionLabel.text = props.descriptionLabeltext
   }
+  
   // MARK: - UISetup
   override init(frame: CGRect) {
     super.init(frame: frame)

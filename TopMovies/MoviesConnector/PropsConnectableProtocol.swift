@@ -10,6 +10,6 @@ import Foundation
 protocol PropsConnectable {
   associatedtype Props
   var propsConnector: BaseConnector<Props>? { get set }
-  func configureConnectionWith(connector: BaseConnector<Props>)
+  func configureConnection(with connector: BaseConnector<Props>)
   func connect(props: Props)
 }

@@ -16,8 +16,8 @@ class Router {
     self.window = window
     let startVc = TopMoviesViewController()
     let navigationController = UINavigationController(rootViewController: startVc)
-    startVc.configureConnectionWith(
-      connector: TopMoviesConnector(
+    startVc.configureConnection(
+      with: TopMoviesConnector(
         updateProps: { [unowned startVc] (props) in
           startVc.connect(props: props)
         }))

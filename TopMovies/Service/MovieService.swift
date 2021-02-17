@@ -9,6 +9,7 @@ import Foundation
 import ReSwift
 
 class MovieService: StoreSubscriber {
+  static let shared = MovieService(movieAPI: MovieAPI())
   typealias StoreSubscriberStateType = MainState
   
   private let movieAPI: MovieAPIProtocol

@@ -7,6 +7,10 @@
 
 import UIKit
 import SnapKit
+// MARK: - MovieCategoryTableViewCellDelegate -
+protocol MovieCategoryTableViewCellDelegate: class {
+  func movieCategoryTableViewCell(didSelectSeeMoreCellIn categoryID: MovieCategory.ID)
+}
 // MARK: - Props struct -
 struct MovieCategoryProps {
   let categoryNameText: String
@@ -21,17 +25,23 @@ extension MovieCategoryProps {
 }
 // MARK: - Cell class -
 class MovieCategoryTableViewCell: UITableViewCell {
+  var cellID: MovieCategory.ID?
+  weak var delegate: MovieCategoryTableViewCellDelegate?
   private let categoryNameLabel = UILabel()
   private let moviesCollectionView = UICollectionView(frame: CGRect(), collectionViewLayout: UICollectionViewLayout())
-  private let movieCollectionViewCellIdentifier = String(describing: MovieCollectionViewCell.self)
+  private let movieCollectionViewCellIdentifier
+    = String(describing: MovieCollectionViewCell.self)
+  private let seeMoreMoviesCollectionViewCellIdentifier
+    = String(describing: SeeMoreMoviesCollectionViewCell.self)
   private let movieCollectionInteritemSpacing: CGFloat = 8.0
   private let infoStackView = UIStackView()
   private var moviesProps = [MovieCollectionProps]()
   
   // MARK: Cell configuration
-  public func configureWith(props: MovieCategoryProps) {
+  public func configure(with props: MovieCategoryProps, cellID: MovieCategory.ID) {
     categoryNameLabel.text = props.categoryNameText
     moviesProps = props.movies
+    self.cellID = cellID
   }
   
   // MARK: - UISetup
@@ -78,6 +88,8 @@ class MovieCategoryTableViewCell: UITableViewCell {
     moviesCollectionView.delegate = self
     moviesCollectionView.register(MovieCollectionViewCell.self,
                                   forCellWithReuseIdentifier: movieCollectionViewCellIdentifier)
+    moviesCollectionView.register(SeeMoreMoviesCollectionViewCell.self,
+                                  forCellWithReuseIdentifier: seeMoreMoviesCollectionViewCellIdentifier)
     moviesCollectionView.showsHorizontalScrollIndicator = false
   }
 }
@@ -85,17 +97,33 @@ class MovieCategoryTableViewCell: UITableViewCell {
 extension MovieCategoryTableViewCell: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView,
                       numberOfItemsInSection section: Int) -> Int {
-    moviesProps.count
+    moviesProps.count + 1
   }
   
   func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier,
-                                 for: indexPath) as? MovieCollectionViewCell
-    else { return UICollectionViewCell() }
-    cell.configureWith(props: moviesProps[indexPath.item])
-    return cell
+    if indexPath.row < moviesProps.count {
+      guard let cell = collectionView
+              .dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier,
+                                   for: indexPath) as? MovieCollectionViewCell
+      else { return UICollectionViewCell() }
+      cell.configureWith(props: moviesProps[indexPath.item])
+      return cell
+    } else {
+      guard let cell = collectionView
+              .dequeueReusableCell(withReuseIdentifier: seeMoreMoviesCollectionViewCellIdentifier,
+                                   for: indexPath) as? SeeMoreMoviesCollectionViewCell
+      else { return UICollectionViewCell() }
+      return cell
+    }
+  }
+}
+// MARK: - UICollectionViewDelegate
+extension MovieCategoryTableViewCell: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    if let cellID = cellID, indexPath.item == moviesProps.count {
+      delegate?.movieCategoryTableViewCell(didSelectSeeMoreCellIn: cellID)
+    }
   }
 }
 // MARK: - UICollectionViewDelegateFlowLayout

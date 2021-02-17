@@ -27,7 +27,7 @@ class TopMoviesViewController: UIViewController, PropsConnectable {
   private let movieCategoryCellIHeight: CGFloat = 200.0
   
   // MARK: - Setup Connection
-  public func configureConnectionWith(connector: BaseConnector<Props>) {
+  public func configureConnection(with connector: BaseConnector<Props>) {
     propsConnector = connector
   }
   internal func connect(props: Props) {
@@ -72,10 +72,24 @@ extension TopMoviesViewController: UITableViewDataSource, UITableViewDelegate {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: movieCategoryCellIdentifier,
                                                    for: indexPath) as? MovieCategoryTableViewCell
     else { return UITableViewCell() }
-    cell.configureWith(props: topMoviesProps.movieCategories[indexPath.row])
+    cell.delegate = self
+    cell.configure(with: topMoviesProps.movieCategories[indexPath.row],
+                   cellID: MovieCategory.ID(value: topMoviesProps.movieCategories[indexPath.row].categoryNameText))
     return cell
   }
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     movieCategoryCellIHeight
+  }
+}
+
+extension TopMoviesViewController: MovieCategoryTableViewCellDelegate {
+  func movieCategoryTableViewCell(didSelectSeeMoreCellIn categoryID: MovieCategory.ID) {
+    let categoryVC = MoviesCategoryVC()
+    categoryVC.configureConnection(
+      with: MovieCategoryVCConnector(categoryID: categoryID,
+                                     updateProps: { [unowned categoryVC] (props) in
+                                      categoryVC.connect(props: props)
+                                     }))
+    navigationController?.pushViewController(categoryVC, animated: true)
   }
 }
