@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class SeeMoreMoviesCollectionViewCell: UICollectionViewCell {
-  let seeMoreLabel = UILabel()
+  let seeMoreImageView = UIImageView()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -22,16 +22,16 @@ class SeeMoreMoviesCollectionViewCell: UICollectionViewCell {
   }
   
   private func setupViewHierarchy() {
-    addSubview(seeMoreLabel)
+    addSubview(seeMoreImageView)
   }
   private func setupLayout() {
-    seeMoreLabel.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+    seeMoreImageView.snp.makeConstraints { make in
+      make.top.left.right.equalToSuperview()
+      make.height.equalToSuperview().multipliedBy(0.6)
     }
   }
   private func setupStyle() {
-    seeMoreLabel.text = "See more"
-    seeMoreLabel.font = .boldSystemFont(ofSize: 28)
-    seeMoreLabel.textAlignment = .justified
+    seeMoreImageView.image = UIImage(named: "seeMore") ?? UIImage()
+    seeMoreImageView.contentMode = .scaleAspectFit
   }
 }

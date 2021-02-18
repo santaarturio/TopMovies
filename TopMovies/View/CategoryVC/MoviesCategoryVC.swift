@@ -34,7 +34,7 @@ class MoviesCategoryVC: UIViewController, PropsConnectable {
   private var categoryID: MovieCategory.ID { MovieCategory.ID(value: props.categoryName) }
   private let categoryTableView = UITableView(frame: .zero, style: .grouped)
   private let movieCellIdentifier = String(describing: MovieTableViewCell.self)
-  private let cellHeight: CGFloat = 200.0
+  private let cellHeight: CGFloat = 250.0
   
   // MARK: - Setup Connection
   public func configureConnection(with connector: BaseConnector<MoviesCategoryVCProps>) {
@@ -66,6 +66,9 @@ class MoviesCategoryVC: UIViewController, PropsConnectable {
     navigationController?.navigationBar.prefersLargeTitles = true
     
     categoryTableView.showsVerticalScrollIndicator = false
+    categoryTableView.separatorStyle = .none
+    categoryTableView.sectionHeaderHeight = 0
+    categoryTableView.sectionFooterHeight = 0
     categoryTableView.register(MovieTableViewCell.self,
                                forCellReuseIdentifier: movieCellIdentifier)
     categoryTableView.dataSource = self

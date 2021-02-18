@@ -26,16 +26,17 @@ extension MovieTableViewCellProps {
     posterURL = movie.poster
     posterPlaceholderImage = UIImage(named: "moviePlaceholder") ?? UIImage()
     titleLabelText = movie.title
-    releaseDateLabelText = "Release date:\n\(movie.releaseDate)"
+    releaseDateLabelText = "Release: \(Date.prettyDate(movie.releaseDate))"
     ratingLabelText = "Rating: \(movie.rating)"
     voteCountLabelText = "Vote count: \(movie.voteCount)"
     adultLabelText = "Adult: \(movie.adult ? "Yes" : "No")"
-    descriptionLabeltext = "Overview:\n\(movie.description)"
+    descriptionLabeltext = movie.description
   }
 }
 
 // MARK: - Cell class -
 class MovieTableViewCell: UITableViewCell {
+  let myContentView = UIView()
   let posterImageView = UIImageView()
   let titleLabel = UILabel()
   let releaseDateLabel = UILabel()
@@ -86,11 +87,17 @@ class MovieTableViewCell: UITableViewCell {
       .forEach(infoStackView.addArrangedSubview(_:))
     [posterImageView, infoStackView]
       .forEach(contentStackView.addArrangedSubview(_:))
-    addSubview(contentStackView)
+    myContentView.addSubview(contentStackView)
+    addSubview(myContentView)
   }
   private func setupLayout() {
+    myContentView.snp.makeConstraints { make in
+      make.center.width.equalToSuperview()
+      make.height.equalToSuperview().offset(-20.0)
+    }
     contentStackView.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+      make.top.left.bottom.equalToSuperview()
+      make.right.equalToSuperview().offset(-4.0)
     }
     posterImageView.snp.makeConstraints { make in
       make.width.equalToSuperview().multipliedBy(0.35)
@@ -104,25 +111,30 @@ class MovieTableViewCell: UITableViewCell {
   }
   private func setupStyle() {
     selectionStyle = .none
+    backgroundColor = .clear
     
     contentStackView.axis = .horizontal
-    titleAndReleaseStackView.axis = .horizontal
-    titleAndReleaseStackView.distribution = .equalSpacing
+    contentStackView.spacing = 4.0
+    titleAndReleaseStackView.axis = .vertical
+    titleAndReleaseStackView.distribution = .fillProportionally
     ratingVotesAdultStackView.axis = .horizontal
     ratingVotesAdultStackView.distribution = .equalSpacing
     infoStackView.axis = .vertical
     
+    myContentView.backgroundColor = UIColor(white: 0.8, alpha: 0.2)
+    myContentView.layer.cornerRadius = 12.5
+    myContentView.clipsToBounds = true
+    
     posterImageView.contentMode = .scaleAspectFill
-    posterImageView.layer.cornerRadius = 15.0
     posterImageView.clipsToBounds = true
     
-    titleLabel.numberOfLines = 0
-    titleLabel.font = .boldSystemFont(ofSize: 14)
+    titleLabel.font = .boldSystemFont(ofSize: 20)
     titleLabel.textAlignment = .left
+    titleLabel.numberOfLines = 0
     
+    releaseDateLabel.font = .boldSystemFont(ofSize: 12)
+    releaseDateLabel.textAlignment = .left
     releaseDateLabel.numberOfLines = 0
-    releaseDateLabel.font = titleLabel.font
-    releaseDateLabel.textAlignment = .right
     
     descriptionLabel.font = .systemFont(ofSize: 12)
     descriptionLabel.textAlignment = .left
@@ -136,5 +148,15 @@ class MovieTableViewCell: UITableViewCell {
     
     adultLabel.font = ratingLabel.font
     adultLabel.textAlignment = .center
+  }
+}
+
+extension Date {
+  static func prettyDate(_ date: String) -> String {
+    let dateFormatterGet = DateFormatter()
+    dateFormatterGet.dateFormat = "yyyy-mm-dd"
+    let dateFormatterPrint = DateFormatter()
+    dateFormatterPrint.dateFormat = "MMM, dd - yyyy"
+    return dateFormatterPrint.string(from: dateFormatterGet.date(from: date)  ?? Date())
   }
 }
