@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     mainStore.dispatch(UpdateConfigurationAction.configureAPIKey(apiKey))
   }
   func createService() {
-    MovieService.shared
+    _ = MovieService.shared
     mainStore.dispatch(MovieCategoriesAction.request)
   }
   func applicationDidFinishLaunching(_ application: UIApplication) {

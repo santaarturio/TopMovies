@@ -9,8 +9,7 @@ import Foundation
 
 struct CategoryPageState {
   let currentPage, totalPages, totalResults: Int
-  private var hasNext: Bool { return currentPage < totalPages }
-  var next: Int? { hasNext ? currentPage + 1 : nil }
+  var next: Int? { currentPage < totalPages ? currentPage + 1 : nil }
 }
 
 extension CategoryPageState {

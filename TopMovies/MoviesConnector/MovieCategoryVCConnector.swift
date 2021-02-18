@@ -23,20 +23,17 @@ class MovieCategoryVCConnector: BaseConnector<MoviesCategoryVCProps> {
   override func newState(state: MainState) {
     guard let categoryID = categoryID else { return }
     
-    if !isExistingMoviesConnected {
-      switch state.movieCategoriesState.categoriesList {
-      case let .completed(categoriesID) where categoriesID.contains(categoryID):
-        guard let props = MoviesCategoryVCProps(
-          categoryName:
-            state.movieCategoriesState.relational[categoryID]?.title,
-          movies:
-            state.movieCategoriesState.relational[categoryID]?.movies
-            .compactMap{ MovieTableViewCellProps(movie: state.moviesState.relational[$0]) } ?? []
-        ) else { return }
-        _updateProps(props)
-        isExistingMoviesConnected = !isExistingMoviesConnected
-      default: break
-      }
+    if !isExistingMoviesConnected,
+       let existingMovies = state.categoryRequestsState.alreadyDownloaded[categoryID],
+       let props = MoviesCategoryVCProps(
+        categoryName:
+          state.movieCategoriesState.relational[categoryID]?.title,
+        movies:
+          existingMovies
+          .compactMap{ MovieTableViewCellProps(movie: state.moviesState.relational[$0]) })
+    {
+      _updateProps(props)
+      isExistingMoviesConnected = !isExistingMoviesConnected
     }
     
     switch state.categoryRequestsState.categoryRequests[categoryID] {

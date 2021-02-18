@@ -16,7 +16,8 @@ func mainReducer(action: Action, state: MainState?) -> MainState {
                                      categoriesList: .initial),
               categoryRequestsState:
                 CategoryRequestsState(categoryRequests: [:],
-                                      requestedPages: [:]),
+                                      requestedPages: [:],
+                                      alreadyDownloaded: [:]),
               moviesState:
                 MoviesState(relational: MoviesRelational()))
   return MainState(configurationState:
