@@ -12,5 +12,4 @@ enum MoviesDownloadingAction: Action {
   case downloading(category: MovieCategory.ID)
   case completed(MovieCategory, [Movie])
   case failed(MovieCategory.ID, Error)
-  case allMoviesDownloaded
 }
