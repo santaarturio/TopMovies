@@ -31,7 +31,7 @@ class MovieCategoryTableViewCell: UITableViewCell {
   private let moviesCollectionView = UICollectionView(frame: CGRect(), collectionViewLayout: UICollectionViewLayout())
   private let movieCollectionViewCellIdentifier
     = String(describing: MovieCollectionViewCell.self)
-  private let seeMoreMoviesCollectionViewCellIdentifier
+  private let seeMoreMoviesCollectionCellIdentifier
     = String(describing: SeeMoreMoviesCollectionViewCell.self)
   private let movieCollectionInteritemSpacing: CGFloat = 8.0
   private let infoStackView = UIStackView()
@@ -89,7 +89,7 @@ class MovieCategoryTableViewCell: UITableViewCell {
     moviesCollectionView.register(MovieCollectionViewCell.self,
                                   forCellWithReuseIdentifier: movieCollectionViewCellIdentifier)
     moviesCollectionView.register(SeeMoreMoviesCollectionViewCell.self,
-                                  forCellWithReuseIdentifier: seeMoreMoviesCollectionViewCellIdentifier)
+                                  forCellWithReuseIdentifier: seeMoreMoviesCollectionCellIdentifier)
     moviesCollectionView.showsHorizontalScrollIndicator = false
   }
 }
@@ -111,7 +111,7 @@ extension MovieCategoryTableViewCell: UICollectionViewDataSource {
       return cell
     } else {
       guard let cell = collectionView
-              .dequeueReusableCell(withReuseIdentifier: seeMoreMoviesCollectionViewCellIdentifier,
+              .dequeueReusableCell(withReuseIdentifier: seeMoreMoviesCollectionCellIdentifier,
                                    for: indexPath) as? SeeMoreMoviesCollectionViewCell
       else { return UICollectionViewCell() }
       return cell

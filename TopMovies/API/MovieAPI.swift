@@ -9,24 +9,24 @@ import Foundation
 import Moya
 
 protocol MovieAPIProtocol {
-  func allMovieCategories(_ categories: @escaping (Result<[MoviesListDTO], Error>) -> Void)
+  func allMovieCategories(_ categories: @escaping (Result<[CategoryDTO], Error>) -> Void)
   func category(_ requestedCategory: MovieCategoryRequest,
                 page: Int,
-                _ category: @escaping (Result<MoviesListDTO, Error>) -> Void)
+                _ category: @escaping (Result<CategoryDTO, Error>) -> Void)
 }
 
 struct MovieAPI: MovieAPIProtocol {
   private let provider = MoyaProvider<MovieTarget>()
   
-  public func allMovieCategories(_ categories: @escaping (Result<[MoviesListDTO], Error>) -> Void) {
-    var categoriesDTO: [MoviesListDTO] = []
+  public func allMovieCategories(_ categories: @escaping (Result<[CategoryDTO], Error>) -> Void) {
+    var categoriesList: [CategoryDTO] = []
     var someError: Error?
     let requests = MovieCategoryRequest.allCases
     var requestsCounter = 0 {
       didSet {
         let numberOfRequests = requests.count
-        if requestsCounter == numberOfRequests && !categoriesDTO.isEmpty {
-          categories(.success(categoriesDTO))
+        if requestsCounter == numberOfRequests && !categoriesList.isEmpty {
+          categories(.success(categoriesList))
         } else if someError != nil
                     && requestsCounter == numberOfRequests {
           someError.map { categories(.failure($0)) }
@@ -37,9 +37,10 @@ struct MovieAPI: MovieAPIProtocol {
       provider.request(.init(requestedCategory: .init(category: requestedCategory))) { (response) in
         switch response {
         case let .success(data):
-          if var moviesListDTO = DataDecoder.decode(MoviesListDTO.self, fromJSON: data.data) {
-            moviesListDTO.name = requestedCategory.rawValue
-            categoriesDTO.append(moviesListDTO)
+          if var categoryDTO = DataDecoder.decode(CategoryDTO.self, fromJSON: data.data) {
+            categoryDTO.id = requestedCategory.rawValue
+            categoryDTO.name = requestedCategory.rawValue
+            categoriesList.append(categoryDTO)
             requestsCounter += 1
           } else { print("Decoder didn't decode") }
         case let .failure(error):
@@ -51,14 +52,15 @@ struct MovieAPI: MovieAPIProtocol {
   }
   public func category(_ requestedCategory: MovieCategoryRequest,
                        page: Int,
-                       _ category: @escaping (Result<MoviesListDTO, Error>) -> Void) {
+                       _ category: @escaping (Result<CategoryDTO, Error>) -> Void) {
     provider.request(.init(requestedCategory: .init(category: requestedCategory,
                                                     page: page))) { (response) in
       switch response {
       case let .success(data):
-        if var moviesListDTO = DataDecoder.decode(MoviesListDTO.self, fromJSON: data.data) {
-          moviesListDTO.name = requestedCategory.rawValue
-          category(.success(moviesListDTO))
+        if var categoryDTO = DataDecoder.decode(CategoryDTO.self, fromJSON: data.data) {
+          categoryDTO.id = requestedCategory.rawValue
+          categoryDTO.name = requestedCategory.rawValue
+          category(.success(categoryDTO))
         } else { print("Decoder didn't decode") }
       case let .failure(error):
         category(.failure(error))

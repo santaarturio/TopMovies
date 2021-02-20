@@ -11,7 +11,7 @@ let allActionsMiddleware: Middleware<MainState> = { dispatch, getState in
   return { next in
     return { action in
       #if DEBUG
-      //print(">  \(action)")
+      print(">  \(action)")
       #endif
       next(action)
     }

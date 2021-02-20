@@ -8,8 +8,8 @@
 import ReSwift
 
 struct MovieCategoriesState: StateType {
-  let relational: [MovieCategory.ID: MovieCategory]
   let categoriesList: RequestState<[MovieCategory.ID]>
+  let relational: [MovieCategory.ID: MovieCategory]
 }
 
 extension MovieCategoriesState {
@@ -17,25 +17,25 @@ extension MovieCategoriesState {
     switch action {
     case MovieCategoriesAction.request:
       return MovieCategoriesState(
-        relational: state.relational,
-        categoriesList: .requested
+        categoriesList: .requested,
+        relational: state.relational
       )
     case MovieCategoriesAction.downloading:
       return MovieCategoriesState(
-        relational: state.relational,
-        categoriesList: .downloading
+        categoriesList: .downloading,
+        relational: state.relational
       )
-    case let MovieCategoriesAction.completed(categories):
+    case let MovieCategoriesAction.completed(categories, _,_):
       let categoriesIDArray = categories.map(\.id)
       return MovieCategoriesState(
+        categoriesList: .completed(data: categoriesIDArray),
         relational: Dictionary(uniqueKeysWithValues:
-                                zip(categoriesIDArray, categories)),
-        categoriesList: .completed(data: categoriesIDArray)
+                                zip(categoriesIDArray, categories))
       )
     case let MovieCategoriesAction.failed(error):
       return MovieCategoriesState(
-        relational: state.relational,
-        categoriesList: .failed(error: error)
+        categoriesList: .failed(error: error),
+        relational: state.relational
       )
     default: return state
     }

@@ -33,6 +33,7 @@ class MoviesCategoryVC: UIViewController, PropsConnectable {
   }
   private var categoryID: MovieCategory.ID { MovieCategory.ID(value: props.categoryName) }
   private let categoryTableView = UITableView(frame: .zero, style: .grouped)
+  private let refreshControl = UIRefreshControl()
   private let movieCellIdentifier = String(describing: MovieTableViewCell.self)
   private let cellHeight: CGFloat = 250.0
   
@@ -56,6 +57,7 @@ class MoviesCategoryVC: UIViewController, PropsConnectable {
   
   private func setupViewHierarchy() {
     view.addSubview(categoryTableView)
+    categoryTableView.addSubview(refreshControl)
   }
   private func setupLayout() {
     categoryTableView.snp.makeConstraints { (make) in
@@ -73,8 +75,20 @@ class MoviesCategoryVC: UIViewController, PropsConnectable {
                                forCellReuseIdentifier: movieCellIdentifier)
     categoryTableView.dataSource = self
     categoryTableView.delegate   = self
+    
+    refreshControl.tintColor = .blue
+    refreshControl.addTarget(self,
+                             action: #selector(refreshControlSelector(sender:)),
+                             for: .valueChanged)
+  }
+  
+  // MARK: - Action
+  @objc func refreshControlSelector(sender: UIRefreshControl) {
+    mainStore.dispatch(MoviesRequestAction(categoryId: categoryID, requestType: .reload))
+    refreshControl.endRefreshing()
   }
 }
+
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension MoviesCategoryVC: UITableViewDelegate, UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
@@ -95,7 +109,7 @@ extension MoviesCategoryVC: UITableViewDelegate, UITableViewDataSource {
   }
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     if indexPath.section == tableView.numberOfSections - 1 {
-      mainStore.dispatch(MoviesDownloadingAction.requestFor(category: categoryID))
+      mainStore.dispatch(MoviesRequestAction(categoryId: categoryID, requestType: .loadMore))
     }
   }
 }

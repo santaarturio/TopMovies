@@ -12,14 +12,11 @@ func mainReducer(action: Action, state: MainState?) -> MainState {
     MainState(configurationState: .initial,
               appFlowState: .launching,
               movieCategoriesState:
-                MovieCategoriesState(relational: [:],
-                                     categoriesList: .initial),
-              categoryRequestsState:
-                CategoryRequestsState(categoryRequests: [:],
-                                      requestedPages: [:],
-                                      alreadyDownloaded: [:]),
+                MovieCategoriesState(categoriesList: .initial, relational: [:]),
               moviesState:
-                MoviesState(relational: MoviesRelational()))
+                MoviesState(relational: [:]),
+              paginationState:
+                PaginationState(paginated: [:]))
   return MainState(configurationState:
                     ConfigurationState
                     .reduce(action: action,
@@ -32,12 +29,12 @@ func mainReducer(action: Action, state: MainState?) -> MainState {
                     MovieCategoriesState
                     .reduce(action: action,
                             state: state.movieCategoriesState),
-                   categoryRequestsState:
-                    CategoryRequestsState
-                    .reduce(action: action,
-                            state: state.categoryRequestsState),
                    moviesState:
                     MoviesState
                     .reduce(action: action,
-                            state: state.moviesState))
+                            state: state.moviesState),
+                   paginationState:
+                    PaginationState
+                    .reduce(action: action,
+                            state: state.paginationState))
 }

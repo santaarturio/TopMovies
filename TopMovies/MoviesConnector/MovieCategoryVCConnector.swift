@@ -9,6 +9,7 @@ import Foundation
 
 class MovieCategoryVCConnector: BaseConnector<MoviesCategoryVCProps> {
   var categoryID: MovieCategory.ID?
+  var downloadedMovies: [Movie.ID] = []
   var isExistingMoviesConnected = false
   
   required init(updateProps: @escaping (MoviesCategoryVCProps) -> Void) {
@@ -17,14 +18,13 @@ class MovieCategoryVCConnector: BaseConnector<MoviesCategoryVCProps> {
   convenience init(categoryID: MovieCategory.ID, updateProps: @escaping (MoviesCategoryVCProps) -> Void) {
     self.init(updateProps: updateProps)
     self.categoryID = categoryID
-    mainStore.dispatch(MoviesDownloadingAction.requestFor(category: categoryID))
-  }
+    mainStore.dispatch(MoviesRequestAction(categoryId: categoryID, requestType: .loadMore))  }
   
   override func newState(state: MainState) {
     guard let categoryID = categoryID else { return }
     
     if !isExistingMoviesConnected,
-       let existingMovies = state.categoryRequestsState.alreadyDownloaded[categoryID],
+       let existingMovies = state.paginationState.paginated[categoryID]?.list,
        let props = MoviesCategoryVCProps(
         categoryName:
           state.movieCategoriesState.relational[categoryID]?.title,
@@ -34,18 +34,23 @@ class MovieCategoryVCConnector: BaseConnector<MoviesCategoryVCProps> {
     {
       _updateProps(props)
       isExistingMoviesConnected = !isExistingMoviesConnected
+      downloadedMovies = existingMovies
     }
     
-    switch state.categoryRequestsState.categoryRequests[categoryID] {
-    case let .completed(data: moviesID):
-      let props =
-        MoviesCategoryVCProps(categoryName: categoryID.value,
-                              movies: moviesID
+    guard
+      let moviesList = state.paginationState.paginated[categoryID]?.list,
+      moviesList.count > downloadedMovies.count
+    else { return }
+    
+    var moviesListDiff = moviesList
+    moviesListDiff.removeSubrange(0..<downloadedMovies.count)
+    downloadedMovies.append(contentsOf: moviesListDiff)
+    if let props =
+        MoviesCategoryVCProps(categoryName: state.movieCategoriesState.relational[categoryID]?.title,
+                              movies: moviesListDiff
                                 .compactMap {
                                   MovieTableViewCellProps(movie: state.moviesState.relational[$0])
                                 })
-      _updateProps(props)
-    default: break
-    }
+    { _updateProps(props) }
   }
 }
