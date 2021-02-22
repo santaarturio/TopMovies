@@ -25,7 +25,7 @@ extension MovieCategoriesState {
         relational: state.relational,
         categoriesList: .downloading
       )
-    case let MovieCategoriesAction.completed(categories):
+    case let MovieCategoriesAction.completed(categories, _,_):
       let categoriesIDArray = categories.map(\.id)
       return MovieCategoriesState(
         relational: Dictionary(uniqueKeysWithValues:

@@ -10,6 +10,8 @@ import ReSwift
 enum MovieCategoriesAction: Action {
   case request
   case downloading
-  case completed(categories: [MovieCategory])
+  case completed(categories: [MovieCategory],
+                 movies: [Movie],
+                 relational: [MovieCategory.ID: [Movie.ID]])
   case failed(error: Error)
 }

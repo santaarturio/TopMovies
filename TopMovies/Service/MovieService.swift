@@ -35,7 +35,17 @@ class MovieService: StoreSubscriber {
                          $0.results.map { Movie(dto: $0) })}
             .forEach(mainStore.dispatch)
           mainStore.dispatch(MovieCategoriesAction
-                              .completed(categories: categoriesList.map { MovieCategory(dto: $0) }))
+                              .completed(
+                                categories: categoriesList.map { MovieCategory(dto: $0) },
+                                movies: categoriesList
+                                  .map { $0.results.map { Movie(dto: $0) } }
+                                  .flatMap { $0 },
+                                relational: categoriesList
+                                  .reduce(into: [:]) { dict, categoryDTO in
+                                    dict[MovieCategory.ID(value: categoryDTO.name)]
+                                      = categoryDTO.results
+                                      .map { Movie.ID(value: String($0.id)) }
+                                  }))
         case let .failure(error):
           mainStore.dispatch(MovieCategoriesAction.failed(error: error))
         }
