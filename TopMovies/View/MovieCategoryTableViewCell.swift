@@ -13,13 +13,10 @@ struct MovieCategoryProps {
   let movies: [MovieCollectionProps]
 }
 extension MovieCategoryProps {
-  init?(categoryNameText: String?, movies: [MovieCollectionProps]?) {
-    guard
-      let categoryNameText = categoryNameText,
-      let movies = movies
-    else { return nil }
+  init?(categoryNameText: String?, movies: [MovieCollectionProps?]) {
+    guard let categoryNameText = categoryNameText else { return nil }
     self.categoryNameText = categoryNameText
-    self.movies = movies
+    self.movies = movies.compactMap{ $0 }
   }
 }
 // MARK: - Cell class -

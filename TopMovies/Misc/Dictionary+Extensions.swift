@@ -2,16 +2,18 @@
 //  Dictionary+Extensions.swift
 //  TopMovies
 //
-//  Created by anikolaenko on 13.02.2021.
+//  Created by Macbook Pro  on 20.02.2021.
 //
 
-import Foundation
-
-extension Dictionary {
-  mutating func merge(dict: [Key: Value]) -> Self {
-    for (key, value) in dict {
-      updateValue(value, forKey: key)
-    }
-    return self
+public extension Array {
+  func hashMap<T>(into: [T: Element] = [:], id keyPath: KeyPath<Element, T>) -> [T: Element] {
+    reduce(into, TopMovies.hashMap(byKeyPath: keyPath))
+  }
+}
+public func hashMap<T, U>(byKeyPath keyPath: KeyPath<T, U>) -> ([U: T], T) -> [U: T] {
+  { whole, element in
+    var copy = whole
+    copy[element[keyPath: keyPath]] = element
+    return copy
   }
 }

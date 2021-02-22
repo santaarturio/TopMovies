@@ -10,8 +10,8 @@ import Foundation
 struct MovieCategory {
   let id: ID
   let title: String
-  let description: String
   let movies: [Movie.ID]
+  let page, totalPages, totalResults: Int
   
   struct ID: Hashable {
       let value: String

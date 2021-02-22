@@ -51,7 +51,11 @@ class TopMoviesViewController: UIViewController, PropsConnectable {
     }
   }
   private func setupStyle() {
+    title = "TopMovies"
+    navigationController?.navigationBar.prefersLargeTitles = true
+    
     movieCategoriesTableView.separatorStyle = .none
+    movieCategoriesTableView.showsVerticalScrollIndicator = false
     movieCategoriesTableView.register(MovieCategoryTableViewCell.self,
                                       forCellReuseIdentifier: movieCategoryCellIdentifier)
     movieCategoriesTableView.dataSource = self

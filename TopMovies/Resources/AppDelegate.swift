@@ -8,7 +8,8 @@
 import ReSwift
 
 typealias MainStore = Store<MainState>
-let mainStore = MainStore(reducer: mainReducer, state: nil) // state is required to be optional
+
+let mainStore = MainStore(reducer: mainReducer, state: nil, middleware: [allActionsMiddleware])
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -11,4 +11,6 @@ enum RequestState<T> {
   case downloading
   case completed(data: T)
   case failed(error: Error)
+  
+  var isRequested: Bool { guard case .requested = self else { return false }; return true }
 }

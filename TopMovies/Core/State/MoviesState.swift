@@ -17,12 +17,7 @@ extension MoviesState {
   static func reduce(action: Action, state: MoviesState) -> MoviesState {
     switch action {
     case let MoviesDownloadingAction.completed(_, movies):
-      var relational = state.relational
-      return MoviesState(relational:
-                          relational.merge(dict: movies
-                                            .reduce(into: MoviesRelational()){ dict, movie in
-                                              dict[movie.id] = movie
-                                            }))
+      return MoviesState(relational: movies.hashMap(into: state.relational, id: \.id))
     default: return state
     }
   }

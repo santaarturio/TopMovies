@@ -9,16 +9,29 @@ import Moya
 
 class MovieTarget: StoreSubscriber {
   typealias StoreSubscriberStateType = MainState
-  private let target: Target
+  private let requestedCategory: RequestedCategory
   private var key = ""
   
-  init(target: Target) {
-    self.target = target
+  init(requestedCategory: RequestedCategory) {
+    self.requestedCategory = requestedCategory
     mainStore.subscribe(self)
   }
   
-  enum Target {
-    case marvelMovies
+  enum RequestedCategory {
+    case nowPlaying(page: Int)
+    case popular(page: Int)
+    case topRated(page: Int)
+    case upcoming(page: Int)
+    
+    func requestedPage() -> Int {
+      switch self {
+      case let .nowPlaying(page),
+           let .popular(page),
+           let .topRated(page),
+           let .upcoming(page):
+        return page
+      }
+    }
   }
   
   func newState(state: MainState) {
@@ -31,32 +44,38 @@ class MovieTarget: StoreSubscriber {
 
 extension MovieTarget: TargetType {
   var baseURL: URL {
-    URL(string: "https://api.themoviedb.org/4")!
+    URL(string: "https://api.themoviedb.org/3/movie")!
   }
   var path: String {
-    "/list/1"
+    switch requestedCategory {
+    case .nowPlaying:
+      return "now_playing"
+    case .popular:
+      return "popular"
+    case .topRated:
+      return "top_rated"
+    case .upcoming:
+      return "upcoming"
+    }
   }
   var method: Moya.Method {
-    switch target {
-    case.marvelMovies: return .get
-    }
+    .get
   }
   var sampleData: Data {
     Data()
   }
   var task: Task {
-    switch target {
-    case.marvelMovies:
-      return .requestParameters(
+    .requestParameters(
         parameters: [
-          "page": 1,
           "api_key": key,
-          "sort_by": "vote_average.desc"
+          "language": "en",
+          "page": "\(requestedCategory.requestedPage())"
         ],
         encoding: URLEncoding.default)
-    }
   }
   var headers: [String : String]? {
     ["Content-Type": "application/json;charset=utf-8"]
   }
 }
+
+

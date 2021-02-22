@@ -16,17 +16,20 @@ class TopMoviesConnector: BaseConnector<TopMoviesProps> {
   override func newState(state: MainState) {
     switch state.movieCategoriesState.categoriesList {
     case let .completed(categoriesID):
-      let props = TopMoviesProps(
-        movieCategories: categoriesID
-          .compactMap{
-            MovieCategoryProps(
+      let props =
+        TopMoviesProps(
+          movieCategories:
+            categoriesID
+            .compactMap{ MovieCategoryProps(
               categoryNameText:
                 state.movieCategoriesState.relational[$0]?.title,
               movies:
                 state.movieCategoriesState.relational[$0]?.movies
-                .compactMap{
-                  MovieCollectionProps(movie: state.moviesState.relational[$0])
-                })})
+                .compactMap{ MovieCollectionProps(
+                  movie: state.moviesState.relational[$0]
+                ) } ?? [] )
+            }
+        )
       _updateProps(props)
     default: break
     }
