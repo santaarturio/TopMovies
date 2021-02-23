@@ -15,27 +15,27 @@ struct MovieCategoriesState: StateType {
 extension MovieCategoriesState {
   static func reduce(action: Action, state: MovieCategoriesState) -> MovieCategoriesState {
     switch action {
-    case MovieCategoriesAction.request:
+    case is RequestMovieCategoriesAction:
       return MovieCategoriesState(
         relational: state.relational,
         categoriesList: .requested
       )
-    case MovieCategoriesAction.downloading:
+    case is DownloadingMovieCategoriesAction:
       return MovieCategoriesState(
         relational: state.relational,
         categoriesList: .downloading
       )
-    case let MovieCategoriesAction.completed(categories, _,_):
-      let categoriesIDArray = categories.map(\.id)
+    case let action as CompletedMovieCategoriesAction:
+      let categoriesIDArray = action.categories.map(\.id)
       return MovieCategoriesState(
         relational: Dictionary(uniqueKeysWithValues:
-                                zip(categoriesIDArray, categories)),
+                                zip(categoriesIDArray, action.categories)),
         categoriesList: .completed(data: categoriesIDArray)
       )
-    case let MovieCategoriesAction.failed(error):
+    case let action as FailedMovieCategoriesAction:
       return MovieCategoriesState(
         relational: state.relational,
-        categoriesList: .failed(error: error)
+        categoriesList: .failed(error: action.error)
       )
     default: return state
     }
