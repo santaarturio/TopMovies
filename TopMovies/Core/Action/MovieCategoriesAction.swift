@@ -7,9 +7,13 @@
 
 import ReSwift
 
-enum MovieCategoriesAction: Action {
-  case request
-  case downloading
-  case completed(categories: [MovieCategory])
-  case failed(error: Error)
+struct RequestMovieCategoriesAction: Action { }
+struct DownloadingMovieCategoriesAction: Action { }
+struct CompletedMovieCategoriesAction: Action {
+  let categories: [MovieCategory]
+  let moviesRelational: [Movie.ID: Movie]
+  let relational: [MovieCategory.ID: [Movie.ID]]
+}
+struct FailedMovieCategoriesAction: Action {
+  let error: Error
 }

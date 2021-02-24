@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func createService() {
         let movieAPI = MovieAPI()
         let movieService = MovieService(movieAPI: movieAPI)
-      mainStore.dispatch(MovieCategoriesAction.request)
+      mainStore.dispatch(RequestMovieCategoriesAction())
     }
     func applicationDidFinishLaunching(_ application: UIApplication) {
         mainStore.dispatch(AppFlowAction.applicationDidFinishLaunching)

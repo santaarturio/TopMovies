@@ -25,19 +25,31 @@ class MovieService: StoreSubscriber {
   
   private func requestAllCategoriesIfNeeded(state: MovieCategoriesState) {
     if state.categoriesList.isRequested {
-      mainStore.dispatch(MovieCategoriesAction.downloading)
+      mainStore.dispatch(DownloadingMovieCategoriesAction())
       movieAPI.allMovieCategories { result in
         switch result {
         case let .success(categoriesList):
           categoriesList
             .map { MoviesDownloadingAction
               .completed(MovieCategory(dto: $0),
-                         $0.results.map { Movie(dto: $0) })}
+                         $0.results.map(Movie.init(dto:)))}
             .forEach(mainStore.dispatch)
-          mainStore.dispatch(MovieCategoriesAction
-                              .completed(categories: categoriesList.map { MovieCategory(dto: $0) }))
+          mainStore.dispatch(CompletedMovieCategoriesAction(
+                              categories: categoriesList.map(MovieCategory.init(dto:)),
+                              moviesRelational: categoriesList
+                                .map { $0.results.map(Movie.init(dto:)) }
+                                .flatMap { $0 }
+                                .hashMap(into: MoviesRelational(), id: \.id),
+                              relational: categoriesList
+                                .reduce(into: [:]) { dict, categoryDTO in
+                                  dict[MovieCategory.ID(value: categoryDTO.name)]
+                                    = categoryDTO.results
+                                    .map(\.id)
+                                    .map(String.init)
+                                    .map(Movie.ID.init(value:))
+                                }))
         case let .failure(error):
-          mainStore.dispatch(MovieCategoriesAction.failed(error: error))
+          mainStore.dispatch(FailedMovieCategoriesAction(error: error))
         }
       }
     }
@@ -55,7 +67,8 @@ class MovieService: StoreSubscriber {
         switch result {
         case let .success(categoryDTO):
           mainStore.dispatch(MoviesDownloadingAction.completed(MovieCategory(dto: categoryDTO),
-                                                               categoryDTO.results.map { Movie(dto: $0) }))
+                                                               categoryDTO.results
+                                                                .map(Movie.init(dto:))))
         case let .failure(error):
           mainStore.dispatch(MoviesDownloadingAction.failed(categoryID, error))
         }
