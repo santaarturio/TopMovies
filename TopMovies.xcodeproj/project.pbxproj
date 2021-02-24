@@ -12,7 +12,7 @@
 		26448B8425CC3B2400D240E7 /* TMDB-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26448B8325CC3B2400D240E7 /* TMDB-Info.plist */; };
 		26448B8725CC3C6B00D240E7 /* UpdateConfigurationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448B8625CC3C6B00D240E7 /* UpdateConfigurationAction.swift */; };
 		26448B8D25CC3E3300D240E7 /* ConfigurationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448B8C25CC3E3300D240E7 /* ConfigurationState.swift */; };
-		26448BA525CD52FE00D240E7 /* MoviesListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BA425CD52FE00D240E7 /* MoviesListDTO.swift */; };
+		26448BA525CD52FE00D240E7 /* CategoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BA425CD52FE00D240E7 /* CategoryDTO.swift */; };
 		26448BA925CD546E00D240E7 /* DataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BA825CD546E00D240E7 /* DataDecoder.swift */; };
 		26448BAF25CD580200D240E7 /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BAE25CD580200D240E7 /* MovieDTO.swift */; };
 		26448BB225CD5CF200D240E7 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BB125CD5CF200D240E7 /* URLManager.swift */; };
@@ -60,7 +60,7 @@
 		26448B8325CC3B2400D240E7 /* TMDB-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TMDB-Info.plist"; sourceTree = "<group>"; };
 		26448B8625CC3C6B00D240E7 /* UpdateConfigurationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateConfigurationAction.swift; sourceTree = "<group>"; };
 		26448B8C25CC3E3300D240E7 /* ConfigurationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationState.swift; sourceTree = "<group>"; };
-		26448BA425CD52FE00D240E7 /* MoviesListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListDTO.swift; sourceTree = "<group>"; };
+		26448BA425CD52FE00D240E7 /* CategoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDTO.swift; sourceTree = "<group>"; };
 		26448BA825CD546E00D240E7 /* DataDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDecoder.swift; sourceTree = "<group>"; };
 		26448BAE25CD580200D240E7 /* MovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDTO.swift; sourceTree = "<group>"; };
 		26448BB125CD5CF200D240E7 /* URLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
@@ -116,7 +116,7 @@
 		26448B9F25CD4D2000D240E7 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				26448BA425CD52FE00D240E7 /* MoviesListDTO.swift */,
+				26448BA425CD52FE00D240E7 /* CategoryDTO.swift */,
 				26448BAE25CD580200D240E7 /* MovieDTO.swift */,
 			);
 			path = DTO;
@@ -445,7 +445,7 @@
 				2657727C25D6848500A05CEE /* CategoryRequestsState.swift in Sources */,
 				522CD92325E52241006B2E55 /* DefaultableProtocol.swift in Sources */,
 				26448B5525CA96DC00D240E7 /* RequestState.swift in Sources */,
-				26448BA525CD52FE00D240E7 /* MoviesListDTO.swift in Sources */,
+				26448BA525CD52FE00D240E7 /* CategoryDTO.swift in Sources */,
 				2657726825D5849F00A05CEE /* MoviesState.swift in Sources */,
 				2657726225D55D7200A05CEE /* MovieCategoriesState.swift in Sources */,
 				2657725F25D55A5E00A05CEE /* MovieCategory.swift in Sources */,

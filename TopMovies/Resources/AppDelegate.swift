@@ -10,6 +10,7 @@ import ReSwift
 typealias MainStore = Store<MainState>
 
 let mainStore = MainStore(reducer: mainReducer, state: nil, middleware: [allActionsMiddleware])
+var movieService: MovieService?
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     func createService() {
         let movieAPI = MovieAPI()
-        let movieService = MovieService(movieAPI: movieAPI)
+      movieService = MovieService(movieAPI: movieAPI)
       mainStore.dispatch(RequestMovieCategoriesAction())
     }
     func applicationDidFinishLaunching(_ application: UIApplication) {
