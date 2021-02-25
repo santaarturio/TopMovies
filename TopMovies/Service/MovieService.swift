@@ -20,7 +20,7 @@ class MovieService: StoreSubscriber {
   
   func newState(state: MainState) {
     requestAllCategoriesIfNeeded(state: state.movieCategoriesState)
-    requestSomeCategoryIfNeeded(state: state.categoryRequestsState)
+    requestSomeCategoryIfNeeded(state: state.categoriesPaginationState)
   }
   
   private func requestAllCategoriesIfNeeded(state: MovieCategoriesState) {
@@ -29,11 +29,6 @@ class MovieService: StoreSubscriber {
       movieAPI.allMovieCategories { result in
         switch result {
         case let .success(categoriesList):
-          categoriesList
-            .map { MoviesDownloadingAction
-              .completed(MovieCategory(dto: $0),
-                         $0.results.map(Movie.init(dto:)))}
-            .forEach(mainStore.dispatch)
           mainStore.dispatch(CompletedMovieCategoriesAction(
                               categories: categoriesList.map(MovieCategory.init(dto:)),
                               moviesRelational: categoriesList
@@ -55,22 +50,44 @@ class MovieService: StoreSubscriber {
     }
   }
   
-  private func requestSomeCategoryIfNeeded(state: CategoryRequestsState) {
-    state.categoryRequests.forEach { categoryID, requestState in
-      guard
-        requestState.isRequested,
-        let categoryRequest = MovieCategoryRequest.init(rawValue: categoryID.value),
-        let requestedPage = state.requestedPages[categoryID]?.next
-      else { return }
-      mainStore.dispatch(MoviesDownloadingAction.downloading(category: categoryID))
-      movieAPI.category(categoryRequest, page: requestedPage) { (result) in
-        switch result {
-        case let .success(categoryDTO):
-          mainStore.dispatch(MoviesDownloadingAction.completed(MovieCategory(dto: categoryDTO),
-                                                               categoryDTO.results
-                                                                .map(Movie.init(dto:))))
-        case let .failure(error):
-          mainStore.dispatch(MoviesDownloadingAction.failed(categoryID, error))
+  private func requestSomeCategoryIfNeeded(state: CategoriesPaginationState) {
+    state.paginated.forEach { categoryId, paginatedState in
+      guard let categoryRequest = MovieCategoryRequest.init(rawValue: categoryId.value) else { return }
+      if case .requested = paginatedState.loadMore,
+         case let CategoriesPaginationState.CategoryState.PageInfo
+          .next(requestedPage) = paginatedState.pageInfo {
+        mainStore.dispatch(DownloadingMoviesListAction(categoryId: categoryId,
+                                                       requestType: .loadMore))
+        movieAPI.category(categoryRequest, page: requestedPage) { (result) in
+          switch result {
+          case let .success(categoryDTO):
+            mainStore.dispatch(CompletedMoviesListAction(categoryId: categoryId,
+                                                         requestType: .loadMore,
+                                                         list: categoryDTO.results
+                                                          .map(Movie.init(dto:)),
+                                                         nextPage: categoryDTO.nextPage))
+          case let .failure(error):
+            mainStore.dispatch(FailedMoviesListAction(categoryId: categoryId,
+                                                      requestType: .loadMore,
+                                                      error: error))
+          }
+        }
+      } else if case .requested = paginatedState.reload {
+        mainStore.dispatch(DownloadingMoviesListAction(categoryId: categoryId,
+                                                       requestType: .reload))
+        movieAPI.category(categoryRequest, page: 1) { (result) in
+          switch result {
+          case let .success(categoryDTO):
+            mainStore.dispatch(CompletedMoviesListAction(categoryId: categoryId,
+                                                         requestType: .reload,
+                                                         list: categoryDTO.results
+                                                          .map(Movie.init(dto:)),
+                                                         nextPage: categoryDTO.nextPage))
+          case let .failure(error):
+            mainStore.dispatch(FailedMoviesListAction(categoryId: categoryId,
+                                                      requestType: .reload,
+                                                      error: error))
+          }
         }
       }
     }

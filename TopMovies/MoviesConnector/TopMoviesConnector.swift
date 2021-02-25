@@ -24,7 +24,7 @@ class TopMoviesConnector: BaseConnector<TopMoviesProps> {
               categoryNameText:
                 state.movieCategoriesState.relational[$0]?.title,
               movies:
-                state.movieCategoriesState.relational[$0]?.movies
+                state.categoriesPaginationState.paginated[$0]?.list
                 .compactMap{ MovieCollectionProps(
                   movie: state.moviesState.relational[$0]
                 ) } ?? [] )

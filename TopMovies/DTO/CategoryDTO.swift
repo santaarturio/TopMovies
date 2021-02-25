@@ -1,11 +1,11 @@
 //
-//  MoviesListDTO.swift
+//  CategoryDTO.swift
 //  TopMovies
 //
 //  Created by anikolaenko on 05.02.2021.
 //
 
-struct MoviesListDTO: Decodable {
+struct CategoryDTO: Decodable {
   var name: String!
   let page: Int
   let results: [MovieDTO]
@@ -19,13 +19,13 @@ struct MoviesListDTO: Decodable {
   }
 }
 
+extension CategoryDTO {
+  var nextPage: Int? { page < totalPages ? page + 1 : nil }
+}
+
 extension MovieCategory {
-  init(dto: MoviesListDTO) {
+  init(dto: CategoryDTO) {
     id = ID(value: dto.name)
     title = dto.name
-    movies = dto.results.map{ Movie(dto: $0).id }
-    page = dto.page
-    totalPages = dto.totalPages
-    totalResults = dto.totalResults
   }
 }
