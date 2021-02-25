@@ -13,6 +13,8 @@ struct Movie: Hashable {
   let title: String
   let description: String
   let rating: Double
+  let voteCount: Int
+  let releaseDate: String
   let poster: URL?
   
   struct ID: Hashable {

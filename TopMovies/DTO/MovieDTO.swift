@@ -39,6 +39,8 @@ extension Movie {
     title = dto.title
     description = dto.overview
     rating = dto.voteAverage
+    voteCount = dto.voteCount
+    releaseDate = dto.releaseDate
     poster = URLManager.moviePosterURLFor(path: dto.posterPath)
   }
 }
