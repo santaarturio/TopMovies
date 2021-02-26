@@ -50,6 +50,7 @@
 		52A4D8E525C308E900810667 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A4D8E325C308E900810667 /* LaunchScreen.storyboard */; };
 		52D2DF3525DC24AA00011A27 /* AllActionsMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D2DF3425DC24AA00011A27 /* AllActionsMiddleware.swift */; };
 		52D2DF3B25DC88D600011A27 /* MovieCategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D2DF3A25DC88D600011A27 /* MovieCategoryRequest.swift */; };
+		52D667DE25E91D5D00D472E0 /* SeeAllMoviesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D667DD25E91D5D00D472E0 /* SeeAllMoviesCollectionViewCell.swift */; };
 		C3B2B242157C198AC014AAA8 /* Pods_TopMovies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ECE3AF53A67C6DBB85E6C37 /* Pods_TopMovies.framework */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +103,7 @@
 		52A4D8E625C308E900810667 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52D2DF3425DC24AA00011A27 /* AllActionsMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllActionsMiddleware.swift; sourceTree = "<group>"; };
 		52D2DF3A25DC88D600011A27 /* MovieCategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCategoryRequest.swift; sourceTree = "<group>"; };
+		52D667DD25E91D5D00D472E0 /* SeeAllMoviesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeAllMoviesCollectionViewCell.swift; sourceTree = "<group>"; };
 		BF4B53E8B2772B8A2510B0BE /* Pods-TopMovies.prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopMovies.prod.xcconfig"; path = "Target Support Files/Pods-TopMovies/Pods-TopMovies.prod.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -218,6 +220,7 @@
 				266B93B725D2923E00194050 /* TopMoviesViewController.swift */,
 				266B93BB25D299AE00194050 /* MovieCategoryTableViewCell.swift */,
 				266B93AE25D1523300194050 /* MovieCollectionViewCell.swift */,
+				52D667DD25E91D5D00D472E0 /* SeeAllMoviesCollectionViewCell.swift */,
 			);
 			path = TopMoviesVC;
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 				26448B8D25CC3E3300D240E7 /* ConfigurationState.swift in Sources */,
 				52A4D8D925C308E500810667 /* AppDelegate.swift in Sources */,
 				52D2DF3B25DC88D600011A27 /* MovieCategoryRequest.swift in Sources */,
+				52D667DE25E91D5D00D472E0 /* SeeAllMoviesCollectionViewCell.swift in Sources */,
 				2657727825D6737700A05CEE /* PropsConnectableProtocol.swift in Sources */,
 				26448BAF25CD580200D240E7 /* MovieDTO.swift in Sources */,
 				2657726525D566F200A05CEE /* MovieCategoriesAction.swift in Sources */,

@@ -11,6 +11,10 @@ import SnapKit
 // MARK: - Props struct
 struct TopMoviesProps {
   let movieCategories: [MovieCategoryProps]
+  
+  func allButtonClicked(_ categoryId: MovieCategory.ID) {
+    Router.shared.perform(route: .categoryVC(categoryId: categoryId))
+  }
 }
 
 // MARK: - VC class
@@ -73,9 +77,16 @@ extension TopMoviesViewController: UITableViewDataSource, UITableViewDelegate {
                                                    for: indexPath) as? MovieCategoryTableViewCell
     else { return UITableViewCell() }
     cell.configureWith(props: topMoviesProps.movieCategories[indexPath.row])
+    cell.delegate = self
     return cell
   }
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     movieCategoryCellIHeight
+  }
+}
+
+extension TopMoviesViewController: MovieCategoryTableViewCellDelegate {
+  func seeAllButtonClicked(_ categoryId: MovieCategory.ID) {
+    topMoviesProps.allButtonClicked(categoryId)
   }
 }

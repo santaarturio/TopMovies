@@ -7,29 +7,44 @@
 
 import UIKit
 import SnapKit
+// MARK: - MovieCategoryTableViewCellDelegate
+protocol MovieCategoryTableViewCellDelegate: class {
+  func seeAllButtonClicked(_ categoryId: MovieCategory.ID)
+}
 // MARK: - Props struct -
 struct MovieCategoryProps {
+  let categoryId: MovieCategory.ID
   let categoryNameText: String
   let movies: [MovieCollectionProps]
 }
 extension MovieCategoryProps {
-  init?(categoryNameText: String?, movies: [MovieCollectionProps?]) {
+  init?(categoryId: MovieCategory.ID,
+        categoryNameText: String?,
+        movies: [MovieCollectionProps?]) {
     guard let categoryNameText = categoryNameText else { return nil }
+    self.categoryId = categoryId
     self.categoryNameText = categoryNameText
     self.movies = movies.compactMap{ $0 }
   }
 }
 // MARK: - Cell class -
 class MovieCategoryTableViewCell: UITableViewCell {
+  weak var delegate: MovieCategoryTableViewCellDelegate?
+  private var categoryId: MovieCategory.ID?
   private let categoryNameLabel = UILabel()
-  private let moviesCollectionView = UICollectionView(frame: CGRect(), collectionViewLayout: UICollectionViewLayout())
-  private let movieCollectionViewCellIdentifier = String(describing: MovieCollectionViewCell.self)
+  private let moviesCollectionView
+    = UICollectionView(frame: CGRect(), collectionViewLayout: UICollectionViewLayout())
+  private let movieCollectionViewCellIdentifier
+    = String(describing: MovieCollectionViewCell.self)
+  private let seeAllMoviesCollectionCellIdentifier
+    = String(describing: SeeAllMoviesCollectionViewCell.self)
   private let movieCollectionInteritemSpacing: CGFloat = 8.0
   private let infoStackView = UIStackView()
   private var moviesProps = [MovieCollectionProps]()
   
   // MARK: Cell configuration
   public func configureWith(props: MovieCategoryProps) {
+    categoryId = props.categoryId
     categoryNameLabel.text = props.categoryNameText
     moviesProps = props.movies
   }
@@ -53,7 +68,7 @@ class MovieCategoryTableViewCell: UITableViewCell {
   private func configureCollectionViewLayout() {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
-    layout.minimumLineSpacing = 0
+    layout.minimumInteritemSpacing = 0
     moviesCollectionView.collectionViewLayout = layout
   }
   private func setupLayout() {
@@ -78,6 +93,8 @@ class MovieCategoryTableViewCell: UITableViewCell {
     moviesCollectionView.delegate = self
     moviesCollectionView.register(MovieCollectionViewCell.self,
                                   forCellWithReuseIdentifier: movieCollectionViewCellIdentifier)
+    moviesCollectionView.register(SeeAllMoviesCollectionViewCell.self,
+                                  forCellWithReuseIdentifier: seeAllMoviesCollectionCellIdentifier)
     moviesCollectionView.showsHorizontalScrollIndicator = false
   }
 }
@@ -85,17 +102,35 @@ class MovieCategoryTableViewCell: UITableViewCell {
 extension MovieCategoryTableViewCell: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView,
                       numberOfItemsInSection section: Int) -> Int {
-    moviesProps.count
+    moviesProps.count + 1
   }
   
   func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier,
-                                 for: indexPath) as? MovieCollectionViewCell
-    else { return UICollectionViewCell() }
-    cell.configureWith(props: moviesProps[indexPath.item])
-    return cell
+    if indexPath.item < moviesProps.count {
+      guard let cell = collectionView
+              .dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier,
+                                   for: indexPath) as? MovieCollectionViewCell
+      else { return UICollectionViewCell() }
+      cell.configureWith(props: moviesProps[indexPath.item])
+      return cell
+    } else {
+      guard let cell = collectionView
+              .dequeueReusableCell(withReuseIdentifier: seeAllMoviesCollectionCellIdentifier,
+                                   for: indexPath) as? SeeAllMoviesCollectionViewCell
+      else { return UICollectionViewCell() }
+      return cell
+    }
+  }
+}
+// MARK: - UICollectionViewDelegate
+extension MovieCategoryTableViewCell: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    guard
+      indexPath.item == moviesProps.count,
+      let categoryId = categoryId
+    else { return }
+    delegate?.seeAllButtonClicked(categoryId)
   }
 }
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -103,7 +138,12 @@ extension MovieCategoryTableViewCell: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
-    CGSize(width: collectionView.bounds.width / 2.2,
+    if indexPath.item < moviesProps.count {
+    return CGSize(width: collectionView.bounds.width / 2.2,
            height: collectionView.bounds.height)
+    } else {
+      return CGSize(width: collectionView.bounds.width / 4.2,
+             height: collectionView.bounds.height)
+    }
   }
 }

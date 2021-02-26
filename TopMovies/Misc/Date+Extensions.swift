@@ -8,11 +8,11 @@
 import Foundation
 
 extension Date {
-  static func prettyDate(_ date: String) -> String {
+  static func prettyDate(_ dateString: String) -> String {
     let dateFormatterGet = DateFormatter()
     dateFormatterGet.dateFormat = "yyyy-mm-dd"
     let dateFormatterPrint = DateFormatter()
     dateFormatterPrint.dateFormat = "MMM, dd - yyyy"
-    return dateFormatterPrint.string(from: dateFormatterGet.date(from: date)  ?? Date())
+    return dateFormatterPrint.string(from: dateFormatterGet.date(from: dateString) ?? Date())
   }
 }

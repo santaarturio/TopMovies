@@ -12,10 +12,18 @@ import SnapKit
 struct MoviesCategoryVCProps {
   let categoryId: MovieCategory.ID
   let categoryName: String
-  var isReloadInProgress: Bool
-  var isLoadMoreInProgress: Bool
-  let moviesUsage: RequestType
-  var movies: [MovieTableViewCellProps]
+  let loadProgress: LoadProgress
+  var moviesState: MoviesState
+  
+  struct LoadProgress {
+    let isReloadInProgress: Bool
+    let isLoadMoreInProgress: Bool
+  }
+  struct MoviesState {
+    let hasNewData: Bool
+    let moviesUsage: RequestType
+    var movies: [MovieTableViewCellProps]
+  }
 }
 
 // MARK: - VC class
@@ -23,10 +31,11 @@ class MoviesCategoryVC: UIViewController, PropsConnectable {
   var propsConnector: BaseConnector<MoviesCategoryVCProps>?
   var props = MoviesCategoryVCProps(categoryId: MovieCategory.ID(value: ""),
                                     categoryName: "",
-                                    isReloadInProgress: false,
-                                    isLoadMoreInProgress: false,
-                                    moviesUsage: .reload,
-                                    movies: []) {
+                                    loadProgress: .init(isReloadInProgress: false,
+                                                        isLoadMoreInProgress: false),
+                                    moviesState: .init(hasNewData: false,
+                                                       moviesUsage: .reload,
+                                                       movies: [])) {
     didSet {
       title = props.categoryName
       categoryTableView.reloadData()
@@ -34,6 +43,7 @@ class MoviesCategoryVC: UIViewController, PropsConnectable {
   }
   private let categoryTableView = UITableView(frame: .zero, style: .grouped)
   private let refreshControl = UIRefreshControl()
+  private let footerIndicatorView = UIActivityIndicatorView()
   private let movieCellIdentifier = String(describing: MovieTableViewCell.self)
   private let cellHeight: CGFloat = 250.0
   
@@ -42,16 +52,23 @@ class MoviesCategoryVC: UIViewController, PropsConnectable {
     propsConnector = connector
   }
   public func connect(props: MoviesCategoryVCProps) {
-    props.isReloadInProgress ?
-      refreshControl.beginRefreshing() : refreshControl.endRefreshing()
-    // TODO: Loader
-    if !props.isReloadInProgress &&
-        !props.isLoadMoreInProgress {
-      props.moviesUsage == .reload ?
-        self.props = props : self.props.movies.append(contentsOf: props.movies)
+    handleRefresh(props.loadProgress)
+    if props.moviesState.hasNewData {
+      switch props.moviesState.moviesUsage {
+      case .reload:
+        self.props = props
+      case .loadMore:
+        self.props.moviesState.movies += props.moviesState.movies
+      }
     }
   }
-  
+  // MARK: - Handle Refresh
+  private func handleRefresh(_ loadProgress: MoviesCategoryVCProps.LoadProgress) {
+    loadProgress.isReloadInProgress ?
+      refreshControl.beginRefreshing() : refreshControl.endRefreshing()
+    loadProgress.isLoadMoreInProgress ?
+      footerIndicatorView.startAnimating() : footerIndicatorView.stopAnimating()
+  }
   // MARK: - UISetup
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -64,6 +81,7 @@ class MoviesCategoryVC: UIViewController, PropsConnectable {
   private func setupViewHierarchy() {
     view.addSubview(categoryTableView)
     categoryTableView.addSubview(refreshControl)
+    categoryTableView.tableFooterView = footerIndicatorView
   }
   private func setupLayout() {
     categoryTableView.snp.makeConstraints { (make) in
@@ -87,6 +105,9 @@ class MoviesCategoryVC: UIViewController, PropsConnectable {
     refreshControl.addTarget(self,
                              action: #selector(refreshControlSelector(sender:)),
                              for: .valueChanged)
+    
+    footerIndicatorView.hidesWhenStopped = true
+    footerIndicatorView.color = .blue
   }
   
   // MARK: - Action
@@ -98,7 +119,7 @@ class MoviesCategoryVC: UIViewController, PropsConnectable {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension MoviesCategoryVC: UITableViewDelegate, UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-    props.movies.count
+    props.moviesState.movies.count
   }
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     1
@@ -110,11 +131,15 @@ extension MoviesCategoryVC: UITableViewDelegate, UITableViewDataSource {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: movieCellIdentifier)
             as? MovieTableViewCell
     else { return UITableViewCell() }
-    cell.configure(with: props.movies[indexPath.section])
+    cell.configure(with: props.moviesState.movies[indexPath.section])
     return cell
   }
-  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    if indexPath.section == tableView.numberOfSections - 1 {
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    let currentOffset = scrollView.contentOffset.y
+    let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+    let deltaOffset = maximumOffset - currentOffset
+    
+    if deltaOffset <= 0 {
       mainStore.dispatch(RequestedMoviesListAction(categoryId: props.categoryId, requestType: .loadMore))
     }
   }

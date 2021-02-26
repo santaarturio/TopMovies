@@ -29,70 +29,94 @@ class CategoryVCConnector: BaseConnector<MoviesCategoryVCProps> {
     else { return }
     
     if !isExistingMoviesConnected {
-      let props = MoviesCategoryVCProps(categoryId: categoryId,
-                                        categoryName: categoryName,
-                                        isReloadInProgress: false,
-                                        isLoadMoreInProgress: false,
-                                        moviesUsage: .reload,
-                                        movies: moviesList
-                                          .compactMap { MovieTableViewCellProps(movie:
-                                                                                  state.moviesState.relational[$0]) })
+      let props = MoviesCategoryVCProps(
+        categoryId: categoryId,
+        categoryName: categoryName,
+        loadProgress: .init(isReloadInProgress: false,
+                            isLoadMoreInProgress: false),
+        moviesState: .init(hasNewData: true,
+                           moviesUsage: .reload,
+                           movies: moviesList
+                            .compactMap { MovieTableViewCellProps(movie:
+                                                                    state.moviesState.relational[$0]) }))
       _updateProps(props)
       isExistingMoviesConnected = !isExistingMoviesConnected
       downloadedMovies = moviesList
     }
-    checkIsDownloadingInProgress(categoryId: categoryId,
-                                 categoryName: categoryName,
-                                 categoryState: state.categoriesPaginationState.paginated[categoryId])
-    if moviesList.count > downloadedMovies.count {
-      var listDiff = moviesList
-      listDiff.removeSubrange(0..<downloadedMovies.count)
-      let props = MoviesCategoryVCProps(categoryId: categoryId,
-                                        categoryName: categoryName,
-                                        isReloadInProgress: false,
-                                        isLoadMoreInProgress: false,
-                                        moviesUsage: .loadMore,
-                                        movies: listDiff
-                                          .compactMap {
-                                            MovieTableViewCellProps(movie: state.moviesState.relational[$0])
-                                          })
+    let categoryState = state.categoriesPaginationState.paginated[categoryId]
+    if isDownloadingInProgress(categoryState)
+    {
+      var isReloadInProgress = false
+      var isLoadMoreInProgress = false
+      if case .downloading = categoryState?.reload {
+        isReloadInProgress = true
+      }
+      if case .downloading = categoryState?.loadMore {
+        isLoadMoreInProgress = true
+      }
+      let props = MoviesCategoryVCProps(
+        categoryId: categoryId,
+        categoryName: categoryName,
+        loadProgress: .init(isReloadInProgress: isReloadInProgress,
+                            isLoadMoreInProgress: isLoadMoreInProgress),
+        moviesState: .init(hasNewData: false,
+                           moviesUsage: .reload,
+                           movies: []))
       _updateProps(props)
-      downloadedMovies.append(contentsOf: listDiff)
-    }
-    if moviesList.count < downloadedMovies.count {
-      let props = MoviesCategoryVCProps(categoryId: categoryId,
-                                        categoryName: categoryName,
-                                        isReloadInProgress: false,
-                                        isLoadMoreInProgress: false,
-                                        moviesUsage: .reload,
-                                        movies: moviesList
-                                          .compactMap {
-                                            MovieTableViewCellProps(movie: state.moviesState.relational[$0])
-                                          })
-      downloadedMovies = moviesList
-      _updateProps(props)
+    } else {
+      switch moviesList.count {
+      case (downloadedMovies.count + 1)...:
+        var listDiff = moviesList
+        listDiff.removeSubrange(0..<downloadedMovies.count)
+        let props = MoviesCategoryVCProps(
+          categoryId: categoryId,
+          categoryName: categoryName,
+          loadProgress: .init(isReloadInProgress: false,
+                              isLoadMoreInProgress: false),
+          moviesState: .init(hasNewData: true,
+                             moviesUsage: .loadMore,
+                             movies: listDiff
+                              .compactMap {
+                                MovieTableViewCellProps(movie: state.moviesState.relational[$0])
+                              }))
+        _updateProps(props)
+        downloadedMovies += listDiff
+      case ...(downloadedMovies.count) where moviesList != downloadedMovies:
+        let props = MoviesCategoryVCProps(
+          categoryId: categoryId,
+          categoryName: categoryName,
+          loadProgress: .init(isReloadInProgress: false,
+                              isLoadMoreInProgress: false),
+          moviesState: .init(hasNewData: true,
+                             moviesUsage: .reload,
+                             movies: moviesList
+                              .compactMap {
+                                MovieTableViewCellProps(movie: state.moviesState.relational[$0])
+                              }))
+        downloadedMovies = moviesList
+        _updateProps(props)
+      case downloadedMovies.count:
+        let props = MoviesCategoryVCProps(
+          categoryId: categoryId,
+          categoryName: categoryName,
+          loadProgress: .init(isReloadInProgress: false,
+                              isLoadMoreInProgress: false),
+          moviesState: .init(hasNewData: false,
+                             moviesUsage: .reload,
+                             movies: []))
+          _updateProps(props)
+      default: break
+      }
     }
   }
   
-  private func checkIsDownloadingInProgress(categoryId: MovieCategory.ID,
-                                            categoryName: String,
-                                            categoryState: CategoriesPaginationState.CategoryState?) {
-    var isReloadInProgress = false
-    var isLoadMoreInProgress = false
+  func isDownloadingInProgress(_ categoryState: CategoriesPaginationState.CategoryState?) -> Bool {
     if case .downloading = categoryState?.reload {
-      isReloadInProgress = true
+      return true
     }
     if case .downloading = categoryState?.loadMore {
-      isLoadMoreInProgress = true
+      return true
     }
-    if isReloadInProgress || isLoadMoreInProgress {
-      let props = MoviesCategoryVCProps(categoryId: categoryId,
-                                        categoryName: categoryName,
-                                        isReloadInProgress: isReloadInProgress,
-                                        isLoadMoreInProgress: isLoadMoreInProgress,
-                                        moviesUsage: .reload,
-                                        movies: [])
-      _updateProps(props)
-    }
+    return false
   }
 }

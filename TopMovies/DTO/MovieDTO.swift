@@ -7,12 +7,13 @@
 
 struct MovieDTO: Decodable {
   let adult: Bool
-  let backdropPath: String
+  let backdropPath: String?
   let genreIds: [Int]
   let id: Int
   let originalTitle, overview: String
   let popularity: Double
-  let posterPath, releaseDate, title: String
+  let posterPath: String?
+  let releaseDate, title: String
   let video: Bool
   let voteAverage: Double
   let voteCount: Int
@@ -41,6 +42,6 @@ extension Movie {
     rating = dto.voteAverage
     voteCount = dto.voteCount
     releaseDate = dto.releaseDate
-    poster = URLManager.moviePosterURLFor(path: dto.posterPath)
+    poster = URLManager.moviePosterURLFor(path: dto.posterPath ?? dto.backdropPath ?? String.init())
   }
 }
