@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "sadSmile.png",
+      "filename" : "censoredMovie.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "sadSmile-1.png",
+      "filename" : "censoredMovie-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "sadSmile-2.png",
+      "filename" : "censoredMovie-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

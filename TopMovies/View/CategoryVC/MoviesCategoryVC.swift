@@ -45,7 +45,7 @@ class MoviesCategoryVC: UIViewController, PropsConnectable {
   private let refreshControl = UIRefreshControl()
   private let footerIndicatorView = UIActivityIndicatorView()
   private let movieCellIdentifier = String(describing: MovieTableViewCell.self)
-  private let cellHeight: CGFloat = 250.0
+  private let cellHeight: CGFloat = 200.0
   
   // MARK: - Setup Connection
   public func configureConnectionWith(connector: BaseConnector<MoviesCategoryVCProps>) {
@@ -133,6 +133,17 @@ extension MoviesCategoryVC: UITableViewDelegate, UITableViewDataSource {
     else { return UITableViewCell() }
     cell.configure(with: props.moviesState.movies[indexPath.section])
     return cell
+  }
+  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    guard let lastIndexPath = tableView.indexPathsForVisibleRows?.last else { return }
+    if lastIndexPath.section <= indexPath.section {
+      cell.transform = .init(translationX: 0, y: cellHeight / 4)
+      cell.alpha = 0.4
+      UIView.animate(withDuration: 0.4, delay: 0, options: [.allowUserInteraction, .curveEaseInOut]) {
+        cell.transform = .identity
+        cell.alpha = 1.0
+      }
+    }
   }
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     let currentOffset = scrollView.contentOffset.y

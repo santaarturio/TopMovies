@@ -15,9 +15,9 @@ struct MovieTableViewCellProps {
   let posterPlaceholderImage: UIImage
   let titleLabelText: String
   let releaseDateLabelText: String
-  let ratingLabelText: String
-  let voteCountLabelText: String
-  let adultLabelText: String
+  let ratingAndVotesLabelText: String
+  let movieIsNew: Bool
+  let movieForAdult: Bool
   let descriptionLabeltext: String
 }
 extension MovieTableViewCellProps {
@@ -27,26 +27,34 @@ extension MovieTableViewCellProps {
     posterPlaceholderImage = UIImage(named: "moviePlaceholder") ?? UIImage()
     titleLabelText = movie.title
     releaseDateLabelText = "Release: \(Date.prettyDate(movie.releaseDate))"
-    ratingLabelText = "Rating: \(movie.rating)"
-    voteCountLabelText = "Vote count: \(movie.voteCount)"
-    adultLabelText = "Adult: \(movie.adult ? "Yes" : "No")"
+    ratingAndVotesLabelText = "\(movie.rating) / 10 out of \(movie.voteCount) votes"
+    movieIsNew = MovieTableViewCellProps.isNewMovie(dateString: movie.releaseDate)
+    movieForAdult = movie.adult
     descriptionLabeltext = movie.description
+  }
+  
+  static func isNewMovie(dateString: String) -> Bool {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-mm-dd"
+    return abs((dateFormatter.date(from: dateString) ?? Date())
+                .months(from: Date())) < 3
   }
 }
 
 // MARK: - Cell class -
 class MovieTableViewCell: UITableViewCell {
   let myContentView = UIView()
+  let shadowView = ANShadowView()
   let posterImageView = UIImageView()
   let titleLabel = UILabel()
   let releaseDateLabel = UILabel()
   let titleAndReleaseStackView = UIStackView()
-  let ratingLabel = UILabel()
-  let voteCountLabel = UILabel()
-  let adultLabel = UILabel()
-  let ratingVotesAdultStackView = UIStackView()
   let descriptionLabel = UILabel()
+  let ratingAndVotesLabel = UILabel()
   let infoStackView = UIStackView()
+  let isNewImage = UIImageView()
+  let isAdultImage = UIImageView()
+  let newAndAdultStackView = UIStackView()
   let contentStackView = UIStackView()
   
   // MARK: - Cell configuration
@@ -61,10 +69,12 @@ class MovieTableViewCell: UITableViewCell {
     }
     titleLabel.text = props.titleLabelText
     releaseDateLabel.text = props.releaseDateLabelText
-    ratingLabel.text = props.ratingLabelText
-    voteCountLabel.text = props.voteCountLabelText
-    adultLabel.text = props.adultLabelText
+    ratingAndVotesLabel.text = props.ratingAndVotesLabelText
     descriptionLabel.text = props.descriptionLabeltext
+    isAdultImage.image = props.movieForAdult ?
+      UIImage(named: "censoredMovie") ?? UIImage() : nil
+    isNewImage.image = props.movieIsNew ?
+      UIImage(named: "newMovie") ?? UIImage() : nil
   }
   
   // MARK: - UISetup
@@ -79,34 +89,50 @@ class MovieTableViewCell: UITableViewCell {
   }
   
   private func setupViewHierarchy() {
+    addSubview(shadowView)
     [titleLabel, releaseDateLabel]
       .forEach(titleAndReleaseStackView.addArrangedSubview(_:))
-    [ratingLabel, voteCountLabel, adultLabel]
-      .forEach(ratingVotesAdultStackView.addArrangedSubview(_:))
-    [titleAndReleaseStackView, descriptionLabel, ratingVotesAdultStackView]
+    [titleAndReleaseStackView, descriptionLabel, ratingAndVotesLabel]
       .forEach(infoStackView.addArrangedSubview(_:))
     [posterImageView, infoStackView]
       .forEach(contentStackView.addArrangedSubview(_:))
     myContentView.addSubview(contentStackView)
     addSubview(myContentView)
+    [isNewImage, isAdultImage]
+      .forEach(newAndAdultStackView.addArrangedSubview(_:))
+    addSubview(newAndAdultStackView)
   }
   private func setupLayout() {
     myContentView.snp.makeConstraints { make in
-      make.center.width.equalToSuperview()
-      make.height.equalToSuperview().offset(-20.0)
+      make.center.equalToSuperview()
+      make.width.equalToSuperview().offset(-32.0)
+      make.height.equalToSuperview().offset(-16.0)
+    }
+    shadowView.snp.makeConstraints { make in
+      make.edges.equalTo(myContentView)
     }
     contentStackView.snp.makeConstraints { make in
       make.top.left.bottom.equalToSuperview()
-      make.right.equalToSuperview().offset(-4.0)
+      make.right.equalToSuperview().offset(-8.0)
     }
     posterImageView.snp.makeConstraints { make in
-      make.width.equalToSuperview().multipliedBy(0.35)
+      make.width.equalTo(posterImageView.snp.height).multipliedBy(0.7)
     }
+    newAndAdultStackView.snp.makeConstraints { make in
+      make.top.left.equalTo(posterImageView).offset(-6.0)
+      make.height.equalTo(50)
+      make.width.equalTo(100)
+    }
+    infoStackView.layoutMargins = UIEdgeInsets(top: 8.0,
+                                               left: 8.0,
+                                               bottom: 8.0,
+                                               right: 8.0)
+    infoStackView.isLayoutMarginsRelativeArrangement = true
     titleAndReleaseStackView.snp.makeConstraints { make in
       make.height.equalToSuperview().multipliedBy(0.2)
     }
     descriptionLabel.snp.makeConstraints { make in
-      make.height.equalToSuperview().multipliedBy(0.7)
+      make.height.equalToSuperview().multipliedBy(0.6)
     }
   }
   private func setupStyle() {
@@ -114,39 +140,38 @@ class MovieTableViewCell: UITableViewCell {
     backgroundColor = .clear
     
     contentStackView.axis = .horizontal
-    contentStackView.spacing = 4.0
     titleAndReleaseStackView.axis = .vertical
     titleAndReleaseStackView.distribution = .fillProportionally
-    ratingVotesAdultStackView.axis = .horizontal
-    ratingVotesAdultStackView.distribution = .equalSpacing
+    newAndAdultStackView.axis = .horizontal
+    newAndAdultStackView.distribution = .fillEqually
     infoStackView.axis = .vertical
     
-    myContentView.backgroundColor = UIColor(white: 0.8, alpha: 0.2)
-    myContentView.layer.cornerRadius = 12.5
+    myContentView.backgroundColor = .white
+    myContentView.layer.cornerRadius = 15
     myContentView.clipsToBounds = true
     
     posterImageView.contentMode = .scaleAspectFill
     posterImageView.clipsToBounds = true
     
     titleLabel.font = .boldSystemFont(ofSize: 20)
+    titleLabel.textColor = .black
     titleLabel.textAlignment = .left
     titleLabel.numberOfLines = 0
     
-    releaseDateLabel.font = .boldSystemFont(ofSize: 12)
+    releaseDateLabel.font = .boldSystemFont(ofSize: 13)
+    releaseDateLabel.textColor = .darkGray
     releaseDateLabel.textAlignment = .left
     releaseDateLabel.numberOfLines = 0
     
-    descriptionLabel.font = .systemFont(ofSize: 12)
+    descriptionLabel.font = .systemFont(ofSize: 14)
+    descriptionLabel.textColor = .gray
     descriptionLabel.textAlignment = .left
-    descriptionLabel.numberOfLines = 0
+    descriptionLabel.numberOfLines = 6
     
-    ratingLabel.font = .boldSystemFont(ofSize: 12)
-    ratingLabel.textAlignment = .center
+    ratingAndVotesLabel.font = .boldSystemFont(ofSize: 13)
+    ratingAndVotesLabel.textAlignment = .left
     
-    voteCountLabel.font = ratingLabel.font
-    voteCountLabel.textAlignment = .center
-    
-    adultLabel.font = ratingLabel.font
-    adultLabel.textAlignment = .center
+    isAdultImage.contentMode = .scaleAspectFit
+    isNewImage.contentMode = .scaleAspectFit
   }
 }

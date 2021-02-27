@@ -142,7 +142,7 @@ extension MovieCategoryTableViewCell: UICollectionViewDelegateFlowLayout {
     return CGSize(width: collectionView.bounds.width / 2.2,
            height: collectionView.bounds.height)
     } else {
-      return CGSize(width: collectionView.bounds.width / 4.2,
+      return CGSize(width: collectionView.bounds.width / 6.6,
              height: collectionView.bounds.height)
     }
   }

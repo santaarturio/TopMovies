@@ -15,4 +15,8 @@ extension Date {
     dateFormatterPrint.dateFormat = "MMM, dd - yyyy"
     return dateFormatterPrint.string(from: dateFormatterGet.date(from: dateString) ?? Date())
   }
+  
+  func months(from date: Date) -> Int {
+    return Calendar.current.dateComponents([.month], from: date, to: self).month ?? 0
+  }
 }
