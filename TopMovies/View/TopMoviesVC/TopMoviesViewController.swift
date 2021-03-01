@@ -11,14 +11,10 @@ import SnapKit
 // MARK: - Props struct
 struct TopMoviesProps {
   let movieCategories: [MovieCategoryProps]
-  
-  func allButtonClicked(_ categoryId: MovieCategory.ID) {
-    Router.shared.perform(route: .categoryVC(categoryId: categoryId))
-  }
 }
 
 // MARK: - VC class
-class TopMoviesViewController: UIViewController, PropsConnectable {
+final class TopMoviesViewController: UIViewController, PropsConnectable {
   typealias Props = TopMoviesProps
   internal var propsConnector: BaseConnector<Props>?
   private var topMoviesProps = TopMoviesProps(movieCategories: []) {
@@ -28,7 +24,7 @@ class TopMoviesViewController: UIViewController, PropsConnectable {
   }
   private let movieCategoriesTableView = UITableView()
   private let movieCategoryCellIdentifier = String(describing: MovieCategoryTableViewCell.self)
-  private let movieCategoryCellIHeight: CGFloat = 200.0
+  private let movieCategoryCellIHeight: CGFloat = 220.0
   
   // MARK: - Setup Connection
   public func configureConnectionWith(connector: BaseConnector<Props>) {
@@ -77,16 +73,9 @@ extension TopMoviesViewController: UITableViewDataSource, UITableViewDelegate {
                                                    for: indexPath) as? MovieCategoryTableViewCell
     else { return UITableViewCell() }
     cell.configureWith(props: topMoviesProps.movieCategories[indexPath.row])
-    cell.delegate = self
     return cell
   }
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     movieCategoryCellIHeight
-  }
-}
-
-extension TopMoviesViewController: MovieCategoryTableViewCellDelegate {
-  func seeAllButtonClicked(_ categoryId: MovieCategory.ID) {
-    topMoviesProps.allButtonClicked(categoryId)
   }
 }

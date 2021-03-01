@@ -7,46 +7,42 @@
 
 import UIKit
 import SnapKit
-// MARK: - MovieCategoryTableViewCellDelegate
-protocol MovieCategoryTableViewCellDelegate: class {
-  func seeAllButtonClicked(_ categoryId: MovieCategory.ID)
-}
+
 // MARK: - Props struct -
 struct MovieCategoryProps {
-  let categoryId: MovieCategory.ID
   let categoryNameText: String
   let movies: [MovieCollectionProps]
+  let actionAllButton: () -> Void
 }
 extension MovieCategoryProps {
-  init?(categoryId: MovieCategory.ID,
-        categoryNameText: String?,
-        movies: [MovieCollectionProps?]) {
+  init?(categoryNameText: String?,
+        movies: [MovieCollectionProps?],
+        actionAllButton: @escaping () -> Void) {
     guard let categoryNameText = categoryNameText else { return nil }
-    self.categoryId = categoryId
     self.categoryNameText = categoryNameText
-    self.movies = movies.compactMap{ $0 }
+    self.movies = movies.compactMap { $0 }
+    self.actionAllButton = actionAllButton
   }
 }
 // MARK: - Cell class -
-class MovieCategoryTableViewCell: UITableViewCell {
-  weak var delegate: MovieCategoryTableViewCellDelegate?
-  private var categoryId: MovieCategory.ID?
-  private let categoryNameLabel = UILabel()
+final class MovieCategoryTableViewCell: UITableViewCell {
+  private let categoryNameLabel = ANPaddingLabel(withInsets: 0, 8, 0, 8)
   private let moviesCollectionView
     = UICollectionView(frame: CGRect(), collectionViewLayout: UICollectionViewLayout())
   private let movieCollectionViewCellIdentifier
     = String(describing: MovieCollectionViewCell.self)
   private let seeAllMoviesCollectionCellIdentifier
     = String(describing: SeeAllMoviesCollectionViewCell.self)
-  private let movieCollectionInteritemSpacing: CGFloat = 8.0
   private let infoStackView = UIStackView()
-  private var moviesProps = [MovieCollectionProps]()
+  private var props = MovieCategoryProps(categoryNameText: "",
+                                         movies: [],
+                                         actionAllButton: { }) {
+    didSet { categoryNameLabel.text = props.categoryNameText }
+  }
   
   // MARK: Cell configuration
   public func configureWith(props: MovieCategoryProps) {
-    categoryId = props.categoryId
-    categoryNameLabel.text = props.categoryNameText
-    moviesProps = props.movies
+    self.props = props
   }
   
   // MARK: - UISetup
@@ -76,7 +72,7 @@ class MovieCategoryTableViewCell: UITableViewCell {
       make.edges.equalToSuperview()
     }
     categoryNameLabel.snp.makeConstraints { make in
-      make.height.equalToSuperview().multipliedBy(0.1)
+      make.height.equalToSuperview().multipliedBy(0.15)
     }
     configureCollectionViewLayout()
   }
@@ -85,7 +81,7 @@ class MovieCategoryTableViewCell: UITableViewCell {
     
     infoStackView.axis = .vertical
     
-    categoryNameLabel.font = .boldSystemFont(ofSize: 16)
+    categoryNameLabel.font = .boldSystemFont(ofSize: 22)
     categoryNameLabel.textAlignment = .left
     
     moviesCollectionView.backgroundColor = .clear
@@ -102,17 +98,17 @@ class MovieCategoryTableViewCell: UITableViewCell {
 extension MovieCategoryTableViewCell: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView,
                       numberOfItemsInSection section: Int) -> Int {
-    moviesProps.count + 1
+    props.movies.count + 1
   }
   
   func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    if indexPath.item < moviesProps.count {
+    if indexPath.item < props.movies.count {
       guard let cell = collectionView
               .dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier,
                                    for: indexPath) as? MovieCollectionViewCell
       else { return UICollectionViewCell() }
-      cell.configureWith(props: moviesProps[indexPath.item])
+      cell.configureWith(props: props.movies[indexPath.item])
       return cell
     } else {
       guard let cell = collectionView
@@ -126,11 +122,9 @@ extension MovieCategoryTableViewCell: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension MovieCategoryTableViewCell: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    guard
-      indexPath.item == moviesProps.count,
-      let categoryId = categoryId
-    else { return }
-    delegate?.seeAllButtonClicked(categoryId)
+    if indexPath.item == props.movies.count {
+      props.actionAllButton()
+    }
   }
 }
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -138,12 +132,12 @@ extension MovieCategoryTableViewCell: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
-    if indexPath.item < moviesProps.count {
-    return CGSize(width: collectionView.bounds.width / 2.2,
-           height: collectionView.bounds.height)
+    if indexPath.item < props.movies.count {
+      return CGSize(width: collectionView.bounds.width / 2.1,
+                    height: collectionView.bounds.height)
     } else {
-      return CGSize(width: collectionView.bounds.width / 6.6,
-             height: collectionView.bounds.height)
+      return CGSize(width: collectionView.bounds.width / 6.3,
+                    height: collectionView.bounds.height)
     }
   }
 }

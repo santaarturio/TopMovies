@@ -35,6 +35,9 @@
 		266B93AF25D1523300194050 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266B93AE25D1523300194050 /* MovieCollectionViewCell.swift */; };
 		266B93B825D2923E00194050 /* TopMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266B93B725D2923E00194050 /* TopMoviesViewController.swift */; };
 		266B93BC25D299AE00194050 /* MovieCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266B93BB25D299AE00194050 /* MovieCategoryTableViewCell.swift */; };
+		52188E4825EDAB730043C994 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52188E4725EDAB730043C994 /* DateFormatter+Extensions.swift */; };
+		52188E6025EECFE60043C994 /* ANPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52188E5F25EECFE60043C994 /* ANPaddingLabel.swift */; };
+		52188E6425EEF5ED0043C994 /* ANCollectionCellShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52188E6325EEF5ED0043C994 /* ANCollectionCellShadowView.swift */; };
 		522CD8FC25E424E1006B2E55 /* CategoriesPaginationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522CD8FB25E424E1006B2E55 /* CategoriesPaginationState.swift */; };
 		522CD8FF25E424FA006B2E55 /* MoviesListAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522CD8FE25E424FA006B2E55 /* MoviesListAction.swift */; };
 		522CD92325E52241006B2E55 /* DefaultableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522CD92225E52241006B2E55 /* DefaultableProtocol.swift */; };
@@ -44,7 +47,7 @@
 		523FA95625E7D1EC0083939D /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523FA95425E7D1EC0083939D /* MovieTableViewCell.swift */; };
 		523FA95B25E7D2CB0083939D /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523FA95A25E7D2CB0083939D /* Date+Extensions.swift */; };
 		523FA96A25E800BD0083939D /* CategoryVCConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523FA96925E800BD0083939D /* CategoryVCConnector.swift */; };
-		5288FF3D25E9C01F00409644 /* ANShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288FF3C25E9C01F00409644 /* ANShadowView.swift */; };
+		5288FF3D25E9C01F00409644 /* ANTableCellShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288FF3C25E9C01F00409644 /* ANTableCellShadowView.swift */; };
 		5296A7ED25E1A45600AC3547 /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5296A7EC25E1A45600AC3547 /* Dictionary+Extensions.swift */; };
 		52A4D8D925C308E500810667 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A4D8D825C308E500810667 /* AppDelegate.swift */; };
 		52A4D8E225C308E900810667 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52A4D8E125C308E900810667 /* Assets.xcassets */; };
@@ -87,6 +90,9 @@
 		266B93AE25D1523300194050 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		266B93B725D2923E00194050 /* TopMoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMoviesViewController.swift; sourceTree = "<group>"; };
 		266B93BB25D299AE00194050 /* MovieCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCategoryTableViewCell.swift; sourceTree = "<group>"; };
+		52188E4725EDAB730043C994 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
+		52188E5F25EECFE60043C994 /* ANPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANPaddingLabel.swift; sourceTree = "<group>"; };
+		52188E6325EEF5ED0043C994 /* ANCollectionCellShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANCollectionCellShadowView.swift; sourceTree = "<group>"; };
 		522CD8FB25E424E1006B2E55 /* CategoriesPaginationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesPaginationState.swift; sourceTree = "<group>"; };
 		522CD8FE25E424FA006B2E55 /* MoviesListAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesListAction.swift; sourceTree = "<group>"; };
 		522CD92225E52241006B2E55 /* DefaultableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultableProtocol.swift; sourceTree = "<group>"; };
@@ -96,7 +102,7 @@
 		523FA95425E7D1EC0083939D /* MovieTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		523FA95A25E7D2CB0083939D /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		523FA96925E800BD0083939D /* CategoryVCConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryVCConnector.swift; sourceTree = "<group>"; };
-		5288FF3C25E9C01F00409644 /* ANShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANShadowView.swift; sourceTree = "<group>"; };
+		5288FF3C25E9C01F00409644 /* ANTableCellShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANTableCellShadowView.swift; sourceTree = "<group>"; };
 		5296A7EC25E1A45600AC3547 /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
 		52A4D8D525C308E500810667 /* TopMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A4D8D825C308E500810667 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -210,7 +216,9 @@
 		522ECACA25E9C6AE00298B1D /* Basic */ = {
 			isa = PBXGroup;
 			children = (
-				5288FF3C25E9C01F00409644 /* ANShadowView.swift */,
+				5288FF3C25E9C01F00409644 /* ANTableCellShadowView.swift */,
+				52188E6325EEF5ED0043C994 /* ANCollectionCellShadowView.swift */,
+				52188E5F25EECFE60043C994 /* ANPaddingLabel.swift */,
 			);
 			path = Basic;
 			sourceTree = "<group>";
@@ -296,6 +304,7 @@
 			children = (
 				5296A7EC25E1A45600AC3547 /* Dictionary+Extensions.swift */,
 				523FA95A25E7D2CB0083939D /* Date+Extensions.swift */,
+				52188E4725EDAB730043C994 /* DateFormatter+Extensions.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -479,8 +488,9 @@
 				266B93B825D2923E00194050 /* TopMoviesViewController.swift in Sources */,
 				522CD8FC25E424E1006B2E55 /* CategoriesPaginationState.swift in Sources */,
 				522CD92325E52241006B2E55 /* DefaultableProtocol.swift in Sources */,
-				5288FF3D25E9C01F00409644 /* ANShadowView.swift in Sources */,
+				5288FF3D25E9C01F00409644 /* ANTableCellShadowView.swift in Sources */,
 				26448B5525CA96DC00D240E7 /* RequestState.swift in Sources */,
+				52188E6025EECFE60043C994 /* ANPaddingLabel.swift in Sources */,
 				26448BA525CD52FE00D240E7 /* CategoryDTO.swift in Sources */,
 				2657726825D5849F00A05CEE /* MoviesState.swift in Sources */,
 				2657726225D55D7200A05CEE /* MovieCategoriesState.swift in Sources */,
@@ -496,6 +506,7 @@
 				2657725825D40CBF00A05CEE /* BaseConnector.swift in Sources */,
 				2657726B25D5855100A05CEE /* MoviesDownloadingAction.swift in Sources */,
 				266B93BC25D299AE00194050 /* MovieCategoryTableViewCell.swift in Sources */,
+				52188E6425EEF5ED0043C994 /* ANCollectionCellShadowView.swift in Sources */,
 				2669922F25C9BDA500D88EB8 /* MainState.swift in Sources */,
 				2669923625C9BDB500D88EB8 /* AppFlowAction.swift in Sources */,
 				522CD92725E53569006B2E55 /* PaginatedOperationState.swift in Sources */,
@@ -503,6 +514,7 @@
 				2669923E25C9BDC900D88EB8 /* MovieService.swift in Sources */,
 				52D2DF3525DC24AA00011A27 /* AllActionsMiddleware.swift in Sources */,
 				2657724D25D4079700A05CEE /* Router.swift in Sources */,
+				52188E4825EDAB730043C994 /* DateFormatter+Extensions.swift in Sources */,
 				523FA95B25E7D2CB0083939D /* Date+Extensions.swift in Sources */,
 				26448BB225CD5CF200D240E7 /* URLManager.swift in Sources */,
 				2669923A25C9BDBE00D88EB8 /* MainReducer.swift in Sources */,

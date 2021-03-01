@@ -32,7 +32,7 @@ extension MovieCollectionProps {
 }
 
 // MARK: - Cell class -
-class MovieCollectionViewCell: UICollectionViewCell {
+final class MovieCollectionViewCell: UICollectionViewCell {
   private let posterImageView = UIImageView()
   private let adultLabel = UILabel()
   private let ratingLabel = UILabel()
@@ -40,6 +40,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
   private let descriptionLabel = UILabel()
   private let shortInfoStackView = UIStackView()
   private let infoStackView = UIStackView()
+  private let shadowView = ANCollectionCellShadowView()
+  private let contentStackView = UIStackView()
   private let containerView = UIView()
   // MARK: - Cell configuration
   public func configureWith(props: MovieCollectionProps) {
@@ -68,37 +70,53 @@ class MovieCollectionViewCell: UICollectionViewCell {
   }
   
   private func setupViewHierarchy() {
-    addSubview(containerView)
+    [shadowView, containerView]
+      .forEach(addSubview(_:))
     [adultLabel, ratingLabel]
       .forEach(shortInfoStackView.addArrangedSubview(_:))
-    [posterImageView, shortInfoStackView, titleLabel, descriptionLabel]
+    [shortInfoStackView, titleLabel, descriptionLabel]
       .forEach(infoStackView.addArrangedSubview(_:))
-    containerView.addSubview(infoStackView)
+    [posterImageView, infoStackView]
+      .forEach(contentStackView.addArrangedSubview(_:))
+    containerView.addSubview(contentStackView)
   }
   private func setupLayout() {
     containerView.snp.makeConstraints { make in
-      make.center.height.equalToSuperview()
-      make.width.equalToSuperview().offset(-8.0)
+      make.centerX.top.equalToSuperview()
+      make.height.width.equalToSuperview().offset(-10.0)
     }
-    infoStackView.snp.makeConstraints { make in
+    shadowView.snp.makeConstraints { make in
+      make.edges.equalTo(containerView)
+    }
+    contentStackView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
     posterImageView.snp.makeConstraints { make in
       make.height.equalToSuperview().multipliedBy(0.6)
     }
+    infoStackView.layoutMargins = UIEdgeInsets(top: 0,
+                                               left: 4,
+                                               bottom: 0,
+                                               right: 4)
+    infoStackView.isLayoutMarginsRelativeArrangement = true
     shortInfoStackView.snp.makeConstraints { make in
-      make.height.equalToSuperview().multipliedBy(0.1)
+      make.height.equalToSuperview().multipliedBy(0.25)
     }
     titleLabel.snp.makeConstraints { make in
       make.height.equalTo(shortInfoStackView)
     }
   }
   private func setupStyle() {
+    containerView.backgroundColor = .white
+    containerView.layer.cornerRadius = 7.5
+    containerView.clipsToBounds = true
+    
+    contentStackView.axis = .vertical
     infoStackView.axis = .vertical
     shortInfoStackView.axis = .horizontal
     
     posterImageView.contentMode = .scaleAspectFill
-    posterImageView.layer.cornerRadius = 5
+    posterImageView.layer.cornerRadius = containerView.layer.cornerRadius
     posterImageView.clipsToBounds = true
     
     adultLabel.textAlignment = .left

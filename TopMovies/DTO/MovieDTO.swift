@@ -42,6 +42,6 @@ extension Movie {
     rating = dto.voteAverage
     voteCount = dto.voteCount
     releaseDate = dto.releaseDate
-    poster = URLManager.moviePosterURLFor(path: dto.posterPath ?? dto.backdropPath ?? String.init())
+    poster = URLManager.moviePosterURLFor(path: dto.posterPath ?? dto.backdropPath)
   }
 }

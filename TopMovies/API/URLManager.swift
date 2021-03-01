@@ -8,7 +8,8 @@
 import Foundation
 
 struct URLManager {
-  static func moviePosterURLFor(path: String) -> URL? {
-    URL(string: "https://image.tmdb.org/t/p/w500" + path)
+  static func moviePosterURLFor(path: String?) -> URL? {
+    guard let path = path else { return nil }
+    return URL(string: "https://image.tmdb.org/t/p/w500" + path)
   }
 }

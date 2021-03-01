@@ -26,36 +26,45 @@ extension MovieTableViewCellProps {
     posterURL = movie.poster
     posterPlaceholderImage = UIImage(named: "moviePlaceholder") ?? UIImage()
     titleLabelText = movie.title
-    releaseDateLabelText = "Release: \(Date.prettyDate(movie.releaseDate))"
+    releaseDateLabelText = "Release: \(MovieTableViewCellProps.prettyDate(movie.releaseDate))"
     ratingAndVotesLabelText = "\(movie.rating) / 10 out of \(movie.voteCount) votes"
     movieIsNew = MovieTableViewCellProps.isNewMovie(dateString: movie.releaseDate)
     movieForAdult = movie.adult
     descriptionLabeltext = movie.description
   }
   
+  static func prettyDate(_ dateString: String) -> String {
+    guard
+      let date = DateFormatter.cached(withFormat: "yyyy-mm-dd")
+        .date(from: dateString)
+    else { return "no date" }
+    return DateFormatter.cached(withFormat: "MMM, dd - yyyy")
+      .string(from: date)
+  }
   static func isNewMovie(dateString: String) -> Bool {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-mm-dd"
-    return abs((dateFormatter.date(from: dateString) ?? Date())
-                .months(from: Date())) < 3
+    return abs(
+      (DateFormatter
+        .cached(withFormat: "yyyy-mm-dd")
+        .date(from: dateString) ?? Date())
+        .months(from: Date())) < 3
   }
 }
 
 // MARK: - Cell class -
-class MovieTableViewCell: UITableViewCell {
-  let myContentView = UIView()
-  let shadowView = ANShadowView()
-  let posterImageView = UIImageView()
-  let titleLabel = UILabel()
-  let releaseDateLabel = UILabel()
-  let titleAndReleaseStackView = UIStackView()
-  let descriptionLabel = UILabel()
-  let ratingAndVotesLabel = UILabel()
-  let infoStackView = UIStackView()
-  let isNewImage = UIImageView()
-  let isAdultImage = UIImageView()
-  let newAndAdultStackView = UIStackView()
-  let contentStackView = UIStackView()
+final class MovieTableViewCell: UITableViewCell {
+  private let myContentView = UIView()
+  private let shadowView = ANTableCellShadowView()
+  private let posterImageView = UIImageView()
+  private let titleLabel = UILabel()
+  private let releaseDateLabel = UILabel()
+  private let titleAndReleaseStackView = UIStackView()
+  private let descriptionLabel = UILabel()
+  private let ratingAndVotesLabel = UILabel()
+  private let infoStackView = UIStackView()
+  private let isNewImage = UIImageView()
+  private let isAdultImage = UIImageView()
+  private let newAndAdultStackView = UIStackView()
+  private let contentStackView = UIStackView()
   
   // MARK: - Cell configuration
   public func configure(with props: MovieTableViewCellProps) {
@@ -72,9 +81,9 @@ class MovieTableViewCell: UITableViewCell {
     ratingAndVotesLabel.text = props.ratingAndVotesLabelText
     descriptionLabel.text = props.descriptionLabeltext
     isAdultImage.image = props.movieForAdult ?
-      UIImage(named: "censoredMovie") ?? UIImage() : nil
+      UIImage(named: "censoredMovie") : nil
     isNewImage.image = props.movieIsNew ?
-      UIImage(named: "newMovie") ?? UIImage() : nil
+      UIImage(named: "newMovie") : nil
   }
   
   // MARK: - UISetup
@@ -156,12 +165,10 @@ class MovieTableViewCell: UITableViewCell {
     titleLabel.font = .boldSystemFont(ofSize: 20)
     titleLabel.textColor = .black
     titleLabel.textAlignment = .left
-    titleLabel.numberOfLines = 0
     
     releaseDateLabel.font = .boldSystemFont(ofSize: 13)
     releaseDateLabel.textColor = .darkGray
     releaseDateLabel.textAlignment = .left
-    releaseDateLabel.numberOfLines = 0
     
     descriptionLabel.font = .systemFont(ofSize: 14)
     descriptionLabel.textColor = .gray

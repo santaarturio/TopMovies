@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 
-class SeeAllMoviesCollectionViewCell: UICollectionViewCell {
-  let seeMoreImageView = UIImageView()
+final class SeeAllMoviesCollectionViewCell: UICollectionViewCell {
+  private let seeMoreImageView = UIImageView()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -26,10 +26,9 @@ class SeeAllMoviesCollectionViewCell: UICollectionViewCell {
   }
   private func setupLayout() {
     seeMoreImageView.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.width.equalToSuperview().offset(-8.0)
-      make.top.equalToSuperview()
-      make.height.equalToSuperview().multipliedBy(0.6)
+      make.centerX.top.equalToSuperview()
+      make.width.equalToSuperview().offset(-10.0)
+      make.height.equalToSuperview().multipliedBy(0.9)
     }
   }
   private func setupStyle() {
