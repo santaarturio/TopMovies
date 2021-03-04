@@ -7,31 +7,50 @@
 
 import ReSwift
 
-class TopMoviesConnector: BaseConnector<TopMoviesProps> {
+final class TopMoviesConnector: BaseConnector<TopMoviesProps> {
+  private typealias CategoriesRelational = [MovieCategory.ID: [Movie.ID]]
+  private let numberOfVisiableMoviesInCategory = 13
+  private var alreadyShown: CategoriesRelational = [:]
   
   required init(updateProps: @escaping (TopMoviesProps) -> Void) {
     super.init(updateProps: updateProps)
   }
   
   override func newState(state: MainState) {
-    switch state.movieCategoriesState.categoriesList {
-    case let .completed(categoriesID):
+    guard
+      case let .completed(categoriesID) = state.movieCategoriesState.categoriesList
+    else { return }
+    
+    let updatedCategories = categoriesID
+      .reduce(into: CategoriesRelational()) { dict, categoryID in
+        var list = state.categoriesPaginationState.paginated[categoryID]?.list ?? []
+        list.removeLast(list.count - numberOfVisiableMoviesInCategory)
+        dict[categoryID] = list
+      }
+    if isNewCategoriesList(oldList: alreadyShown,
+                           newList: updatedCategories) {
       let props =
         TopMoviesProps(
           movieCategories:
             categoriesID
-            .compactMap{ MovieCategoryProps(
+            .compactMap { categoryId in MovieCategoryProps(
               categoryNameText:
-                state.movieCategoriesState.relational[$0]?.title,
+                state.movieCategoriesState.relational[categoryId]?.title,
               movies:
-                state.categoriesPaginationState.paginated[$0]?.list
+                updatedCategories[categoryId]?
                 .compactMap{ MovieCollectionProps(
                   movie: state.moviesState.relational[$0]
-                ) } ?? [] )
+                ) } ?? [],
+              actionAllButton: { Router.shared.perform(route: .categoryVC(categoryId: categoryId)) })
             }
         )
       _updateProps(props)
-    default: break
+      alreadyShown = updatedCategories
     }
+  }
+  
+  private func isNewCategoriesList(oldList old: CategoriesRelational,
+                                   newList new: CategoriesRelational) -> Bool {
+    new.first { key, value in old[key] == nil || old[key]?.elementsEqual(value) == false } != nil
   }
 }

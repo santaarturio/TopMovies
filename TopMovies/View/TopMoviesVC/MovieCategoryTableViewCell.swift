@@ -7,31 +7,42 @@
 
 import UIKit
 import SnapKit
+
 // MARK: - Props struct -
 struct MovieCategoryProps {
   let categoryNameText: String
   let movies: [MovieCollectionProps]
+  let actionAllButton: () -> Void
 }
 extension MovieCategoryProps {
-  init?(categoryNameText: String?, movies: [MovieCollectionProps?]) {
+  init?(categoryNameText: String?,
+        movies: [MovieCollectionProps?],
+        actionAllButton: @escaping () -> Void) {
     guard let categoryNameText = categoryNameText else { return nil }
     self.categoryNameText = categoryNameText
-    self.movies = movies.compactMap{ $0 }
+    self.movies = movies.compactMap { $0 }
+    self.actionAllButton = actionAllButton
   }
 }
 // MARK: - Cell class -
-class MovieCategoryTableViewCell: UITableViewCell {
-  private let categoryNameLabel = UILabel()
-  private let moviesCollectionView = UICollectionView(frame: CGRect(), collectionViewLayout: UICollectionViewLayout())
-  private let movieCollectionViewCellIdentifier = String(describing: MovieCollectionViewCell.self)
-  private let movieCollectionInteritemSpacing: CGFloat = 8.0
+final class MovieCategoryTableViewCell: UITableViewCell {
+  private let categoryNameLabel = ANPaddingLabel(withInsets: 0, 8, 0, 8)
+  private let moviesCollectionView
+    = UICollectionView(frame: CGRect(), collectionViewLayout: UICollectionViewLayout())
+  private let movieCollectionViewCellIdentifier
+    = String(describing: MovieCollectionViewCell.self)
+  private let seeAllMoviesCollectionCellIdentifier
+    = String(describing: SeeAllMoviesCollectionViewCell.self)
   private let infoStackView = UIStackView()
-  private var moviesProps = [MovieCollectionProps]()
+  private var props = MovieCategoryProps(categoryNameText: "",
+                                         movies: [],
+                                         actionAllButton: { }) {
+    didSet { categoryNameLabel.text = props.categoryNameText }
+  }
   
   // MARK: Cell configuration
   public func configureWith(props: MovieCategoryProps) {
-    categoryNameLabel.text = props.categoryNameText
-    moviesProps = props.movies
+    self.props = props
   }
   
   // MARK: - UISetup
@@ -53,7 +64,7 @@ class MovieCategoryTableViewCell: UITableViewCell {
   private func configureCollectionViewLayout() {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
-    layout.minimumLineSpacing = 0
+    layout.minimumInteritemSpacing = 0
     moviesCollectionView.collectionViewLayout = layout
   }
   private func setupLayout() {
@@ -61,7 +72,7 @@ class MovieCategoryTableViewCell: UITableViewCell {
       make.edges.equalToSuperview()
     }
     categoryNameLabel.snp.makeConstraints { make in
-      make.height.equalToSuperview().multipliedBy(0.1)
+      make.height.equalToSuperview().multipliedBy(0.15)
     }
     configureCollectionViewLayout()
   }
@@ -70,7 +81,7 @@ class MovieCategoryTableViewCell: UITableViewCell {
     
     infoStackView.axis = .vertical
     
-    categoryNameLabel.font = .boldSystemFont(ofSize: 16)
+    categoryNameLabel.font = .boldSystemFont(ofSize: 22)
     categoryNameLabel.textAlignment = .left
     
     moviesCollectionView.backgroundColor = .clear
@@ -78,6 +89,8 @@ class MovieCategoryTableViewCell: UITableViewCell {
     moviesCollectionView.delegate = self
     moviesCollectionView.register(MovieCollectionViewCell.self,
                                   forCellWithReuseIdentifier: movieCollectionViewCellIdentifier)
+    moviesCollectionView.register(SeeAllMoviesCollectionViewCell.self,
+                                  forCellWithReuseIdentifier: seeAllMoviesCollectionCellIdentifier)
     moviesCollectionView.showsHorizontalScrollIndicator = false
   }
 }
@@ -85,17 +98,33 @@ class MovieCategoryTableViewCell: UITableViewCell {
 extension MovieCategoryTableViewCell: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView,
                       numberOfItemsInSection section: Int) -> Int {
-    moviesProps.count
+    props.movies.count + 1
   }
   
   func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier,
-                                 for: indexPath) as? MovieCollectionViewCell
-    else { return UICollectionViewCell() }
-    cell.configureWith(props: moviesProps[indexPath.item])
-    return cell
+    if indexPath.item < props.movies.count {
+      guard let cell = collectionView
+              .dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier,
+                                   for: indexPath) as? MovieCollectionViewCell
+      else { return UICollectionViewCell() }
+      cell.configureWith(props: props.movies[indexPath.item])
+      return cell
+    } else {
+      guard let cell = collectionView
+              .dequeueReusableCell(withReuseIdentifier: seeAllMoviesCollectionCellIdentifier,
+                                   for: indexPath) as? SeeAllMoviesCollectionViewCell
+      else { return UICollectionViewCell() }
+      return cell
+    }
+  }
+}
+// MARK: - UICollectionViewDelegate
+extension MovieCategoryTableViewCell: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    if indexPath.item == props.movies.count {
+      props.actionAllButton()
+    }
   }
 }
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -103,7 +132,12 @@ extension MovieCategoryTableViewCell: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
-    CGSize(width: collectionView.bounds.width / 2.2,
-           height: collectionView.bounds.height)
+    if indexPath.item < props.movies.count {
+      return CGSize(width: collectionView.bounds.width / 2.1,
+                    height: collectionView.bounds.height)
+    } else {
+      return CGSize(width: collectionView.bounds.width / 6.3,
+                    height: collectionView.bounds.height)
+    }
   }
 }

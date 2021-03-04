@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "sadSmile.png",
+      "filename" : "seeMore.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "sadSmile-1.png",
+      "filename" : "seeMore-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "sadSmile-2.png",
+      "filename" : "seeMore-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -14,7 +14,7 @@ struct TopMoviesProps {
 }
 
 // MARK: - VC class
-class TopMoviesViewController: UIViewController, PropsConnectable {
+final class TopMoviesViewController: UIViewController, PropsConnectable {
   typealias Props = TopMoviesProps
   internal var propsConnector: BaseConnector<Props>?
   private var topMoviesProps = TopMoviesProps(movieCategories: []) {
@@ -24,7 +24,7 @@ class TopMoviesViewController: UIViewController, PropsConnectable {
   }
   private let movieCategoriesTableView = UITableView()
   private let movieCategoryCellIdentifier = String(describing: MovieCategoryTableViewCell.self)
-  private let movieCategoryCellIHeight: CGFloat = 200.0
+  private let movieCategoryCellIHeight: CGFloat = 220.0
   
   // MARK: - Setup Connection
   public func configureConnectionWith(connector: BaseConnector<Props>) {
