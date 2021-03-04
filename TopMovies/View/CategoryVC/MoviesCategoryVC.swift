@@ -35,7 +35,9 @@ final class MoviesCategoryVC: UIViewController, PropsConnectable {
   }
   private let categoryTableView = UITableView(frame: .zero, style: .grouped)
   private let refreshControl = UIRefreshControl()
-  private let footerIndicatorView = UIActivityIndicatorView()
+  private let footerIndicatorView = UIActivityIndicatorView(frame: CGRect(origin: .zero,
+                                                                          size: .init(width: 40,
+                                                                                      height: 40)))
   private let movieCellIdentifier = String(describing: MovieTableViewCell.self)
   private let cellHeight: CGFloat = 200.0
   private var lastAnimatedCellPath = IndexPath()
@@ -75,7 +77,9 @@ final class MoviesCategoryVC: UIViewController, PropsConnectable {
   }
   private func setupStyle() {
     navigationController?.navigationBar.prefersLargeTitles = true
+    view.backgroundColor = Asset.Colors.mainBackground.color
     
+    categoryTableView.backgroundColor = .clear
     categoryTableView.showsVerticalScrollIndicator = false
     categoryTableView.separatorStyle = .none
     categoryTableView.sectionHeaderHeight = 0
@@ -85,14 +89,14 @@ final class MoviesCategoryVC: UIViewController, PropsConnectable {
     categoryTableView.dataSource = self
     categoryTableView.delegate   = self
     
-    refreshControl.tintColor = .blue
+    refreshControl.tintColor = Asset.Colors.refresh.color
     refreshControl.attributedTitle = NSAttributedString(string: "Reload in progress...")
     refreshControl.addTarget(self,
                              action: #selector(refreshControlSelector(sender:)),
                              for: .valueChanged)
     
     footerIndicatorView.hidesWhenStopped = true
-    footerIndicatorView.color = .blue
+    footerIndicatorView.color = refreshControl.tintColor
   }
   
   // MARK: - Action

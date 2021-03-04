@@ -22,12 +22,12 @@ struct MovieCollectionProps {
 extension MovieCollectionProps {
   init?(movie: Movie?) {
     guard let movie = movie else { return nil }
-    adultLabelText = "Adult: \(movie.adult ? "Yes" : "No")"
-    ratingLabelText = "Rating: \(movie.rating)"
+    adultLabelText = "\(L10n.App.Home.Movie.adult): \(movie.adult ? L10n.App.Home.Movie.yes : L10n.App.Home.Movie.no)"
+    ratingLabelText = "\(L10n.App.Home.Movie.rating): \(movie.rating)"
     titleLabelText = movie.title
     descriptionLabeltext = movie.description
     posterURL = movie.poster
-    posterPlaceholderImage = UIImage(named: "moviePlaceholder") ?? UIImage()
+    posterPlaceholderImage = Asset.Images.moviePlaceholder.image
   }
 }
 
@@ -107,7 +107,7 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     }
   }
   private func setupStyle() {
-    containerView.backgroundColor = .white
+    containerView.backgroundColor = Asset.Colors.secondaryBackground.color
     containerView.layer.cornerRadius = 7.5
     containerView.clipsToBounds = true
     
@@ -121,15 +121,19 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     
     adultLabel.textAlignment = .left
     adultLabel.font = .boldSystemFont(ofSize: 12)
+    adultLabel.textColor = Asset.Colors.subtitle.color
     
     ratingLabel.textAlignment = .right
     ratingLabel.font = adultLabel.font
+    ratingLabel.textColor = adultLabel.textColor
     
     titleLabel.textAlignment = .left
     titleLabel.font = .boldSystemFont(ofSize: 14)
+    titleLabel.textColor = Asset.Colors.title.color
     
     descriptionLabel.textAlignment = .left
     descriptionLabel.font = .systemFont(ofSize: 12)
+    descriptionLabel.textColor = Asset.Colors.secondaryText.color
     descriptionLabel.numberOfLines = 0
   }
 }

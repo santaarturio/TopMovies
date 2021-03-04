@@ -77,5 +77,3 @@ extension MovieTarget: TargetType {
     ["Content-Type": "application/json;charset=utf-8"]
   }
 }
-
-

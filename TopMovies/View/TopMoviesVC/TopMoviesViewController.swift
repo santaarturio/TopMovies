@@ -51,9 +51,11 @@ final class TopMoviesViewController: UIViewController, PropsConnectable {
     }
   }
   private func setupStyle() {
-    title = L10n.App.Application.Name.title
+    view.backgroundColor = Asset.Colors.mainBackground.color
+    title = L10n.App.Home.title
     navigationController?.navigationBar.prefersLargeTitles = true
     
+    movieCategoriesTableView.backgroundColor = .clear
     movieCategoriesTableView.separatorStyle = .none
     movieCategoriesTableView.showsVerticalScrollIndicator = false
     movieCategoriesTableView.register(MovieCategoryTableViewCell.self,

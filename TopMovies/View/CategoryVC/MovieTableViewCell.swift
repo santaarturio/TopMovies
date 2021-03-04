@@ -24,7 +24,7 @@ extension MovieTableViewCellProps {
   init?(movie: Movie?) {
     guard let movie = movie else { return nil }
     posterURL = movie.poster
-    posterPlaceholderImage = UIImage(named: "moviePlaceholder") ?? UIImage()
+    posterPlaceholderImage = Asset.Images.moviePlaceholder.image
     titleLabelText = movie.title
     releaseDateLabelText = "Release: \(MovieTableViewCellProps.prettyDate(movie.releaseDate))"
     ratingAndVotesLabelText = "\(movie.rating) / 10 out of \(movie.voteCount) votes"
@@ -81,9 +81,9 @@ final class MovieTableViewCell: UITableViewCell {
     ratingAndVotesLabel.text = props.ratingAndVotesLabelText
     descriptionLabel.text = props.descriptionLabeltext
     isAdultImage.image = props.movieForAdult ?
-      UIImage(named: "censoredMovie") : nil
+      Asset.Images.censored.image : nil
     isNewImage.image = props.movieIsNew ?
-      UIImage(named: "newMovie") : nil
+      Asset.Images.newMovie.image : nil
   }
   
   // MARK: - UISetup
@@ -155,7 +155,7 @@ final class MovieTableViewCell: UITableViewCell {
     newAndAdultStackView.distribution = .fillEqually
     infoStackView.axis = .vertical
     
-    myContentView.backgroundColor = .white
+    myContentView.backgroundColor = Asset.Colors.secondaryBackground.color
     myContentView.layer.cornerRadius = 15
     myContentView.clipsToBounds = true
     
@@ -163,19 +163,20 @@ final class MovieTableViewCell: UITableViewCell {
     posterImageView.clipsToBounds = true
     
     titleLabel.font = .boldSystemFont(ofSize: 20)
-    titleLabel.textColor = .black
+    titleLabel.textColor = Asset.Colors.title.color
     titleLabel.textAlignment = .left
     
     releaseDateLabel.font = .boldSystemFont(ofSize: 13)
-    releaseDateLabel.textColor = .darkGray
+    releaseDateLabel.textColor = Asset.Colors.subtitle.color
     releaseDateLabel.textAlignment = .left
     
     descriptionLabel.font = .systemFont(ofSize: 14)
-    descriptionLabel.textColor = .gray
+    descriptionLabel.textColor = Asset.Colors.secondaryText.color
     descriptionLabel.textAlignment = .left
     descriptionLabel.numberOfLines = 6
     
     ratingAndVotesLabel.font = .boldSystemFont(ofSize: 13)
+    ratingAndVotesLabel.textColor = Asset.Colors.subtitle.color
     ratingAndVotesLabel.textAlignment = .left
     
     isAdultImage.contentMode = .scaleAspectFit

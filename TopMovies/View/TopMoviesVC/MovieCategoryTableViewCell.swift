@@ -78,10 +78,12 @@ final class MovieCategoryTableViewCell: UITableViewCell {
   }
   private func setupStyle() {
     selectionStyle = .none
+    backgroundColor = .clear
     
     infoStackView.axis = .vertical
     
     categoryNameLabel.font = .boldSystemFont(ofSize: 22)
+    categoryNameLabel.textColor = Asset.Colors.title.color
     categoryNameLabel.textAlignment = .left
     
     moviesCollectionView.backgroundColor = .clear

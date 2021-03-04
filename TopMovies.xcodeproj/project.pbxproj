@@ -468,7 +468,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nif which swiftgen >/dev/null; then\n/usr/local/bin/swiftgen config run --config \"$SRCROOT/swiftgen.yml\"\nelse\necho \"warning: SwiftGen not installed\"\nfi\nfi\n";
+			shellScript = "swiftgen config run --config \"$SRCROOT/swiftgen.yml\"\n";
 		};
 		5278AEBC25C43FEF00286566 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -32,7 +32,7 @@ final class SeeAllMoviesCollectionViewCell: UICollectionViewCell {
     }
   }
   private func setupStyle() {
-    seeMoreImageView.image = UIImage(named: "seeAllMovies") ?? UIImage()
+    seeMoreImageView.image = Asset.Images.seeAllButton.image
     seeMoreImageView.contentMode = .scaleAspectFit
   }
 }
