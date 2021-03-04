@@ -51,7 +51,7 @@ final class TopMoviesViewController: UIViewController, PropsConnectable {
     }
   }
   private func setupStyle() {
-    title = "TopMovies"
+    title = L10n.App.Application.Name.title
     navigationController?.navigationBar.prefersLargeTitles = true
     
     movieCategoriesTableView.separatorStyle = .none

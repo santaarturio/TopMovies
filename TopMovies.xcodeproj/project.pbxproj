@@ -38,11 +38,14 @@
 		52188E4825EDAB730043C994 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52188E4725EDAB730043C994 /* DateFormatter+Extensions.swift */; };
 		52188E6025EECFE60043C994 /* ANPaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52188E5F25EECFE60043C994 /* ANPaddingLabel.swift */; };
 		52188E6425EEF5ED0043C994 /* ANCollectionCellShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52188E6325EEF5ED0043C994 /* ANCollectionCellShadowView.swift */; };
+		521D741F25F11309001D48BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 521D742125F11309001D48BD /* Localizable.strings */; };
 		522CD8FC25E424E1006B2E55 /* CategoriesPaginationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522CD8FB25E424E1006B2E55 /* CategoriesPaginationState.swift */; };
 		522CD8FF25E424FA006B2E55 /* MoviesListAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522CD8FE25E424FA006B2E55 /* MoviesListAction.swift */; };
 		522CD92325E52241006B2E55 /* DefaultableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522CD92225E52241006B2E55 /* DefaultableProtocol.swift */; };
 		522CD92725E53569006B2E55 /* PaginatedOperationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522CD92625E53569006B2E55 /* PaginatedOperationState.swift */; };
 		522CD93225E53A5D006B2E55 /* EmptyRequestState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522CD93125E53A5D006B2E55 /* EmptyRequestState.swift */; };
+		523B689B25F0F84D008A8032 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B689925F0F84D008A8032 /* Assets.swift */; };
+		523B689C25F0F84D008A8032 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B689A25F0F84D008A8032 /* Strings.swift */; };
 		523FA95525E7D1EC0083939D /* MoviesCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523FA95325E7D1EC0083939D /* MoviesCategoryVC.swift */; };
 		523FA95625E7D1EC0083939D /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523FA95425E7D1EC0083939D /* MovieTableViewCell.swift */; };
 		523FA95B25E7D2CB0083939D /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523FA95A25E7D2CB0083939D /* Date+Extensions.swift */; };
@@ -93,11 +96,14 @@
 		52188E4725EDAB730043C994 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		52188E5F25EECFE60043C994 /* ANPaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANPaddingLabel.swift; sourceTree = "<group>"; };
 		52188E6325EEF5ED0043C994 /* ANCollectionCellShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANCollectionCellShadowView.swift; sourceTree = "<group>"; };
+		521D742025F11309001D48BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		522CD8FB25E424E1006B2E55 /* CategoriesPaginationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesPaginationState.swift; sourceTree = "<group>"; };
 		522CD8FE25E424FA006B2E55 /* MoviesListAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesListAction.swift; sourceTree = "<group>"; };
 		522CD92225E52241006B2E55 /* DefaultableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultableProtocol.swift; sourceTree = "<group>"; };
 		522CD92625E53569006B2E55 /* PaginatedOperationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedOperationState.swift; sourceTree = "<group>"; };
 		522CD93125E53A5D006B2E55 /* EmptyRequestState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyRequestState.swift; sourceTree = "<group>"; };
+		523B689925F0F84D008A8032 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		523B689A25F0F84D008A8032 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		523FA95325E7D1EC0083939D /* MoviesCategoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesCategoryVC.swift; sourceTree = "<group>"; };
 		523FA95425E7D1EC0083939D /* MovieTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		523FA95A25E7D2CB0083939D /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
@@ -107,11 +113,11 @@
 		52A4D8D525C308E500810667 /* TopMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A4D8D825C308E500810667 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52A4D8E125C308E900810667 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		52A4D8E425C308E900810667 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52A4D8E625C308E900810667 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52D2DF3425DC24AA00011A27 /* AllActionsMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllActionsMiddleware.swift; sourceTree = "<group>"; };
 		52D2DF3A25DC88D600011A27 /* MovieCategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCategoryRequest.swift; sourceTree = "<group>"; };
 		52D667DD25E91D5D00D472E0 /* SeeAllMoviesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeAllMoviesCollectionViewCell.swift; sourceTree = "<group>"; };
+		52FABD9025F0FEC700989926 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BF4B53E8B2772B8A2510B0BE /* Pods-TopMovies.prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopMovies.prod.xcconfig"; path = "Target Support Files/Pods-TopMovies/Pods-TopMovies.prod.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -223,6 +229,15 @@
 			path = Basic;
 			sourceTree = "<group>";
 		};
+		523B688D25F0F3A5008A8032 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				523B689925F0F84D008A8032 /* Assets.swift */,
+				523B689A25F0F84D008A8032 /* Strings.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		523FA95225E7D1EC0083939D /* CategoryVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,7 +289,6 @@
 				26448B9F25CD4D2000D240E7 /* DTO */,
 				522ECACA25E9C6AE00298B1D /* Basic */,
 				52BFC85F25C33BFE001B9F19 /* Resources */,
-				52A4D8E125C308E900810667 /* Assets.xcassets */,
 			);
 			path = TopMovies;
 			sourceTree = "<group>";
@@ -312,6 +326,9 @@
 		52BFC85F25C33BFE001B9F19 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				521D742125F11309001D48BD /* Localizable.strings */,
+				52A4D8E125C308E900810667 /* Assets.xcassets */,
+				523B688D25F0F3A5008A8032 /* Generated */,
 				2657724C25D4079700A05CEE /* Router.swift */,
 				52A4D8D825C308E500810667 /* AppDelegate.swift */,
 				52A4D8E325C308E900810667 /* LaunchScreen.storyboard */,
@@ -355,6 +372,7 @@
 			buildConfigurationList = 52A4D8E925C308E900810667 /* Build configuration list for PBXNativeTarget "TopMovies" */;
 			buildPhases = (
 				835E3AC482783F25F6848E99 /* [CP] Check Pods Manifest.lock */,
+				521D740125F106D2001D48BD /* SwiftGen */,
 				5278AEBC25C43FEF00286566 /* SwiftLint */,
 				52A4D8D125C308E500810667 /* Sources */,
 				52A4D8D225C308E500810667 /* Frameworks */,
@@ -390,7 +408,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = 52A4D8CC25C308E400810667;
 			productRefGroup = 52A4D8D625C308E500810667 /* Products */;
@@ -408,6 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52A4D8E525C308E900810667 /* LaunchScreen.storyboard in Resources */,
+				521D741F25F11309001D48BD /* Localizable.strings in Resources */,
 				52A4D8E225C308E900810667 /* Assets.xcassets in Resources */,
 				26448B8425CC3B2400D240E7 /* TMDB-Info.plist in Resources */,
 			);
@@ -433,6 +451,25 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TopMovies/Pods-TopMovies-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		521D740125F106D2001D48BD /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nif which swiftgen >/dev/null; then\n/usr/local/bin/swiftgen config run --config \"$SRCROOT/swiftgen.yml\"\nelse\necho \"warning: SwiftGen not installed\"\nfi\nfi\n";
+		};
 		5278AEBC25C43FEF00286566 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -450,7 +487,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nif which swiftlint >/dev/null; then\nswiftlint --config \"$SRCROOT/swiftlint.yml\"\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\nfi\n";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nif which swiftlint >/dev/null; then\nswiftlint --config \"$SRCROOT/swiftlint.yml\"\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\nfi\n";
 		};
 		835E3AC482783F25F6848E99 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -500,11 +537,13 @@
 				523FA95625E7D1EC0083939D /* MovieTableViewCell.swift in Sources */,
 				2657725B25D40DD100A05CEE /* TopMoviesConnector.swift in Sources */,
 				522CD93225E53A5D006B2E55 /* EmptyRequestState.swift in Sources */,
+				523B689C25F0F84D008A8032 /* Strings.swift in Sources */,
 				2669924225C9BDD500D88EB8 /* MovieAPI.swift in Sources */,
 				522CD8FF25E424FA006B2E55 /* MoviesListAction.swift in Sources */,
 				523FA96A25E800BD0083939D /* CategoryVCConnector.swift in Sources */,
 				2657725825D40CBF00A05CEE /* BaseConnector.swift in Sources */,
 				2657726B25D5855100A05CEE /* MoviesDownloadingAction.swift in Sources */,
+				523B689B25F0F84D008A8032 /* Assets.swift in Sources */,
 				266B93BC25D299AE00194050 /* MovieCategoryTableViewCell.swift in Sources */,
 				52188E6425EEF5ED0043C994 /* ANCollectionCellShadowView.swift in Sources */,
 				2669922F25C9BDA500D88EB8 /* MainState.swift in Sources */,
@@ -532,10 +571,18 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		521D742125F11309001D48BD /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				521D742025F11309001D48BD /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		52A4D8E325C308E900810667 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				52A4D8E425C308E900810667 /* Base */,
+				52FABD9025F0FEC700989926 /* en */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -547,6 +594,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -608,6 +656,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -703,6 +752,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
