@@ -1,0 +1,11 @@
+strings:
+  inputs: TopMovies/Resources
+  outputs:
+    - templateName: structured-swift5
+      output: TopMovies/Resources/Generated/Strings.swift
+xcassets:
+  inputs:
+    - TopMovies/Resources/Assets.xcassets
+  outputs:
+    - templateName: swift5
+      output: TopMovies/Resources/Generated/Assets.swift
