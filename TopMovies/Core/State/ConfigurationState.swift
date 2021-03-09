@@ -9,7 +9,7 @@ import ReSwift
 
 enum ConfigurationState: StateType, Equatable {
   case initial
-  case configuredAPIKey(_: String)
+  case configuredAPIKey(String)
 }
 
 extension ConfigurationState {
