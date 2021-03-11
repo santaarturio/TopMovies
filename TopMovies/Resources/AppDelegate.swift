@@ -14,7 +14,7 @@ let mainStore = MainStore(reducer: mainReducer, state: nil, middleware: [allActi
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
-  var movieService: MovieService?
+  var movieService: MovieService<StoreProvider<MainState>>?
   
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -39,7 +39,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   func createService() {
     let movieAPI = MovieAPI()
-    movieService = MovieService(movieAPI: movieAPI)
+    movieService = MovieService(movieAPI: movieAPI,
+                                storeProvider: StoreProvider<MainState>(store: mainStore) { [self] state in
+                                  movieService?.newState(state: state)
+                                })
     mainStore.dispatch(RequestMovieCategoriesAction())
   }
   func applicationDidFinishLaunching(_ application: UIApplication) {
