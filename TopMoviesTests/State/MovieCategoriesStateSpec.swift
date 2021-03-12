@@ -49,31 +49,24 @@ class MovieCategoriesStateSpec: QuickSpec {
           state = MovieCategoriesState.reduce(action: action,
                                               state: state)
           expect(state.relational.count == 1).to(beTrue())
-          expect({
-            guard case let .completed(kategoriesIdArray) = state.categoriesList
-            else { return { .failed(reason: "wrong enum case") } }
-            if [mockMovieCategory2.id] != kategoriesIdArray {
-              return { .failed(reason: "wrong associated value")}
-            }
-            return { .succeeded }
-          }).to(succeed())
+          expect(state.categoriesList.completedData).notTo(beNil())
+          expect(state.categoriesList.completedData == [mockMovieCategory2.id]).to(beTrue())
         }
       }
       
       context("failed movie categories action should be reduced") {
         it("shouldn't affect on relational and set categoriesList to .failed(error)") {
-          let error = MockError(description: "failed movie categories action error")
-          let action = FailedMovieCategoriesAction(error: error)
+          let mockError = MockError(description: "failed movie categories action error")
+          let action = FailedMovieCategoriesAction(error: mockError)
           state = MovieCategoriesState.reduce(action: action,
                                               state: state)
           expect(state.relational.count == 1
                   && state.relational[mockMovieCategory.id] == mockMovieCategory).to(beTrue())
+          expect(state.categoriesList.failedError).notTo(beNil())
           expect({
-            guard case let .failed(error) = state.categoriesList
-            else { return { .failed(reason: "wrong enum case") } }
             guard
-              let myError = error as? MockError,
-              myError.description == "failed movie categories action error"
+              let myError = state.categoriesList.failedError as? MockError,
+              myError.description == mockError.description
             else { return { .failed(reason: "wrong error associated value") } }
             return { .succeeded }
           }).to(succeed())

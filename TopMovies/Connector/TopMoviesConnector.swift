@@ -14,6 +14,8 @@ final class TopMoviesConnector: BaseConnector<TopMoviesProps> {
   
   required init(updateProps: @escaping (TopMoviesProps) -> Void) {
     super.init(updateProps: updateProps)
+    
+    mainStore.dispatch(RequestMovieCategoriesAction())
   }
   
   override func newState(state: MainState) {

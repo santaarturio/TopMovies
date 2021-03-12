@@ -10,7 +10,7 @@ import ReSwift
 
 final class MockStoreProvider<ExpectedStateType>: StoreProviderProtocol {
   var dispatchedActions: [Action] = []
-  var onStateUpdate: (ExpectedStateType) -> Void
+  let onStateUpdate: (ExpectedStateType) -> Void
 
   init(onStateUpdate: @escaping (ExpectedStateType) -> Void) {
     self.onStateUpdate = onStateUpdate

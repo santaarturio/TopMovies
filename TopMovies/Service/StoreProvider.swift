@@ -7,10 +7,10 @@
 
 import ReSwift
 
-final class StoreProvider<ExpectedStateType>: StoreProviderProtocol, StoreSubscriber where ExpectedStateType: StateType {
+final class StoreProvider<ExpectedStateType>: StoreProviderProtocol, StoreSubscriber
+where ExpectedStateType: StateType {
   private let store: Store<ExpectedStateType>
-  
-  var onStateUpdate: (ExpectedStateType) -> Void
+  let onStateUpdate: (ExpectedStateType) -> Void
   
   init(store: Store<ExpectedStateType>, onStateUpdate: @escaping (ExpectedStateType) -> Void) {
     self.store = store

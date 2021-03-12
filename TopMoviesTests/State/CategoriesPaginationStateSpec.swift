@@ -81,7 +81,7 @@ class CategoriesPaginationStateSpec: QuickSpec {
           state = CategoriesPaginationState.reduce(action: action,
                                                    state: state)
           expect(state.paginated.count) == 1
-          expect(state.paginated[mockMovieCategory.id]?.list.elementsEqual([mockMovie.id])).to(beTrue())
+          expect(state.paginated[mockMovieCategory.id]?.list) == [mockMovie.id]
           expect({
             guard
               case let .next(page) = state.paginated[mockMovieCategory.id]?.pageInfo,
@@ -89,11 +89,7 @@ class CategoriesPaginationStateSpec: QuickSpec {
             else { return { .failed(reason: "wrong enum case") }}
             return { .succeeded }
           }).to(succeed())
-          expect({
-            guard case .initial = state.paginated[mockMovieCategory.id]?.reload
-            else { return { .failed(reason: "wrong enum case") }}
-            return { .succeeded }
-          }).to(succeed())
+          expect(state.paginated[mockMovieCategory.id]?.reload.isInitial).to(beTrue())
         }
         it("should add new movie to list, set pageState to .lastPage and make CategoryState.loadMore .initial") {
           let action = CompletedMoviesListAction(categoryId: mockMovieCategory.id,
@@ -103,54 +99,51 @@ class CategoriesPaginationStateSpec: QuickSpec {
           state = CategoriesPaginationState.reduce(action: action,
                                                    state: state)
           expect(state.paginated.count) == 1
-          expect(state.paginated[mockMovieCategory.id]?.list
-                  .elementsEqual([mockMovie.id, mockMovie2.id])).to(beTrue())
+          expect(state.paginated[mockMovieCategory.id]?.list) == [mockMovie.id, mockMovie2.id]
           expect({
             guard case .lastPage = state.paginated[mockMovieCategory.id]?.pageInfo
             else { return { .failed(reason: "wrong enum case") }}
             return { .succeeded }
           }).to(succeed())
-          expect({
-            guard case .initial = state.paginated[mockMovieCategory.id]?.loadMore
-            else { return { .failed(reason: "wrong enum case") }}
-            return { .succeeded }
-          }).to(succeed())
+          expect(state.paginated[mockMovieCategory.id]?.loadMore.isInitial).to(beTrue())
         }
       }
       
       context("failed movies list action should be reduced") {
         it("shouldn't affect at paginated count and should make CategoryState.reload .failed(error)") {
+          let mockError = MockError(description: "failed movies list error")
           let action = FailedMoviesListAction(categoryId: mockMovieCategory.id,
                                               requestType: .reload,
-                                              error: MockError(description: "failed movies list error"))
+                                              error: mockError)
           state = CategoriesPaginationState.reduce(action: action,
                                                    state: state)
+          let storedError = state.paginated[mockMovieCategory.id]?.reload.failedError
           expect(state.paginated.count) == 1
-          expect(state.paginated[mockMovieCategory.id]?.list.elementsEqual([mockMovie.id])).to(beTrue())
+          expect(state.paginated[mockMovieCategory.id]?.list) == [mockMovie.id]
+          expect(storedError).notTo(beNil())
           expect({
-            guard case let .failed(error) = state.paginated[mockMovieCategory.id]?.reload
-            else { return { .failed(reason: "wrong enum case") }}
             guard
-              let myError = error as? MockError,
-              myError.description == "failed movies list error"
+              let myError = storedError as? MockError,
+              myError.description == mockError.description
             else { return { .failed(reason: "wrong error associated value") } }
             return { .succeeded }
           }).to(succeed())
         }
         it("shouldn't affect at paginated count and should make CategoryState.loadMore .failed(error)") {
+          let mockError = MockError(description: "failed movies list error")
           let action = FailedMoviesListAction(categoryId: mockMovieCategory.id,
                                               requestType: .loadMore,
-                                              error: MockError(description: "failed movies list error"))
+                                              error: mockError)
           state = CategoriesPaginationState.reduce(action: action,
                                                    state: state)
+          let storedError = state.paginated[mockMovieCategory.id]?.loadMore.failedError
           expect(state.paginated.count) == 1
-          expect(state.paginated[mockMovieCategory.id]?.list.elementsEqual([mockMovie.id])).to(beTrue())
+          expect(state.paginated[mockMovieCategory.id]?.list) == [mockMovie.id]
+          expect(storedError).notTo(beNil())
           expect({
-            guard case let .failed(error) = state.paginated[mockMovieCategory.id]?.loadMore
-            else { return { .failed(reason: "wrong enum case") }}
             guard
-              let myError = error as? MockError,
-              myError.description == "failed movies list error"
+              let myError = storedError as? MockError,
+              myError.description == mockError.description
             else { return { .failed(reason: "wrong error associated value") } }
             return { .succeeded }
           }).to(succeed())

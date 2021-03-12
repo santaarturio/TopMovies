@@ -26,6 +26,3 @@ class MockUnsuccessfulMovieAPI: MovieAPIProtocol {
     category(.failure(MockError(description: "failed movie category")))
   }
 }
-
-let mockSuccessfulMovieAPI = MockSuccessfulMovieAPI()
-let mockUnsuccessfulMovieAPI = MockUnsuccessfulMovieAPI()

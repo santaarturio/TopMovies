@@ -24,7 +24,7 @@ class ConfigurationStateSpec: QuickSpec {
           let action = UpdateConfigurationAction.configureAPIKey(apiKey)
           state = ConfigurationState.reduce(action: action,
                                             state: state)
-          expect(state == .configuredAPIKey(apiKey)).to(beTrue())
+          expect(state) == .configuredAPIKey(apiKey)
         }
       }
     }

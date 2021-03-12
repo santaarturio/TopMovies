@@ -18,9 +18,9 @@ class ServiceSpec: QuickSpec {
       
       describe("successful API response") {
         beforeEach {
-          provider = MockStoreProvider<MainState> { state in service.newState(state: state) }
-          service = .init(movieAPI: mockSuccessfulMovieAPI,
-                          storeProvider: provider)
+          service = .init(movieAPI: MockSuccessfulMovieAPI(),
+                          storeProvider: MockStoreProvider<MainState>.init(onStateUpdate: ))
+          provider = service.provider
         }
         context("request all categories") {
           it("should dispatch 2 actions, DownloadingMovieCategoriesAction() with no parameters and CompletedMovieCategoriesAction() with right parameters") {
@@ -79,9 +79,9 @@ class ServiceSpec: QuickSpec {
       
       describe("unsuccessful API response") {
         beforeEach {
-          provider = MockStoreProvider<MainState> { state in service.newState(state: state) }
-          service = .init(movieAPI: mockUnsuccessfulMovieAPI,
-                          storeProvider: provider)
+          service = .init(movieAPI: MockUnsuccessfulMovieAPI(),
+                          storeProvider: MockStoreProvider<MainState>.init(onStateUpdate: ))
+          provider = service.provider
         }
         context("request all categories") {
           it("should dispatch 2 actions, DownloadingMovieCategoriesAction() with no parameters and FailedMovieCategoriesAction() with right parameters") {

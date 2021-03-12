@@ -6,6 +6,7 @@ PODS:
     - Alamofire (~> 5.0)
   - Nimble (9.0.0)
   - Nuke (9.2.4)
+  - Overture (0.5.0)
   - Quick (3.1.2)
   - ReSwift (6.0.0)
   - SnapKit (5.0.1)
@@ -14,6 +15,7 @@ DEPENDENCIES:
   - Moya (~> 14.0.0)
   - Nimble (~> 9.0.0)
   - Nuke (~> 9.2.4)
+  - Overture (~> 0.5)
   - Quick (~> 3.1.2)
   - ReSwift (~> 6.0.0)
   - SnapKit (~> 5.0.0)
@@ -24,6 +26,7 @@ SPEC REPOS:
     - Moya
     - Nimble
     - Nuke
+    - Overture
     - Quick
     - ReSwift
     - SnapKit
@@ -33,10 +36,11 @@ SPEC CHECKSUMS:
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
   Nuke: 44439f7a92e665a4f927ecd73cb51f91d93b0e0c
+  Overture: 2e6252ead5da6d3347f758047f27a31cb469d59d
   Quick: 60f0ea3b8e0cfc0df3259a5c06a238ad8b3c46e0
   ReSwift: 14e6f9409fe6bdc635e588208296a01f43b959c9
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: bf4cd2ae76c14cde6f32ad268f9515ace15766b9
+PODFILE CHECKSUM: 6f1c81a3ece79a51c28f63b85ecfd1e7ced659bd
 
 COCOAPODS: 1.10.1

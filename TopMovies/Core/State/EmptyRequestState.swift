@@ -13,6 +13,8 @@ enum EmptyRequestState {
 }
 
 extension EmptyRequestState {
+  var isInitial: Bool { guard case .initial = self else { return false }; return true}
   var isRequested: Bool { guard case .requested = self else { return false }; return true }
   var isDownloading: Bool { guard case .downloading = self else { return false }; return true }
+  var failedError: Error? { guard case let .failed(error) = self else { return nil }; return error }
 }

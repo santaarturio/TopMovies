@@ -7,7 +7,7 @@
 
 @testable import TopMovies
 
-public let mockMovieDTO = MovieDTO(adult: false,
+let mockMovieDTO = MovieDTO(adult: false,
                                    backdropPath: "/x0VXCWSTny5JRvpgDnw5ptwQyhA.jpg",
                                    genreIds: [878, 28, 53, 12, 27, 35],
                                    id: 346910,
@@ -20,7 +20,7 @@ public let mockMovieDTO = MovieDTO(adult: false,
                                    video: false,
                                    voteAverage: 5.6,
                                    voteCount: 3232)
-public let mockMovieDTO2 = MovieDTO(adult: false,
+let mockMovieDTO2 = MovieDTO(adult: false,
                                    backdropPath: "/tintsaQ0WLzZsTMkTiqtMB3rfc8.jpg",
                                    genreIds: [28, 80, 35],
                                    id: 522627,
@@ -34,23 +34,23 @@ public let mockMovieDTO2 = MovieDTO(adult: false,
                                    voteAverage: 7.7,
                                    voteCount: 2939)
 
-public let mockCategoryDTO = CategoryDTO(name: "Popular",
+let mockCategoryDTO = CategoryDTO(name: "Popular",
                                          page: 9,
                                          results: [mockMovieDTO],
                                          totalPages: 500,
                                          totalResults: 10000)
-public let mockCategoryDTO2 = CategoryDTO(name: "Top Rated",
+let mockCategoryDTO2 = CategoryDTO(name: "Top Rated",
                                          page: 10,
                                          results: [mockMovieDTO2],
                                          totalPages: 500,
                                          totalResults: 10000)
 
-public let mockMovie = Movie(dto: mockMovieDTO)
-public let mockMovie2 = Movie(dto: mockMovieDTO2)
+let mockMovie = Movie(dto: mockMovieDTO)
+let mockMovie2 = Movie(dto: mockMovieDTO2)
 
-public let mockMovieCategory = MovieCategory(dto: mockCategoryDTO)
-public let mockMovieCategory2 = MovieCategory(dto: mockCategoryDTO2)
+let mockMovieCategory = MovieCategory(dto: mockCategoryDTO)
+let mockMovieCategory2 = MovieCategory(dto: mockCategoryDTO2)
 
-public struct MockError: Error {
+struct MockError: Error {
   let description: String
 }

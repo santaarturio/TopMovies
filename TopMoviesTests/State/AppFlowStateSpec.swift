@@ -21,7 +21,7 @@ class AppFlowStateSpec: QuickSpec {
       
       context("state is .launching by default") {
         it("should be .launching") {
-          expect(state == .launching).to(beTrue())
+          expect(state) == .launching
         }
       }
       
@@ -30,7 +30,7 @@ class AppFlowStateSpec: QuickSpec {
           action = .applicationDidFinishLaunching
           state = AppFlowState.reduce(action: action,
                                       state: state)
-          expect(state == .foreground).to(beTrue())
+          expect(state) == .foreground
         }
       }
       
@@ -39,7 +39,7 @@ class AppFlowStateSpec: QuickSpec {
           action = .applicationWillEnterForeground
           state = AppFlowState.reduce(action: action,
                                       state: state)
-          expect(state == .foreground).to(beTrue())
+          expect(state) == .foreground
         }
       }
       
@@ -48,7 +48,7 @@ class AppFlowStateSpec: QuickSpec {
           action = .applicationDidEnterBackground
           state = AppFlowState.reduce(action: action,
                                       state: state)
-          expect(state == .background).to(beTrue())
+          expect(state) == .background
         }
       }
       
@@ -57,7 +57,7 @@ class AppFlowStateSpec: QuickSpec {
           action = .applicationWillTerminate
           state = AppFlowState.reduce(action: action,
                                       state: state)
-          expect(state == .terminating).to(beTrue())
+          expect(state) == .terminating
         }
       }
     }
