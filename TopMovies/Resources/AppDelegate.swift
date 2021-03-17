@@ -6,6 +6,7 @@
 //
 
 import ReSwift
+import Overture
 
 typealias MainStore = Store<MainState>
 let mainStore = MainStore(reducer: mainReducer, state: nil, middleware: [allActionsMiddleware])
@@ -14,15 +15,15 @@ let mainStore = MainStore(reducer: mainReducer, state: nil, middleware: [allActi
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
-  var movieService: MovieService?
+  var movieService: MovieService<StoreProvider<MainState>>?
   
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
-    window = UIWindow(frame: UIScreen.main.bounds)
-    Router.shared.setup(with: window)
     configureAPIKey()
     createService()
+    window = UIWindow(frame: UIScreen.main.bounds)
+    Router.shared.setup(with: window)
     
     return true
   }
@@ -39,8 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   func createService() {
     let movieAPI = MovieAPI()
-    movieService = MovieService(movieAPI: movieAPI)
-    mainStore.dispatch(RequestMovieCategoriesAction())
+    movieService = MovieService(
+      movieAPI: movieAPI,
+      storeProvider: curry(StoreProvider<MainState>.init(store: onStateUpdate:))(mainStore)
+    )
   }
   func applicationDidFinishLaunching(_ application: UIApplication) {
     mainStore.dispatch(AppFlowAction.applicationDidFinishLaunching)

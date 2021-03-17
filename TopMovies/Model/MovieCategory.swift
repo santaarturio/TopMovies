@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieCategory {
+struct MovieCategory: Equatable {
   let id: ID
   let title: String
   
