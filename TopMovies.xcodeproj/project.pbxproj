@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26091037260237AC00C4ED73 /* TopMoviesConnectorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26091036260237AC00C4ED73 /* TopMoviesConnectorSpec.swift */; };
 		26448B5525CA96DC00D240E7 /* RequestState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448B5425CA96DC00D240E7 /* RequestState.swift */; };
 		26448B7925CC102B00D240E7 /* MovieTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448B7825CC102B00D240E7 /* MovieTarget.swift */; };
 		26448B8425CC3B2400D240E7 /* TMDB-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26448B8325CC3B2400D240E7 /* TMDB-Info.plist */; };
@@ -19,6 +20,7 @@
 		2648E0DB25FF7F25007EC61F /* BaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2648E0DA25FF7F25007EC61F /* BaseService.swift */; };
 		2648E14425FFFEDC007EC61F /* AutoPrism.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 2648E14325FFFEDC007EC61F /* AutoPrism.stencil */; };
 		2648E16D260019D6007EC61F /* AutoEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2648E16C260019D6007EC61F /* AutoEnum.swift */; };
+		26570AB026024A6900817FA1 /* CategoryVCConnectorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26570AAF26024A6900817FA1 /* CategoryVCConnectorSpec.swift */; };
 		2657724D25D4079700A05CEE /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657724C25D4079700A05CEE /* Router.swift */; };
 		2657725825D40CBF00A05CEE /* BaseConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657725725D40CBF00A05CEE /* BaseConnector.swift */; };
 		2657725B25D40DD100A05CEE /* TopMoviesConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657725A25D40DD100A05CEE /* TopMoviesConnector.swift */; };
@@ -92,6 +94,7 @@
 		0653D1B8C665C67DD39443FA /* Pods-TopMovies.stage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopMovies.stage.xcconfig"; path = "Target Support Files/Pods-TopMovies/Pods-TopMovies.stage.xcconfig"; sourceTree = "<group>"; };
 		0ECE3AF53A67C6DBB85E6C37 /* Pods_TopMovies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TopMovies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F11A4FA5D52C68416AB823F /* Pods-TopMovies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopMovies.debug.xcconfig"; path = "Target Support Files/Pods-TopMovies/Pods-TopMovies.debug.xcconfig"; sourceTree = "<group>"; };
+		26091036260237AC00C4ED73 /* TopMoviesConnectorSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TopMoviesConnectorSpec.swift; path = TopMoviesTests/Connector/TopMoviesConnectorSpec.swift; sourceTree = SOURCE_ROOT; };
 		26448B5425CA96DC00D240E7 /* RequestState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestState.swift; sourceTree = "<group>"; };
 		26448B7825CC102B00D240E7 /* MovieTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTarget.swift; sourceTree = "<group>"; };
 		26448B8325CC3B2400D240E7 /* TMDB-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TMDB-Info.plist"; sourceTree = "<group>"; };
@@ -105,6 +108,7 @@
 		2648E0DE25FF808B007EC61F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2648E14325FFFEDC007EC61F /* AutoPrism.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoPrism.stencil; sourceTree = "<group>"; };
 		2648E16C260019D6007EC61F /* AutoEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoEnum.swift; sourceTree = "<group>"; };
+		26570AAF26024A6900817FA1 /* CategoryVCConnectorSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryVCConnectorSpec.swift; sourceTree = "<group>"; };
 		2657724C25D4079700A05CEE /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		2657725725D40CBF00A05CEE /* BaseConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConnector.swift; sourceTree = "<group>"; };
 		2657725A25D40DD100A05CEE /* TopMoviesConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMoviesConnector.swift; sourceTree = "<group>"; };
@@ -190,6 +194,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		260910482602388800C4ED73 /* Connector */ = {
+			isa = PBXGroup;
+			children = (
+				26091036260237AC00C4ED73 /* TopMoviesConnectorSpec.swift */,
+				26570AAF26024A6900817FA1 /* CategoryVCConnectorSpec.swift */,
+			);
+			path = Connector;
+			sourceTree = "<group>";
+		};
 		26448B9F25CD4D2000D240E7 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
@@ -438,6 +451,7 @@
 		52C116DD25F785AD002D6637 /* TopMoviesTests */ = {
 			isa = PBXGroup;
 			children = (
+				260910482602388800C4ED73 /* Connector */,
 				5212DCD625F90A670065E7E1 /* State */,
 				268DD8D325FA5D35001E0281 /* Service */,
 				52C116E025F785AD002D6637 /* Info.plist */,
@@ -784,8 +798,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				268FFD8525FA62EA00591A1A /* MockProvider.swift in Sources */,
+				26570AB026024A6900817FA1 /* CategoryVCConnectorSpec.swift in Sources */,
 				268FFD7F25FA5FD800591A1A /* MockMovieAPI.swift in Sources */,
 				268FFD9525FA7BC800591A1A /* MockMainState.swift in Sources */,
+				26091037260237AC00C4ED73 /* TopMoviesConnectorSpec.swift in Sources */,
 				529B921F25F7DD8300CD2E42 /* AppFlowStateSpec.swift in Sources */,
 				529B921725F7DACE00CD2E42 /* ConfigurationStateSpec.swift in Sources */,
 				5212DCB125F8BCB40065E7E1 /* CategoriesPaginationStateSpec.swift in Sources */,

@@ -5,17 +5,19 @@
 //  Created by anikolaenko on 10.02.2021.
 //
 
-import ReSwift
-
-final class TopMoviesConnector: BaseConnector<TopMoviesProps> {
+final class TopMoviesConnector<Provider: StoreProviderProtocol>: BaseConnector<TopMoviesProps, Provider>
+where Provider.ExpectedStateType == MainState {
   private typealias CategoriesRelational = [MovieCategory.ID: [Movie.ID]]
   private let numberOfVisiableMoviesInCategory = 13
   private var alreadyShown: CategoriesRelational = [:]
   
-  required init(updateProps: @escaping (TopMoviesProps) -> Void) {
-    super.init(updateProps: updateProps)
+  typealias StateUpdate = (Provider.ExpectedStateType) -> Void
+  override init(updateProps: @escaping (TopMoviesProps) -> Void,
+                provider: (@escaping StateUpdate) -> Provider) {
     
-    mainStore.dispatch(RequestMovieCategoriesAction())
+    super.init(updateProps: updateProps,
+               provider: provider)
+    self.provider.dispatch(RequestMovieCategoriesAction())
   }
   
   override func newState(state: MainState) {
@@ -26,7 +28,9 @@ final class TopMoviesConnector: BaseConnector<TopMoviesProps> {
     let updatedCategories = categoriesID
       .reduce(into: CategoriesRelational()) { dict, categoryID in
         var list = state.categoriesPaginationState.paginated[categoryID]?.list ?? []
-        list.removeLast(list.count - numberOfVisiableMoviesInCategory)
+        if list.count > numberOfVisiableMoviesInCategory {
+          list.removeLast(list.count - numberOfVisiableMoviesInCategory)
+        }
         dict[categoryID] = list
       }
     if isNewCategoriesList(oldList: alreadyShown,

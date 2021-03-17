@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Overture
 
 class Router {
   var window : UIWindow?
@@ -20,7 +21,8 @@ class Router {
       connector: TopMoviesConnector(
         updateProps: { [unowned startVc] (props) in
           startVc.connect(props: props)
-        }))
+        },
+        provider: curry(StoreProvider<MainState>.init(store: onStateUpdate: ))(mainStore)))
     navigationController = UINavigationController(rootViewController: startVc)
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
@@ -43,9 +45,12 @@ class Router {
   private func setupCategoryVC(_ categoryId: MovieCategory.ID) -> MoviesCategoryVC {
     let categoryVc = MoviesCategoryVC()
     categoryVc.configureConnectionWith(
-      connector: CategoryVCConnector(categoryId: categoryId) { [unowned categoryVc] (props) in
-        categoryVc.connect(props: props)
-      })
+      connector: CategoryVCConnector(
+        categoryId: categoryId,
+        updateProps: { [unowned categoryVc] (props) in
+          categoryVc.connect(props: props)
+        },
+        provider: curry(StoreProvider<MainState>.init(store: onStateUpdate: ))(mainStore)))
     return categoryVc
   }
 }

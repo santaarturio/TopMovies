@@ -5,19 +5,20 @@
 //  Created by Macbook Pro  on 17.02.2021.
 //
 
-import Foundation
-
-final class CategoryVCConnector: BaseConnector<MoviesCategoryVCProps> {
+final class CategoryVCConnector<Provider: StoreProviderProtocol>: BaseConnector<MoviesCategoryVCProps, Provider>
+where Provider.ExpectedStateType == MainState {
   var categoryId: MovieCategory.ID?
   
-  required init(updateProps: @escaping (MoviesCategoryVCProps) -> Void) {
-    super.init(updateProps: updateProps)
-  }
-  convenience init(categoryId: MovieCategory.ID, updateProps: @escaping (MoviesCategoryVCProps) -> Void) {
-    self.init(updateProps: updateProps)
+  typealias StateUpdate = (Provider.ExpectedStateType) -> Void
+  init(categoryId: MovieCategory.ID,
+       updateProps: @escaping (MoviesCategoryVCProps) -> Void,
+       provider: (@escaping StateUpdate) -> Provider) {
+    
     self.categoryId = categoryId
-    mainStore.dispatch(RequestedMoviesListAction(categoryId: categoryId,
-                                                 requestType: .loadMore))
+    super.init(updateProps: updateProps,
+               provider: provider)
+    self.provider.dispatch(RequestedMoviesListAction(categoryId: categoryId,
+                                                     requestType: .loadMore))
   }
   
   override func newState(state: MainState) {

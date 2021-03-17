@@ -20,7 +20,10 @@ struct MoviesCategoryVCProps {
 
 // MARK: - VC class
 final class MoviesCategoryVC: UIViewController, PropsConnectable {
-  var propsConnector: BaseConnector<MoviesCategoryVCProps>?
+  typealias Props = MoviesCategoryVCProps
+  typealias Provider = StoreProvider<MainState>
+  
+  var propsConnector: BaseConnector<Props, Provider>?
   var props = MoviesCategoryVCProps(categoryName: "",
                                     isReloadInProgress: false,
                                     isLoadMoreInProgress: false,
@@ -43,7 +46,7 @@ final class MoviesCategoryVC: UIViewController, PropsConnectable {
   private var lastAnimatedCellPath = IndexPath()
   
   // MARK: - Setup Connection
-  public func configureConnectionWith(connector: BaseConnector<MoviesCategoryVCProps>) {
+  public func configureConnectionWith(connector: BaseConnector<Props, Provider>) {
     propsConnector = connector
   }
   public func connect(props: MoviesCategoryVCProps) {

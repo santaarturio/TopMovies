@@ -5,11 +5,13 @@
 //  Created by anikolaenko on 12.02.2021.
 //
 
-import Foundation
-
 protocol PropsConnectable {
   associatedtype Props
-  var propsConnector: BaseConnector<Props>? { get set }
-  func configureConnectionWith(connector: BaseConnector<Props>)
+  associatedtype Provider: StoreProviderProtocol
+  
+  typealias Connector = BaseConnector<Props, Provider>
+  var propsConnector: Connector? { get set }
+  
+  func configureConnectionWith(connector: Connector)
   func connect(props: Props)
 }
