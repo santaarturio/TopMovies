@@ -49,8 +49,8 @@ class MovieCategoriesStateSpec: QuickSpec {
           state = MovieCategoriesState.reduce(action: action,
                                               state: state)
           expect(state.relational.count == 1).to(beTrue())
-          expect(state.categoriesList.completedData).notTo(beNil())
-          expect(state.categoriesList.completedData == [mockMovieCategory2.id]).to(beTrue())
+          expect(state.categoriesList.completed).notTo(beNil())
+          expect(state.categoriesList.completed == [mockMovieCategory2.id]).to(beTrue())
         }
       }
       
@@ -62,10 +62,10 @@ class MovieCategoriesStateSpec: QuickSpec {
                                               state: state)
           expect(state.relational.count == 1
                   && state.relational[mockMovieCategory.id] == mockMovieCategory).to(beTrue())
-          expect(state.categoriesList.failedError).notTo(beNil())
+          expect(state.categoriesList.failed).notTo(beNil())
           expect({
             guard
-              let myError = state.categoriesList.failedError as? MockError,
+              let myError = state.categoriesList.failed as? MockError,
               myError.description == mockError.description
             else { return { .failed(reason: "wrong error associated value") } }
             return { .succeeded }

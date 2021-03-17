@@ -7,7 +7,7 @@
 
 import ReSwift
 
-enum AppFlowState {
+enum AppFlowState: AutoEnum {
   case launching
   case foreground
   case background

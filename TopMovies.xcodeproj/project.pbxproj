@@ -17,6 +17,8 @@
 		26448BAF25CD580200D240E7 /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BAE25CD580200D240E7 /* MovieDTO.swift */; };
 		26448BB225CD5CF200D240E7 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26448BB125CD5CF200D240E7 /* URLManager.swift */; };
 		2648E0DB25FF7F25007EC61F /* BaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2648E0DA25FF7F25007EC61F /* BaseService.swift */; };
+		2648E14425FFFEDC007EC61F /* AutoPrism.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 2648E14325FFFEDC007EC61F /* AutoPrism.stencil */; };
+		2648E16D260019D6007EC61F /* AutoEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2648E16C260019D6007EC61F /* AutoEnum.swift */; };
 		2657724D25D4079700A05CEE /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657724C25D4079700A05CEE /* Router.swift */; };
 		2657725825D40CBF00A05CEE /* BaseConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657725725D40CBF00A05CEE /* BaseConnector.swift */; };
 		2657725B25D40DD100A05CEE /* TopMoviesConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657725A25D40DD100A05CEE /* TopMoviesConnector.swift */; };
@@ -43,6 +45,7 @@
 		268FFD8B25FA747A00591A1A /* StoreProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268FFD8A25FA747A00591A1A /* StoreProviderProtocol.swift */; };
 		268FFD9525FA7BC800591A1A /* MockMainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268FFD9425FA7BC800591A1A /* MockMainState.swift */; };
 		3EA16A9AD0F4CB32D5C053BD /* Pods_TopMovies_TopMoviesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D8577B2A2BC45EFC0E1294 /* Pods_TopMovies_TopMoviesTests.framework */; };
+		521010FE2601035000319F75 /* AutoPrism.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521010FD2601035000319F75 /* AutoPrism.generated.swift */; };
 		5212DCB125F8BCB40065E7E1 /* CategoriesPaginationStateSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5212DCB025F8BCB40065E7E1 /* CategoriesPaginationStateSpec.swift */; };
 		5212DCD125F906DE0065E7E1 /* MoviesStateSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5212DCD025F906DE0065E7E1 /* MoviesStateSpec.swift */; };
 		52188E4825EDAB730043C994 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52188E4725EDAB730043C994 /* DateFormatter+Extensions.swift */; };
@@ -100,6 +103,8 @@
 		26448BB125CD5CF200D240E7 /* URLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
 		2648E0DA25FF7F25007EC61F /* BaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseService.swift; sourceTree = "<group>"; };
 		2648E0DE25FF808B007EC61F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2648E14325FFFEDC007EC61F /* AutoPrism.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoPrism.stencil; sourceTree = "<group>"; };
+		2648E16C260019D6007EC61F /* AutoEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoEnum.swift; sourceTree = "<group>"; };
 		2657724C25D4079700A05CEE /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		2657725725D40CBF00A05CEE /* BaseConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConnector.swift; sourceTree = "<group>"; };
 		2657725A25D40DD100A05CEE /* TopMoviesConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMoviesConnector.swift; sourceTree = "<group>"; };
@@ -126,6 +131,7 @@
 		268FFD8A25FA747A00591A1A /* StoreProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreProviderProtocol.swift; sourceTree = "<group>"; };
 		268FFD9425FA7BC800591A1A /* MockMainState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMainState.swift; sourceTree = "<group>"; };
 		2A9DE8D973541216536D8BA7 /* Pods-TopMovies-TopMoviesTests.stage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopMovies-TopMoviesTests.stage.xcconfig"; path = "Target Support Files/Pods-TopMovies-TopMoviesTests/Pods-TopMovies-TopMoviesTests.stage.xcconfig"; sourceTree = "<group>"; };
+		521010FD2601035000319F75 /* AutoPrism.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AutoPrism.generated.swift; path = TopMovies/Generated/AutoPrism.generated.swift; sourceTree = SOURCE_ROOT; };
 		5212DCB025F8BCB40065E7E1 /* CategoriesPaginationStateSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesPaginationStateSpec.swift; sourceTree = "<group>"; };
 		5212DCD025F906DE0065E7E1 /* MoviesStateSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesStateSpec.swift; sourceTree = "<group>"; };
 		52188E4725EDAB730043C994 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -191,6 +197,15 @@
 				26448BA425CD52FE00D240E7 /* CategoryDTO.swift */,
 			);
 			path = DTO;
+			sourceTree = "<group>";
+		};
+		2648E14725FFFF72007EC61F /* Prisms */ = {
+			isa = PBXGroup;
+			children = (
+				2648E16C260019D6007EC61F /* AutoEnum.swift */,
+				2648E14325FFFEDC007EC61F /* AutoPrism.stencil */,
+			);
+			path = Prisms;
 			sourceTree = "<group>";
 		};
 		264AA3FF25C853290095D22D /* Reducer */ = {
@@ -312,6 +327,7 @@
 			children = (
 				523B689925F0F84D008A8032 /* Assets.swift */,
 				523B689A25F0F84D008A8032 /* Strings.swift */,
+				521010FD2601035000319F75 /* AutoPrism.generated.swift */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -408,6 +424,7 @@
 			children = (
 				521D742125F11309001D48BD /* Localizable.strings */,
 				52A4D8E125C308E900810667 /* Assets.xcassets */,
+				2648E14725FFFF72007EC61F /* Prisms */,
 				523B688D25F0F3A5008A8032 /* Generated */,
 				2657724C25D4079700A05CEE /* Router.swift */,
 				52A4D8D825C308E500810667 /* AppDelegate.swift */,
@@ -467,6 +484,7 @@
 			buildPhases = (
 				835E3AC482783F25F6848E99 /* [CP] Check Pods Manifest.lock */,
 				521D740125F106D2001D48BD /* SwiftGen */,
+				521010E42600FEFC00319F75 /* Sourcery */,
 				5278AEBC25C43FEF00286566 /* SwiftLint */,
 				52A4D8D125C308E500810667 /* Sources */,
 				52A4D8D225C308E500810667 /* Frameworks */,
@@ -547,6 +565,7 @@
 			files = (
 				52A4D8E525C308E900810667 /* LaunchScreen.storyboard in Resources */,
 				521D741F25F11309001D48BD /* Localizable.strings in Resources */,
+				2648E14425FFFEDC007EC61F /* AutoPrism.stencil in Resources */,
 				52A4D8E225C308E900810667 /* Assets.xcassets in Resources */,
 				26448B8425CC3B2400D240E7 /* TMDB-Info.plist in Resources */,
 			);
@@ -600,6 +619,26 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		521010E42600FEFC00319F75 /* Sourcery */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Sourcery;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/${INPUT_FILE_BASE}.generated.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh sources/stencil.sh \"${INPUT_FILE_DIR}/${INPUT_FILE_NAME}\" \"${DERIVED_SOURCES_DIR}/${INPUT_FILE_BASE}.generated.swift\"\n\nset -e\nif ! which sourcery > /dev/null; then\necho \"error: Sourcery is missing. Make Mint install & run sourcery.\"\nexit 1\nfi\ntemplates=$1\noutput=$2\nsourcery --sources sources --templates \"${templates}\" --output \"${output}\"\n";
 		};
 		521D740125F106D2001D48BD /* SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -692,6 +731,7 @@
 				266B93B825D2923E00194050 /* TopMoviesViewController.swift in Sources */,
 				522CD8FC25E424E1006B2E55 /* CategoriesPaginationState.swift in Sources */,
 				268DD8B525FA2304001E0281 /* StoreProvider.swift in Sources */,
+				2648E16D260019D6007EC61F /* AutoEnum.swift in Sources */,
 				522CD92325E52241006B2E55 /* DefaultableProtocol.swift in Sources */,
 				5288FF3D25E9C01F00409644 /* ANTableCellShadowView.swift in Sources */,
 				26448B5525CA96DC00D240E7 /* RequestState.swift in Sources */,
@@ -729,6 +769,7 @@
 				26448B8D25CC3E3300D240E7 /* ConfigurationState.swift in Sources */,
 				52A4D8D925C308E500810667 /* AppDelegate.swift in Sources */,
 				52D2DF3B25DC88D600011A27 /* MovieCategoryRequest.swift in Sources */,
+				521010FE2601035000319F75 /* AutoPrism.generated.swift in Sources */,
 				52D667DE25E91D5D00D472E0 /* SeeAllMoviesCollectionViewCell.swift in Sources */,
 				2657727825D6737700A05CEE /* PropsConnectableProtocol.swift in Sources */,
 				26448BAF25CD580200D240E7 /* MovieDTO.swift in Sources */,
