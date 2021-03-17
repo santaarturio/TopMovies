@@ -1,0 +1,42 @@
+{# macros #}
+// macro associatedValueVarMultiType case
+{% macro associatedValueVarMultiType case %}
+  ({% for associatedValue in case.associatedValues %}{% if associatedValue.localName != nil %}{{ associatedValue.localName }}: {% endif %}{% if associatedValue.type.name != nil %}{{ associatedValue.type.name }}{% else %}{{ associatedValue.typeName }}{% endif %}{% if associatedValue.isOptional %}?{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %})?
+{% endmacro %}
+// macro associatedValueVarUnitType case
+{% macro associatedValueVarUnitType case %}{% if associatedValue.localName != nil %}{{ associatedValue.localName }}:{% endif %}{% if case.associatedValues.first.type.name != nil %}{{ case.associatedValues.first.type.name }}?{% else %}{{case.associatedValues.first.typeName }}?{% endif %}{% endmacro %}
+// macro associatedValueVar case
+{% macro associatedValueVar case %}
+  var {{case.name}}: {% if case.associatedValues.all.count > 1 %}{% call associatedValueVarMultiType case %}{% else %}{% call associatedValueVarUnitType case %}{% endif %} { guard case let .{{ case.name }}({{ case.name }}) = self else { return nil }; return {{case.name}} }
+{% endmacro %}
+// macro simpleVar case
+{% macro simpleVar case %}
+  var is{{ case.name|upperFirstLetter }}: Bool { guard case .{{ case.name }} = self else { return false }; return true }
+{% endmacro %}
+// macro setCase case
+{% macro setCase case %}
+  {% if case.hasAssociatedValue %}
+    {% call associatedValueVar case %}
+  {% else %}
+    {% call simpleVar case %}
+  {% endif %}
+{% endmacro %}
+
+// MARK: - AutoEnum subsribers
+{% for enum in types.implementing.AutoEnum where enum.kind == 'enum' %}
+extension {{ enum.name }} {
+  {% for case in enum.cases %}
+    {% call setCase case %}
+  {% endfor %}
+}
+{% endfor %}
+
+/* add '// sourcery: autoGetter' before some case for usage */
+// MARK: - Annotations
+{% for enum in types.enums where not enum.implements.AutoEnum %}
+  {% for case in enum.cases|annotated:"autoGetter" %}
+extension {{ enum.name }} {
+  {% call setCase case %}
+}
+  {% endfor %}
+{% endfor %}

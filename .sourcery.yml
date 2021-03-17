@@ -1,0 +1,5 @@
+sources:
+    - TopMovies
+templates:
+    - TopMovies/Resources/Prisms
+output: TopMovies/Generated

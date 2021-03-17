@@ -117,7 +117,7 @@ class CategoriesPaginationStateSpec: QuickSpec {
                                               error: mockError)
           state = CategoriesPaginationState.reduce(action: action,
                                                    state: state)
-          let storedError = state.paginated[mockMovieCategory.id]?.reload.failedError
+          let storedError = state.paginated[mockMovieCategory.id]?.reload.failed
           expect(state.paginated.count) == 1
           expect(state.paginated[mockMovieCategory.id]?.list) == [mockMovie.id]
           expect(storedError).notTo(beNil())
@@ -136,7 +136,7 @@ class CategoriesPaginationStateSpec: QuickSpec {
                                               error: mockError)
           state = CategoriesPaginationState.reduce(action: action,
                                                    state: state)
-          let storedError = state.paginated[mockMovieCategory.id]?.loadMore.failedError
+          let storedError = state.paginated[mockMovieCategory.id]?.loadMore.failed
           expect(state.paginated.count) == 1
           expect(state.paginated[mockMovieCategory.id]?.list) == [mockMovie.id]
           expect(storedError).notTo(beNil())
