@@ -7,7 +7,7 @@
 
 final class CategoryVCConnector<Provider: StoreProviderProtocol>: BaseConnector<MoviesCategoryVCProps, Provider>
 where Provider.ExpectedStateType == MainState {
-  var categoryId: MovieCategory.ID?
+  private let categoryId: MovieCategory.ID
   
   typealias StateUpdate = (Provider.ExpectedStateType) -> Void
   init(categoryId: MovieCategory.ID,
@@ -23,7 +23,6 @@ where Provider.ExpectedStateType == MainState {
   
   override func newState(state: MainState) {
     guard
-      let categoryId = categoryId,
       let categoryName = state.movieCategoriesState.relational[categoryId]?.title,
       let categoryState = state.categoriesPaginationState.paginated[categoryId]
     else { return }
@@ -35,10 +34,10 @@ where Provider.ExpectedStateType == MainState {
                                         .compactMap {
                                           MovieTableViewCellProps(movie: state.moviesState.relational[$0])
                                         },
-                                      actionReload: { mainStore
+                                      actionReload: { [unowned self] in mainStore
                                         .dispatch(RequestedMoviesListAction(categoryId: categoryId,
                                                                             requestType: .reload)) },
-                                      actionLoadMore: { mainStore
+                                      actionLoadMore: { [unowned self] in mainStore
                                         .dispatch(RequestedMoviesListAction(categoryId: categoryId,
                                                                             requestType: .loadMore)) })
     _updateProps(props)

@@ -1,5 +1,5 @@
 //
-//  TopMoviesViewController.swift
+//  TopMoviesVC.swift
 //  TopMovies
 //
 //  Created by anikolaenko on 09.02.2021.
@@ -14,10 +14,7 @@ struct TopMoviesProps {
 }
 
 // MARK: - VC class
-final class TopMoviesViewController: UIViewController, PropsConnectable {
-  typealias Props = TopMoviesProps
-  typealias Provider = StoreProvider<MainState>
-  internal var propsConnector: BaseConnector<Props, Provider>?
+final class TopMoviesVC: BaseVC<TopMoviesProps, StoreProvider<MainState>> {
   private var topMoviesProps = TopMoviesProps(movieCategories: []) {
     didSet {
       movieCategoriesTableView.reloadData()
@@ -28,10 +25,7 @@ final class TopMoviesViewController: UIViewController, PropsConnectable {
   private let movieCategoryCellIHeight: CGFloat = 220.0
   
   // MARK: - Setup Connection
-  public func configureConnectionWith(connector: BaseConnector<Props, Provider>) {
-    propsConnector = connector
-  }
-  internal func connect(props: Props) {
+  override func connect(props: TopMoviesProps) {
     topMoviesProps = props
   }
   
@@ -67,7 +61,7 @@ final class TopMoviesViewController: UIViewController, PropsConnectable {
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
-extension TopMoviesViewController: UITableViewDataSource, UITableViewDelegate {
+extension TopMoviesVC: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     topMoviesProps.movieCategories.count
   }

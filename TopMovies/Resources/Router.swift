@@ -16,13 +16,16 @@ class Router {
   
   func setup(with window: UIWindow?) {
     self.window = window
-    let startVc = TopMoviesViewController()
-    startVc.configureConnectionWith(
-      connector: TopMoviesConnector(
-        updateProps: { [unowned startVc] (props) in
-          startVc.connect(props: props)
-        },
-        provider: curry(StoreProvider<MainState>.init(store: onStateUpdate: ))(mainStore)))
+    let startVc = TopMoviesVC()
+    startVc.configureConnection(with:
+        flip(
+          curry(
+            TopMoviesConnector
+              .init(updateProps: provider: ))
+        )(curry(
+            StoreProvider<MainState>
+              .init(store: onStateUpdate: ))(mainStore))
+    )
     navigationController = UINavigationController(rootViewController: startVc)
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
@@ -44,13 +47,15 @@ class Router {
   
   private func setupCategoryVC(_ categoryId: MovieCategory.ID) -> MoviesCategoryVC {
     let categoryVc = MoviesCategoryVC()
-    categoryVc.configureConnectionWith(
-      connector: CategoryVCConnector(
-        categoryId: categoryId,
-        updateProps: { [unowned categoryVc] (props) in
-          categoryVc.connect(props: props)
-        },
-        provider: curry(StoreProvider<MainState>.init(store: onStateUpdate: ))(mainStore)))
+    categoryVc.configureConnection(with:
+        flip(
+          curry(
+            CategoryVCConnector
+              .init(categoryId: updateProps: provider: ))(categoryId)
+        )(curry(
+            StoreProvider<MainState>
+              .init(store: onStateUpdate: ))(mainStore))
+    )
     return categoryVc
   }
 }
