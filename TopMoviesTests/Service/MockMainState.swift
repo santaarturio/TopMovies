@@ -7,6 +7,7 @@
 
 @testable import TopMovies
 
+// MARK: - All Categories
 let mockMainStateAllCategories
   = MainState(configurationState: .initial,
               appFlowState: .foreground,
@@ -31,6 +32,7 @@ let mockMainStateAllCategoriesCompleted
               moviesState: .init(relational: [mockMovie.id: mockMovie,
                                               mockMovie2.id: mockMovie2]))
 
+// MARK: - Some Category
 let mockMainStateSomeCategoryReload
   = MainState(configurationState: .initial,
               appFlowState: .foreground,
@@ -61,3 +63,21 @@ let mockMainStateSomeCategoryCompleted
                                                                                        loadMore: .initial,
                                                                                        pageInfo: .next(10))]),
               moviesState: .init(relational: [mockMovie.id: mockMovie]))
+
+// MARK: - Some Movie
+let mockMainStateSomeMovieDetailRequested
+  = MainState(configurationState: .initial,
+              appFlowState: .foreground,
+              movieCategoriesState: .init(relational: [:], categoriesList: .initial),
+              categoriesPaginationState: .init(paginated: [:]),
+              moviesState: .init(detailInfo: [mockMovie.id: .requested],
+                                 relational: [:]))
+
+let mockMainStateSomeMovieDetailCompleted
+  = MainState(configurationState: .initial,
+              appFlowState: .foreground,
+              movieCategoriesState: .init(relational: [mockMovieCategory.id: mockMovieCategory],
+                                          categoriesList: .completed(data: [mockMovieCategory.id])),
+              categoriesPaginationState: .init(paginated: [:]),
+              moviesState: .init(detailInfo: [mockMovie.id: .updated],
+                                 relational: [mockMovie.id: mockMovie]))

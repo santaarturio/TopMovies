@@ -75,6 +75,22 @@ class ServiceSpec: QuickSpec {
             }).to(succeed())
           }
         }
+        context("request some movie detail") {
+          it("should dispatch 2 actions with right parameters, DownloadingMovieDetailAction() and CompletedMovieDetailAction()") {
+            provider.onStateUpdate(mockMainStateSomeMovieDetailRequested)
+            expect(provider.dispatchedActions.count) == 2
+            expect({
+              guard
+                let downloadingAction = provider.dispatchedActions.first as? DownloadingMovieDetailAction,
+                let completedAction = provider.dispatchedActions.last as? CompletedMovieDetailAction
+              else { return { .failed(reason: "wrong action type")}}
+              expect(downloadingAction.movieId) == mockMovie.id
+              expect(completedAction.movie.id) == mockMovie.id
+              expect(completedAction.movie) == mockMovie
+              return { .succeeded }
+            }).to(succeed())
+          }
+        }
       }
       
       describe("unsuccessful API response") {
@@ -132,6 +148,23 @@ class ServiceSpec: QuickSpec {
               expect(failedAction.categoryId) == mockMovieCategory.id
               expect(failedAction.requestType) == .loadMore
               expect(myError.description) == "failed movie category"
+              return { .succeeded }
+            }).to(succeed())
+          }
+        }
+        context("request some movie detail") {
+          it("should dispatch 2 actions with right parameters, DownloadingMovieDetailAction() and FailedMovieDetailAction()") {
+            provider.onStateUpdate(mockMainStateSomeMovieDetailRequested)
+            expect(provider.dispatchedActions.count) == 2
+            expect({
+              guard
+                let downloadingAction = provider.dispatchedActions.first as? DownloadingMovieDetailAction,
+                let failedAction = provider.dispatchedActions.last as? FailedMovieDetailAction,
+                let myError = failedAction.error as? MockError
+              else { return { .failed(reason: "wrong action type")}}
+              expect(downloadingAction.movieId) == mockMovie.id
+              expect(failedAction.movieId) == mockMovie.id
+              expect(myError.description) == "failed movie detail"
               return { .succeeded }
             }).to(succeed())
           }
