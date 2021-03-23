@@ -17,8 +17,8 @@ where Provider.ExpectedStateType == MainState {
     self.categoryId = categoryId
     super.init(updateProps: updateProps,
                provider: provider)
-    self.provider.dispatch(RequestedMoviesListAction(categoryId: categoryId,
-                                                     requestType: .loadMore))
+    self.provider.dispatch(RequestedPreviewsListAction(categoryId: categoryId,
+                                                       requestType: .loadMore))
   }
   
   override func newState(state: MainState) {
@@ -32,14 +32,14 @@ where Provider.ExpectedStateType == MainState {
                                       isLoadMoreInProgress: categoryState.loadMore.isDownloading,
                                       movies: categoryState.list
                                         .compactMap {
-                                          MovieTableViewCellProps(movie: state.moviesState.relational[$0])
+                                          MovieTableViewCellProps(movie: state.moviesState.previewsRelational[$0])
                                         },
                                       actionReload: { [unowned self] in provider
-                                        .dispatch(RequestedMoviesListAction(categoryId: categoryId,
-                                                                            requestType: .reload)) },
+                                        .dispatch(RequestedPreviewsListAction(categoryId: categoryId,
+                                                                              requestType: .reload)) },
                                       actionLoadMore: { [unowned self] in provider
-                                        .dispatch(RequestedMoviesListAction(categoryId: categoryId,
-                                                                            requestType: .loadMore)) })
+                                        .dispatch(RequestedPreviewsListAction(categoryId: categoryId,
+                                                                              requestType: .loadMore)) })
     _updateProps(props)
   }
 }

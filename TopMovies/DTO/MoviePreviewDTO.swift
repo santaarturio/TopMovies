@@ -1,11 +1,11 @@
 //
-//  MovieDTO.swift
+//  MoviePreviewDTO.swift
 //  TopMovies
 //
 //  Created by anikolaenko on 05.02.2021.
 //
 
-struct MovieDTO: Decodable {
+struct MoviePreviewDTO: Decodable {
   let adult: Bool
   let backdropPath: String?
   let genreIds: [Int]
@@ -33,8 +33,8 @@ struct MovieDTO: Decodable {
   }
 }
 
-extension Movie {
-  init(dto: MovieDTO) {
+extension MoviePreview {
+  init(dto: MoviePreviewDTO) {
     id = ID(value: String(dto.id))
     adult = dto.adult
     title = dto.title

@@ -21,7 +21,7 @@ struct MovieTableViewCellProps {
   let descriptionLabeltext: String
 }
 extension MovieTableViewCellProps {
-  init?(movie: Movie?) {
+  init?(movie: MoviePreview?) {
     guard let movie = movie else { return nil }
     posterURL = movie.poster
     posterPlaceholderImage = Asset.Images.moviePlaceholder.image

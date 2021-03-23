@@ -1,5 +1,5 @@
 //
-//  MoviesListAction.swift
+//  PreviewsListAction.swift
 //  TopMovies
 //
 //  Created by Macbook Pro  on 21.02.2021.
@@ -9,21 +9,21 @@ import ReSwift
 
 enum RequestType { case reload, loadMore }
 
-struct RequestedMoviesListAction: Action {
+struct RequestedPreviewsListAction: Action {
   let categoryId: MovieCategory.ID
   let requestType: RequestType
 }
-struct DownloadingMoviesListAction: Action {
+struct DownloadingPreviewsListAction: Action {
   let categoryId: MovieCategory.ID
   let requestType: RequestType
 }
-struct CompletedMoviesListAction: Action {
+struct CompletedPreviewsListAction: Action {
   let categoryId: MovieCategory.ID
   let requestType: RequestType
-  let list: [Movie]
+  let list: [MoviePreview]
   let nextPage: Int?
 }
-struct FailedMoviesListAction: Action {
+struct FailedPreviewsListAction: Action {
   let categoryId: MovieCategory.ID
   let requestType: RequestType
   let error: Error

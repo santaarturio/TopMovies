@@ -8,7 +8,7 @@
 struct CategoryDTO: Decodable {
   var name: String!
   let page: Int
-  let results: [MovieDTO]
+  let results: [MoviePreviewDTO]
   let totalPages, totalResults: Int
   
   enum CodingKeys: String, CodingKey {

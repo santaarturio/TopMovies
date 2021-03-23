@@ -1,5 +1,5 @@
 //
-//  MovieModel.swift
+//  MoviePreview.swift
 //  TopMovies
 //
 //  Created by anikolaenko on 02.02.2021.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Movie: Hashable {
+struct MoviePreview: Hashable, Equatable {
   let id: ID
   let adult: Bool
   let title: String
