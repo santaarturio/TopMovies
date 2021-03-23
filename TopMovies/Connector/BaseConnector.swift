@@ -5,23 +5,22 @@
 //  Created by anikolaenko on 10.02.2021.
 //
 
-import ReSwift
-
-class BaseConnector<PropsType>: StoreSubscriber {
+class BaseConnector<PropsType, Provider: StoreProviderProtocol> {
   typealias Props = PropsType
-  typealias StoreSubscriberStateType = MainState
   
+  private(set) var provider: Provider!
   let _updateProps: (Props) -> Void
   
-  required init(updateProps: @escaping (Props) -> Void) {
+  typealias StateType = Provider.ExpectedStateType
+  typealias StateUpdate = (StateType) -> Void
+  
+  init(updateProps: @escaping (Props) -> Void,
+       provider: (@escaping StateUpdate) -> Provider) {
     _updateProps = updateProps
-    mainStore.subscribe(self)
-  }
-  deinit {
-    mainStore.unsubscribe(self)
+    self.provider = provider { [weak self] state in self?.newState(state: state) }
   }
   
-  func newState(state: MainState) {
+  func newState(state: StateType) {
     fatalError("newState func should be overriden")
   }
 }

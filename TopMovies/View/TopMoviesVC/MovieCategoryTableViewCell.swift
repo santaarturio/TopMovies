@@ -41,7 +41,7 @@ final class MovieCategoryTableViewCell: UITableViewCell {
   }
   
   // MARK: Cell configuration
-  public func configureWith(props: MovieCategoryProps) {
+  func configureWith(props: MovieCategoryProps) {
     self.props = props
   }
   
