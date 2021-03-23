@@ -5,25 +5,23 @@
 //  Created by Macbook Pro  on 28.01.2021.
 //
 
-import ReSwift
-import Overture
-
-typealias MainStore = Store<MainState>
-let mainStore = MainStore(reducer: mainReducer, state: nil, middleware: [allActionsMiddleware])
+import Swinject
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
-  var movieService: MovieService<StoreProvider<MainState>>?
+  @Inject var mainStore: MainStore
+  @Inject var router: RouterProtocol
   
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
-    configureAPIKey()
+    Assembler.registerDependencies()
     createService()
+    configureAPIKey()
     window = UIWindow(frame: UIScreen.main.bounds)
-    Router.shared.setup(with: window)
+    router.setup(with: window)
     
     return true
   }
@@ -39,11 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     mainStore.dispatch(UpdateConfigurationAction.configureAPIKey(apiKey))
   }
   func createService() {
-    let movieAPI = MovieAPI()
-    movieService = MovieService(
-      movieAPI: movieAPI,
-      storeProvider: curry(StoreProvider<MainState>.init(store: onStateUpdate:))(mainStore)
-    )
+    _ = Container.default.resolver.resolve(MovieService<StoreProvider<MainState>>.self)
   }
   func applicationDidFinishLaunching(_ application: UIApplication) {
     mainStore.dispatch(AppFlowAction.applicationDidFinishLaunching)

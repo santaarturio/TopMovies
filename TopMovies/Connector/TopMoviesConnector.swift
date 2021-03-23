@@ -7,6 +7,7 @@
 
 final class TopMoviesConnector<Provider: StoreProviderProtocol>: BaseConnector<TopMoviesProps, Provider>
 where Provider.ExpectedStateType == MainState {
+  @Inject var router: RouterProtocol
   private typealias CategoriesRelational = [MovieCategory.ID: [Movie.ID]]
   private let numberOfVisiableMoviesInCategory = 13
   private var alreadyShown: CategoriesRelational = [:]
@@ -47,7 +48,7 @@ where Provider.ExpectedStateType == MainState {
                 .compactMap{ MovieCollectionProps(
                   movie: state.moviesState.relational[$0]
                 ) } ?? [],
-              actionAllButton: { Router.shared.perform(route: .categoryVC(categoryId: categoryId)) })
+              actionAllButton: { [unowned self] in router.perform(route: .category(categoryId)) })
             }
         )
       _updateProps(props)

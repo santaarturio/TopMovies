@@ -34,10 +34,10 @@ where Provider.ExpectedStateType == MainState {
                                         .compactMap {
                                           MovieTableViewCellProps(movie: state.moviesState.relational[$0])
                                         },
-                                      actionReload: { [unowned self] in mainStore
+                                      actionReload: { [unowned self] in provider
                                         .dispatch(RequestedMoviesListAction(categoryId: categoryId,
                                                                             requestType: .reload)) },
-                                      actionLoadMore: { [unowned self] in mainStore
+                                      actionLoadMore: { [unowned self] in provider
                                         .dispatch(RequestedMoviesListAction(categoryId: categoryId,
                                                                             requestType: .loadMore)) })
     _updateProps(props)
