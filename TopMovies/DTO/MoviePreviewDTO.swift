@@ -10,7 +10,8 @@ struct MoviePreviewDTO: Decodable {
   let backdropPath: String?
   let genreIds: [Int]
   let id: Int
-  let originalTitle, overview: String
+  let originalTitle: String
+  let overview: String?
   let popularity: Double
   let posterPath: String?
   let releaseDate, title: String
@@ -38,10 +39,10 @@ extension MoviePreview {
     id = ID(value: String(dto.id))
     adult = dto.adult
     title = dto.title
-    description = dto.overview
+    description = dto.overview ?? L10n.App.Home.Movie.overview
     rating = dto.voteAverage
     voteCount = dto.voteCount
     releaseDate = dto.releaseDate
-    poster = URLManager.moviePosterURLFor(path: dto.posterPath ?? dto.backdropPath)
+    poster = URLManager.moviePosterURL(for: dto.posterPath ?? dto.backdropPath)
   }
 }

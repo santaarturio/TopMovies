@@ -20,11 +20,17 @@ internal enum L10n {
         internal static let adult = L10n.tr("Localizable", "app.home.movie.adult")
         /// No
         internal static let no = L10n.tr("Localizable", "app.home.movie.no")
+        /// no overview
+        internal static let overview = L10n.tr("Localizable", "app.home.movie.overview")
         /// Rating
         internal static let rating = L10n.tr("Localizable", "app.home.movie.rating")
         /// Yes
         internal static let yes = L10n.tr("Localizable", "app.home.movie.yes")
       }
+    }
+    internal enum MovieDetail {
+      /// no overview
+      internal static let overview = L10n.tr("Localizable", "app.movieDetail.overview")
     }
   }
 }

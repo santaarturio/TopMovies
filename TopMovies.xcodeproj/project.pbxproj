@@ -29,7 +29,6 @@
 		2657726225D55D7200A05CEE /* MovieCategoriesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657726125D55D7200A05CEE /* MovieCategoriesState.swift */; };
 		2657726525D566F200A05CEE /* MovieCategoriesAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657726425D566F200A05CEE /* MovieCategoriesAction.swift */; };
 		2657726825D5849F00A05CEE /* MoviesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657726725D5849F00A05CEE /* MoviesState.swift */; };
-		2657726B25D5855100A05CEE /* PreviewsDownloadingAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2657726A25D5855100A05CEE /* PreviewsDownloadingAction.swift */; };
 		2669922825C9BC6800D88EB8 /* MoviePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669922725C9BC6800D88EB8 /* MoviePreview.swift */; };
 		2669922F25C9BDA500D88EB8 /* MainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669922C25C9BDA500D88EB8 /* MainState.swift */; };
 		2669923125C9BDA500D88EB8 /* AppFlowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669922E25C9BDA500D88EB8 /* AppFlowState.swift */; };
@@ -88,6 +87,7 @@
 		52D2DF3525DC24AA00011A27 /* AllActionsMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D2DF3425DC24AA00011A27 /* AllActionsMiddleware.swift */; };
 		52D2DF3B25DC88D600011A27 /* MovieCategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D2DF3A25DC88D600011A27 /* MovieCategoryRequest.swift */; };
 		52D667DE25E91D5D00D472E0 /* SeeAllMoviesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D667DD25E91D5D00D472E0 /* SeeAllMoviesCollectionViewCell.swift */; };
+		52DDD2EE260A958E00B08BFF /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DDD2ED260A958E00B08BFF /* MovieDTO.swift */; };
 		52E54C3F26055BEA00E7C995 /* VCFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E54C3E26055BEA00E7C995 /* VCFactoryProtocol.swift */; };
 		52E54C4326055C2C00E7C995 /* ConnectorFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E54C4226055C2C00E7C995 /* ConnectorFactoryProtocol.swift */; };
 		52E54C5326055D8200E7C995 /* ConnectableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E54C5226055D8200E7C995 /* ConnectableVC.swift */; };
@@ -131,7 +131,6 @@
 		2657726125D55D7200A05CEE /* MovieCategoriesState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCategoriesState.swift; sourceTree = "<group>"; };
 		2657726425D566F200A05CEE /* MovieCategoriesAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCategoriesAction.swift; sourceTree = "<group>"; };
 		2657726725D5849F00A05CEE /* MoviesState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesState.swift; sourceTree = "<group>"; };
-		2657726A25D5855100A05CEE /* PreviewsDownloadingAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewsDownloadingAction.swift; sourceTree = "<group>"; };
 		2669922725C9BC6800D88EB8 /* MoviePreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoviePreview.swift; path = TopMovies/Model/MoviePreview.swift; sourceTree = SOURCE_ROOT; };
 		2669922C25C9BDA500D88EB8 /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainState.swift; path = TopMovies/Core/State/MainState.swift; sourceTree = SOURCE_ROOT; };
 		2669922E25C9BDA500D88EB8 /* AppFlowState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppFlowState.swift; path = TopMovies/Core/State/AppFlowState.swift; sourceTree = SOURCE_ROOT; };
@@ -193,6 +192,7 @@
 		52D2DF3425DC24AA00011A27 /* AllActionsMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllActionsMiddleware.swift; sourceTree = "<group>"; };
 		52D2DF3A25DC88D600011A27 /* MovieCategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCategoryRequest.swift; sourceTree = "<group>"; };
 		52D667DD25E91D5D00D472E0 /* SeeAllMoviesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeAllMoviesCollectionViewCell.swift; sourceTree = "<group>"; };
+		52DDD2ED260A958E00B08BFF /* MovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDTO.swift; sourceTree = "<group>"; };
 		52E54C3E26055BEA00E7C995 /* VCFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCFactoryProtocol.swift; sourceTree = "<group>"; };
 		52E54C4226055C2C00E7C995 /* ConnectorFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectorFactoryProtocol.swift; sourceTree = "<group>"; };
 		52E54C5226055D8200E7C995 /* ConnectableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectableVC.swift; sourceTree = "<group>"; };
@@ -236,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				26448BAE25CD580200D240E7 /* MoviePreviewDTO.swift */,
+				52DDD2ED260A958E00B08BFF /* MovieDTO.swift */,
 				26448BA425CD52FE00D240E7 /* CategoryDTO.swift */,
 			);
 			path = DTO;
@@ -266,7 +267,6 @@
 				2657726425D566F200A05CEE /* MovieCategoriesAction.swift */,
 				522CD8FE25E424FA006B2E55 /* PreviewsListAction.swift */,
 				5241C43F260A33D800482A6F /* MovieUpdateAction.swift */,
-				2657726A25D5855100A05CEE /* PreviewsDownloadingAction.swift */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -854,6 +854,7 @@
 				52C11A312608F4470086EBB6 /* MovieVC.swift in Sources */,
 				2617197B26035E0D00F82165 /* BaseVC.swift in Sources */,
 				523FA95625E7D1EC0083939D /* MovieTableViewCell.swift in Sources */,
+				52DDD2EE260A958E00B08BFF /* MovieDTO.swift in Sources */,
 				52C11A372608F6190086EBB6 /* MovieVCConnector.swift in Sources */,
 				2657725B25D40DD100A05CEE /* TopMoviesConnector.swift in Sources */,
 				522CD93225E53A5D006B2E55 /* EmptyRequestState.swift in Sources */,
@@ -867,7 +868,6 @@
 				5241C440260A33D800482A6F /* MovieUpdateAction.swift in Sources */,
 				52E54C4326055C2C00E7C995 /* ConnectorFactoryProtocol.swift in Sources */,
 				2657725825D40CBF00A05CEE /* BaseConnector.swift in Sources */,
-				2657726B25D5855100A05CEE /* PreviewsDownloadingAction.swift in Sources */,
 				268FFD8B25FA747A00591A1A /* StoreProviderProtocol.swift in Sources */,
 				523B689B25F0F84D008A8032 /* Assets.swift in Sources */,
 				266B93BC25D299AE00194050 /* MovieCategoryTableViewCell.swift in Sources */,
