@@ -33,60 +33,60 @@ class ServiceSpec: QuickSpec {
               else { return { .failed(reason: "wrong action type")}}
               expect(completedAction.categories) == [mockMovieCategory,
                                                      mockMovieCategory2]
-              expect(completedAction.relational) == [mockMovieCategory.id: [mockMovie.id],
-                                                     mockMovieCategory2.id: [mockMovie2.id]]
-              expect(completedAction.moviesRelational) == [mockMovie.id: mockMovie,
-                                                           mockMovie2.id: mockMovie2]
+              expect(completedAction.relational) == [mockMovieCategory.id: [mockMoviePreview.id],
+                                                     mockMovieCategory2.id: [mockMoviePreview2.id]]
+              expect(completedAction.previewsRelational) == [mockMoviePreview.id: mockMoviePreview,
+                                                             mockMoviePreview2.id: mockMoviePreview2]
               return { .succeeded }
             }).to(succeed())
           }
         }
         context("request some category for reload") {
-          it("should dispatch 2 actions with right parameters, DownloadingMoviesListAction() and CompletedMoviesListAction() ") {
+          it("should dispatch 2 actions with right parameters, DownloadingPreviewsListAction() and CompletedPreviewsListAction() ") {
             provider.onStateUpdate(mockMainStateSomeCategoryReload)
             expect(provider.dispatchedActions.count) == 2
             expect({
               guard
-                let downloadingAction = provider.dispatchedActions.first as? DownloadingMoviesListAction,
-                let completedAction = provider.dispatchedActions.last as? CompletedMoviesListAction
+                let downloadingAction = provider.dispatchedActions.first as? DownloadingPreviewsListAction,
+                let completedAction = provider.dispatchedActions.last as? CompletedPreviewsListAction
               else { return { .failed(reason: "wrong action type")}}
               expect(downloadingAction.categoryId) == mockMovieCategory.id
               expect(downloadingAction.requestType) == .reload
               expect(completedAction.categoryId) == mockMovieCategory.id
-              expect(completedAction.list) == [mockMovie]
+              expect(completedAction.list) == [mockMoviePreview]
               return { .succeeded }
             }).to(succeed())
           }
         }
         context("request some category for loadMore") {
-          it("should dispatch 2 actions with right parameters, DownloadingMoviesListAction() and CompletedMoviesListAction() ") {
+          it("should dispatch 2 actions with right parameters, DownloadingPreviewsListAction() and CompletedPreviewsListAction() ") {
             provider.onStateUpdate(mockMainStateSomeCategoryLoadMore)
             expect(provider.dispatchedActions.count) == 2
             expect({
               guard
-                let downloadingAction = provider.dispatchedActions.first as? DownloadingMoviesListAction,
-                let completedAction = provider.dispatchedActions.last as? CompletedMoviesListAction
+                let downloadingAction = provider.dispatchedActions.first as? DownloadingPreviewsListAction,
+                let completedAction = provider.dispatchedActions.last as? CompletedPreviewsListAction
               else { return { .failed(reason: "wrong action type")}}
               expect(downloadingAction.categoryId) == mockMovieCategory.id
               expect(downloadingAction.requestType) == .loadMore
               expect(completedAction.categoryId) == mockMovieCategory.id
-              expect(completedAction.list) == [mockMovie]
+              expect(completedAction.list) == [mockMoviePreview]
               return { .succeeded }
             }).to(succeed())
           }
         }
-        context("request some movie detail") {
-          it("should dispatch 2 actions with right parameters, DownloadingMovieDetailAction() and CompletedMovieDetailAction()") {
-            provider.onStateUpdate(mockMainStateSomeMovieDetailRequested)
+        context("request some movie update") {
+          it("should dispatch 2 actions with right parameters, DownloadingMovieUpdateAction() and CompletedMovieUpdateAction()") {
+            provider.onStateUpdate(mockMainStateSomeMovieUpdateRequested)
             expect(provider.dispatchedActions.count) == 2
             expect({
               guard
-                let downloadingAction = provider.dispatchedActions.first as? DownloadingMovieDetailAction,
-                let completedAction = provider.dispatchedActions.last as? CompletedMovieDetailAction
+                let downloadingAction = provider.dispatchedActions.first as? DownloadingMovieUpdateAction,
+                let completedAction = provider.dispatchedActions.last as? CompletedMovieUpdateAction
               else { return { .failed(reason: "wrong action type")}}
-              expect(downloadingAction.movieId) == mockMovie.id
-              expect(completedAction.movie.id) == mockMovie.id
-              expect(completedAction.movie) == mockMovie
+              expect(downloadingAction.movieId) == mockMoviePreview.id
+              expect(completedAction.movie.id) == mockMoviePreview.id
+              expect(completedAction.movie) == mockUpdatedMovie
               return { .succeeded }
             }).to(succeed())
           }
@@ -115,13 +115,13 @@ class ServiceSpec: QuickSpec {
           }
         }
         context("request some category for reload") {
-          it("should dispatch 2 actions with right parameters, DownloadingMoviesListAction() and FailedMoviesListAction() ") {
+          it("should dispatch 2 actions with right parameters, DownloadingPreviewsListAction() and FailedPreviewsListAction() ") {
             provider.onStateUpdate(mockMainStateSomeCategoryReload)
             expect(provider.dispatchedActions.count) == 2
             expect({
               guard
-                let downloadingAction = provider.dispatchedActions.first as? DownloadingMoviesListAction,
-                let failedAction = provider.dispatchedActions.last as? FailedMoviesListAction,
+                let downloadingAction = provider.dispatchedActions.first as? DownloadingPreviewsListAction,
+                let failedAction = provider.dispatchedActions.last as? FailedPreviewsListAction,
                 let myError = failedAction.error as? MockError
               else { return { .failed(reason: "wrong action type")}}
               expect(downloadingAction.categoryId) == mockMovieCategory.id
@@ -134,13 +134,13 @@ class ServiceSpec: QuickSpec {
           }
         }
         context("request some category for loadMore") {
-          it("should dispatch 2 actions with right parameters, DownloadingMoviesListAction() and FailedMoviesListAction() ") {
+          it("should dispatch 2 actions with right parameters, DownloadingPreviewsListAction() and FailedPreviewsListAction() ") {
             provider.onStateUpdate(mockMainStateSomeCategoryLoadMore)
             expect(provider.dispatchedActions.count) == 2
             expect({
               guard
-                let downloadingAction = provider.dispatchedActions.first as? DownloadingMoviesListAction,
-                let failedAction = provider.dispatchedActions.last as? FailedMoviesListAction,
+                let downloadingAction = provider.dispatchedActions.first as? DownloadingPreviewsListAction,
+                let failedAction = provider.dispatchedActions.last as? FailedPreviewsListAction,
                 let myError = failedAction.error as? MockError
               else { return { .failed(reason: "wrong action type")}}
               expect(downloadingAction.categoryId) == mockMovieCategory.id
@@ -153,18 +153,18 @@ class ServiceSpec: QuickSpec {
           }
         }
         context("request some movie detail") {
-          it("should dispatch 2 actions with right parameters, DownloadingMovieDetailAction() and FailedMovieDetailAction()") {
-            provider.onStateUpdate(mockMainStateSomeMovieDetailRequested)
+          it("should dispatch 2 actions with right parameters, DownloadingMovieUpdateAction() and FailedMovieUpdateAction()") {
+            provider.onStateUpdate(mockMainStateSomeMovieUpdateRequested)
             expect(provider.dispatchedActions.count) == 2
             expect({
               guard
-                let downloadingAction = provider.dispatchedActions.first as? DownloadingMovieDetailAction,
-                let failedAction = provider.dispatchedActions.last as? FailedMovieDetailAction,
+                let downloadingAction = provider.dispatchedActions.first as? DownloadingMovieUpdateAction,
+                let failedAction = provider.dispatchedActions.last as? FailedMovieUpdateAction,
                 let myError = failedAction.error as? MockError
               else { return { .failed(reason: "wrong action type")}}
-              expect(downloadingAction.movieId) == mockMovie.id
-              expect(failedAction.movieId) == mockMovie.id
-              expect(myError.description) == "failed movie detail"
+              expect(downloadingAction.movieId) == mockMoviePreview.id
+              expect(failedAction.movieId) == mockMoviePreview.id
+              expect(myError.description) == "failed movie update"
               return { .succeeded }
             }).to(succeed())
           }

@@ -27,3 +27,16 @@ struct ProductionCompany: Equatable {
   let logo: URL?
   let country: String
 }
+
+extension MoviePreview {
+  init(movie: Movie) {
+    id = movie.id
+    adult = movie.adult
+    title = movie.title
+    description = movie.description
+    rating = movie.rating
+    voteCount = movie.voteCount
+    releaseDate = movie.releaseDate
+    poster = movie.poster
+  }
+}

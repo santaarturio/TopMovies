@@ -16,6 +16,8 @@ func mainReducer(action: Action, state: MainState?) -> MainState {
                                      categoriesList: .initial),
               categoriesPaginationState:
                 CategoriesPaginationState(paginated: [:]),
+              moviesUpdateState:
+                MoviesUpdateState(relational: [:]),
               moviesState:
                 MoviesState(previewsRelational: PreviewsRelational(),
                             moviesRelational: MoviesRelational()))
@@ -35,6 +37,10 @@ func mainReducer(action: Action, state: MainState?) -> MainState {
                     CategoriesPaginationState
                     .reduce(action: action,
                             state: state.categoriesPaginationState),
+                   moviesUpdateState:
+                    MoviesUpdateState
+                    .reduce(action: action,
+                            state: state.moviesUpdateState),
                    moviesState:
                     MoviesState
                     .reduce(action: action,

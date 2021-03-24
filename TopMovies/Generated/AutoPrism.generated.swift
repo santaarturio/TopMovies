@@ -27,6 +27,12 @@ extension RequestState {
   var completed: T? { guard case let .completed(completed) = self else { return nil }; return completed }
   var failed: Error? { guard case let .failed(failed) = self else { return nil }; return failed }
 }
+extension UpdateRequestState {
+  var isRequested: Bool { guard case .requested = self else { return false }; return true }
+  var isDownloading: Bool { guard case .downloading = self else { return false }; return true }
+  var isUpdated: Bool { guard case .updated = self else { return false }; return true }
+  var failed: Error? { guard case let .failed(failed) = self else { return nil }; return failed }
+}
 
 /* add '// sourcery: autoGetter' before some case for usage */
 // MARK: - Annotations

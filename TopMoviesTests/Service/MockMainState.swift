@@ -13,71 +13,89 @@ let mockMainStateAllCategories
               appFlowState: .foreground,
               movieCategoriesState: .init(relational: [:], categoriesList: .requested),
               categoriesPaginationState: .init(paginated: [:]),
-              moviesState: .init(relational: [:]))
+              moviesUpdateState: .init(relational: [:]),
+              moviesState: .init(previewsRelational: [:],
+                                 moviesRelational: [:]))
 
 let mockMainStateAllCategoriesCompleted
   = MainState(configurationState: .initial,
               appFlowState: .foreground,
-              movieCategoriesState: .init(relational: [mockMovieCategory.id: mockMovieCategory,
-                                                       mockMovieCategory2.id: mockMovieCategory2],
-                                          categoriesList: .completed(data: [mockMovieCategory.id, mockMovieCategory2.id])),
-              categoriesPaginationState: .init(paginated: [mockMovieCategory.id: .init(list: [mockMovie.id],
-                                                                                       reload: .initial,
-                                                                                       loadMore: .initial,
-                                                                                       pageInfo: .next(10)),
-                                                           mockMovieCategory2.id: .init(list: [mockMovie2.id],
-                                                                                        reload: .initial,
-                                                                                        loadMore: .initial,
-                                                                                        pageInfo: .next(10))]),
-              moviesState: .init(relational: [mockMovie.id: mockMovie,
-                                              mockMovie2.id: mockMovie2]))
+              movieCategoriesState:
+                .init(relational: [mockMovieCategory.id: mockMovieCategory,
+                                   mockMovieCategory2.id: mockMovieCategory2],
+                      categoriesList: .completed(data: [mockMovieCategory.id, mockMovieCategory2.id])),
+              categoriesPaginationState:
+                .init(paginated: [mockMovieCategory.id: .init(list: [mockMoviePreview.id],
+                                                              reload: .initial,
+                                                              loadMore: .initial,
+                                                              pageInfo: .next(10)),
+                                  mockMovieCategory2.id: .init(list: [mockMoviePreview2.id],
+                                                               reload: .initial,
+                                                               loadMore: .initial,
+                                                               pageInfo: .next(10))]),
+              moviesUpdateState: .init(relational: [:]),
+              moviesState:
+                .init(previewsRelational: [mockMoviePreview.id: mockMoviePreview,
+                                           mockMoviePreview2.id: mockMoviePreview2],
+                      moviesRelational: [:]))
 
 // MARK: - Some Category
 let mockMainStateSomeCategoryReload
   = MainState(configurationState: .initial,
               appFlowState: .foreground,
               movieCategoriesState: .init(relational: [:], categoriesList: .initial),
-              categoriesPaginationState: .init(paginated: [mockMovieCategory.id: .init(list: [],
-                                                                                       reload: .requested,
-                                                                                       loadMore: .initial,
-                                                                                       pageInfo: .next(10))]),
-              moviesState: .init(relational: [:]))
+              categoriesPaginationState: .init(paginated: [mockMovieCategory.id:
+                                                            .init(list: [],
+                                                                  reload: .requested,
+                                                                  loadMore: .initial,
+                                                                  pageInfo: .next(10))]),
+              moviesUpdateState: .init(relational: [:]),
+              moviesState: .init(previewsRelational: [:],
+                                 moviesRelational: [:]))
 
 let mockMainStateSomeCategoryLoadMore
   = MainState(configurationState: .initial,
               appFlowState: .foreground,
               movieCategoriesState: .init(relational: [:], categoriesList: .initial),
-              categoriesPaginationState: .init(paginated: [mockMovieCategory.id: .init(list: [],
-                                                                                       reload: .initial,
-                                                                                       loadMore: .requested,
-                                                                                       pageInfo: .next(10))]),
-              moviesState: .init(relational: [:]))
+              categoriesPaginationState: .init(paginated: [mockMovieCategory.id:
+                                                            .init(list: [],
+                                                                  reload: .initial,
+                                                                  loadMore: .requested,
+                                                                  pageInfo: .next(10))]),
+              moviesUpdateState: .init(relational: [:]),
+              moviesState: .init(previewsRelational: [:],
+                                 moviesRelational: [:]))
 
 let mockMainStateSomeCategoryCompleted
   = MainState(configurationState: .initial,
               appFlowState: .foreground,
               movieCategoriesState: .init(relational: [mockMovieCategory.id: mockMovieCategory],
                                           categoriesList: .completed(data: [mockMovieCategory.id])),
-              categoriesPaginationState: .init(paginated: [mockMovieCategory.id: .init(list: [mockMovie.id],
-                                                                                       reload: .initial,
-                                                                                       loadMore: .initial,
-                                                                                       pageInfo: .next(10))]),
-              moviesState: .init(relational: [mockMovie.id: mockMovie]))
+              categoriesPaginationState: .init(paginated: [mockMovieCategory.id:
+                                                            .init(list: [mockMoviePreview.id],
+                                                                  reload: .initial,
+                                                                  loadMore: .initial,
+                                                                  pageInfo: .next(10))]),
+              moviesUpdateState: .init(relational: [:]),
+              moviesState: .init(previewsRelational: [mockMoviePreview.id: mockMoviePreview],
+                                 moviesRelational: [:]))
 
 // MARK: - Some Movie
-let mockMainStateSomeMovieDetailRequested
+let mockMainStateSomeMovieUpdateRequested
   = MainState(configurationState: .initial,
               appFlowState: .foreground,
               movieCategoriesState: .init(relational: [:], categoriesList: .initial),
               categoriesPaginationState: .init(paginated: [:]),
-              moviesState: .init(detailInfo: [mockMovie.id: .requested],
-                                 relational: [:]))
+              moviesUpdateState: .init(relational: [mockMoviePreview.id: .requested]),
+              moviesState: .init(previewsRelational: [mockMoviePreview.id: mockMoviePreview],
+                                 moviesRelational: [:]))
 
-let mockMainStateSomeMovieDetailCompleted
+let mockMainStateSomeMovieUpdateCompleted
   = MainState(configurationState: .initial,
               appFlowState: .foreground,
               movieCategoriesState: .init(relational: [mockMovieCategory.id: mockMovieCategory],
                                           categoriesList: .completed(data: [mockMovieCategory.id])),
               categoriesPaginationState: .init(paginated: [:]),
-              moviesState: .init(detailInfo: [mockMovie.id: .updated],
-                                 relational: [mockMovie.id: mockMovie]))
+              moviesUpdateState: .init(relational: [mockMoviePreview.id: .updated]),
+              moviesState: .init(previewsRelational: [mockMoviePreview.id: mockMoviePreview],
+                                 moviesRelational: [mockUpdatedMovie.id: mockUpdatedMovie]))

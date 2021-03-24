@@ -17,6 +17,9 @@ class MovieTarget: StoreSubscriber {
     self.requestedCategory = requestedCategory
     mainStore.subscribe(self)
   }
+  deinit {
+    mainStore.unsubscribe(self)
+  }
   
   enum RequestedCategory {
     case nowPlaying(page: Int)

@@ -33,14 +33,7 @@ extension MoviesState {
         moviesRelational: movies.hashMap(into: state.moviesRelational, id: \.id)
       )
     case let action as CompletedMovieUpdateAction:
-      let moviePreview = MoviePreview(id: action.movie.id,
-                                      adult: action.movie.adult,
-                                      title: action.movie.title,
-                                      description: action.movie.description,
-                                      rating: action.movie.rating,
-                                      voteCount: action.movie.voteCount,
-                                      releaseDate: action.movie.releaseDate,
-                                      poster: action.movie.poster)
+      let moviePreview = MoviePreview(movie: action.movie)
       return MoviesState(
         previewsRelational: [moviePreview].hashMap(into: state.previewsRelational, id: \.id),
         moviesRelational: [action.movie].hashMap(into: state.moviesRelational, id: \.id)

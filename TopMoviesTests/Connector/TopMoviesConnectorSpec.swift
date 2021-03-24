@@ -37,13 +37,13 @@ class TopMoviesConnectorSpec: QuickSpec {
           expect(propsArray.first?.movieCategories.count) == 2
           expect(propsArray.first?.movieCategories.first?.categoryNameText) == mockMovieCategory.title
           expect(propsArray.first?.movieCategories.last?.categoryNameText) == mockMovieCategory2.title
-          expect(propsArray.first?.movieCategories.first?.movies.first?.posterURL) == mockMovie.poster
-          expect(propsArray.first?.movieCategories.last?.movies.first?.posterURL) == mockMovie2.poster
+          expect(propsArray.first?.movieCategories.first?.movies.first?.posterURL) == mockMoviePreview.poster
+          expect(propsArray.first?.movieCategories.last?.movies.first?.posterURL) == mockMoviePreview2.poster
         }
       }
       context("props shouldn't be created") {
         it("should be anything inside propsArray") {
-          provider.onStateUpdate(mockMainStateSomeCategoryReload) // random state
+          provider.onStateUpdate(mockMainStateSomeCategoryReload)
           expect(propsArray.count) == 0
         }
       }

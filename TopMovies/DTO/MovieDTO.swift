@@ -18,7 +18,7 @@ struct MovieDTO: Decodable {
   let popularity: Double
   let posterPath: String?
   let productionCompanies: [ProductionCompanyDTO]
-  let productionCountries: [ProductionCountry]
+  let productionCountries: [ProductionCountryDTO]
   let releaseDate: String
   let revenue, runtime: Int
   let status, tagline, title: String
@@ -66,7 +66,7 @@ struct ProductionCompanyDTO: Decodable {
 }
 
 // MARK: - ProductionCountry
-struct ProductionCountry: Decodable {
+struct ProductionCountryDTO: Decodable {
   let name: String
   
   enum CodingKeys: String, CodingKey {

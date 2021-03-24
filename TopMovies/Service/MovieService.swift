@@ -18,6 +18,7 @@ where Provider.ExpectedStateType == MainState {
   override func newState(state: MainState) {
     requestAllCategoriesIfNeeded(state: state.movieCategoriesState)
     requestSomeCategoryIfNeeded(state: state.categoriesPaginationState)
+    requestMoviesUpdateIfNeeded(state: state.moviesUpdateState)
   }
   
   private func requestAllCategoriesIfNeeded(state: MovieCategoriesState) {
@@ -84,6 +85,22 @@ where Provider.ExpectedStateType == MainState {
             provider.dispatch(FailedPreviewsListAction(categoryId: categoryId,
                                                        requestType: .reload,
                                                        error: error))
+          }
+        }
+      }
+    }
+  }
+  
+  private func requestMoviesUpdateIfNeeded(state: MoviesUpdateState) {
+    state.relational.forEach { movieId, state in
+      if state.isRequested {
+        provider.dispatch(DownloadingMovieUpdateAction(movieId: movieId))
+        movieAPI.movie(id: movieId) { [unowned self] result in
+          switch result {
+          case let .success(movieDTO):
+            provider.dispatch(CompletedMovieUpdateAction(movie: .init(dto: movieDTO)))
+          case let .failure(error):
+            provider.dispatch(FailedMovieUpdateAction(movieId: movieId, error: error))
           }
         }
       }
