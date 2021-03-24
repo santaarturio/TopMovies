@@ -12,6 +12,8 @@ target 'TopMovies' do
   pod 'SnapKit', '~> 5.0.0'
   pod 'Nuke', '~> 9.2.4'
   pod 'Overture', '~> 0.5'
+  pod 'Swinject', '~> 2.7.1'
+  pod 'SwinjectAutoregistration', '~> 2.7.0'
   
   def testing_pods
   pod 'Quick', '~> 3.1.2'

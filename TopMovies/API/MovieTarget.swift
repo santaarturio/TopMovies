@@ -8,6 +8,7 @@ import ReSwift
 import Moya
 
 class MovieTarget: StoreSubscriber {
+  @Inject private var mainStore: MainStore
   typealias StoreSubscriberStateType = MainState
   private let requestedCategory: RequestedCategory
   private var key = ""
