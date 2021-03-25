@@ -33,6 +33,7 @@ internal enum Asset {
   }
   internal enum Images {
     internal static let censored = ImageAsset(name: "Images/censored")
+    internal static let logoPlaceholder = ImageAsset(name: "Images/logo-placeholder")
     internal static let moviePlaceholder = ImageAsset(name: "Images/movie-placeholder")
     internal static let newMovie = ImageAsset(name: "Images/new-movie")
     internal static let seeAllButton = ImageAsset(name: "Images/see-all-button")

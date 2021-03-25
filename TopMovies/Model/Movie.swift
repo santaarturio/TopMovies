@@ -17,6 +17,8 @@ struct Movie: Equatable {
   let productionCompanies: [ProductionCompany]
   let rating: Double
   let voteCount: Int
+  let runtime: Int
+  let tagline: String
   let releaseDate: String
   let status: String
   let poster: URL?

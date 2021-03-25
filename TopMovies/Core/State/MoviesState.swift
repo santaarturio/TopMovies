@@ -53,6 +53,8 @@ extension MoviesState {
                    productionCompanies: movie.productionCompanies,
                    rating: preview.rating,
                    voteCount: preview.voteCount,
+                   runtime: movie.runtime,
+                   tagline: movie.tagline,
                    releaseDate: preview.releaseDate,
                    status: movie.status,
                    poster: preview.poster)

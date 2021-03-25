@@ -9,7 +9,10 @@ final class VCFactory: VCFactoryProtocol {
   func createAllCategoriesVC() -> TopMoviesVC {
     TopMoviesVC()
   }
-  func createCategoryVC(_ categoryId: MovieCategory.ID) -> MoviesCategoryVC {
+  func createCategoryVC() -> MoviesCategoryVC {
     MoviesCategoryVC()
+  }
+  func createMovieVC() -> MovieVC {
+    MovieVC()
   }
 }

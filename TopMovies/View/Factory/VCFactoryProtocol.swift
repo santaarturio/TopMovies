@@ -7,5 +7,6 @@
 
 protocol VCFactoryProtocol {
   func createAllCategoriesVC() -> TopMoviesVC
-  func createCategoryVC(_ categoryId: MovieCategory.ID) -> MoviesCategoryVC
+  func createCategoryVC() -> MoviesCategoryVC
+  func createMovieVC() -> MovieVC
 }

@@ -11,17 +11,19 @@ struct MovieDTO: Decodable {
   let backdropPath: String?
   let budget: Int
   let genres: [GenreDTO]
-  let homepage: String
+  let homepage: String?
   let id: Int
-  let imdbID, originalLanguage, originalTitle: String
+  let originalLanguage, originalTitle: String
   let overview: String?
   let popularity: Double
   let posterPath: String?
   let productionCompanies: [ProductionCompanyDTO]
   let productionCountries: [ProductionCountryDTO]
   let releaseDate: String
-  let revenue, runtime: Int
-  let status, tagline, title: String
+  let revenue: Int
+  let runtime: Int?
+  let tagline: String?
+  let status, title: String
   let video: Bool
   let voteAverage: Double
   let voteCount: Int
@@ -30,7 +32,6 @@ struct MovieDTO: Decodable {
     case adult
     case backdropPath = "backdrop_path"
     case budget, genres, homepage, id
-    case imdbID = "imdb_id"
     case originalLanguage = "original_language"
     case originalTitle = "original_title"
     case overview, popularity
@@ -93,6 +94,8 @@ extension Movie {
     productionCompanies = dto.productionCompanies.map(ProductionCompany.init(dto: ))
     rating = dto.voteAverage
     voteCount = dto.voteCount
+    runtime = dto.runtime ?? 0
+    tagline = dto.tagline ?? ""
     releaseDate = dto.releaseDate
     status = dto.status
     poster = URLManager.moviePosterURL(for: dto.posterPath ?? dto.backdropPath)

@@ -29,8 +29,13 @@ final class Router: RouterProtocol {
       vc.configureConnection(with: connector)
       navigationVC?.setViewControllers([vc], animated: true)
     case let .category(categoryId):
-      let vc = vcFactory.createCategoryVC(categoryId)
+      let vc = vcFactory.createCategoryVC()
       let connector = connectorFactory.createCategoryVCConnector(categoryId)
+      vc.configureConnection(with: connector)
+      navigationVC?.pushViewController(vc, animated: true)
+    case let .movie(movieId):
+      let vc = vcFactory.createMovieVC()
+      let connector = connectorFactory.createMovieVCConnector(movieId)
       vc.configureConnection(with: connector)
       navigationVC?.pushViewController(vc, animated: true)
     }

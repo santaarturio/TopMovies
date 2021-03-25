@@ -17,7 +17,21 @@ where Provider.ExpectedStateType == MainState {
     self.movieId = movieId
     super.init(updateProps: updateProps,
                provider: provider)
+    
+    self.provider.dispatch(RequestMovieUpdateAction.init(movieId: movieId))
   }
   
-  override func newState(state: MainState) { }
+  override func newState(state: MainState) {
+    guard let updateState = state.moviesUpdateState.relational[movieId] else { return }
+    var props: MovieVCProps!
+    switch updateState {
+    case .downloading:
+      props = .init(downloadingInProgress: true)
+      _updateProps(props)
+    case .updated:
+      state.moviesState.moviesRelational[movieId]
+        .flatMap { props = .init(movie: $0); _updateProps(props) }
+    default: break
+    }
+  }
 }

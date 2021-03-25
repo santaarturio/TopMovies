@@ -16,6 +16,7 @@ struct MoviesCategoryVCProps {
   let movies: [MovieTableViewCellProps]
   let actionReload: () -> Void
   let actionLoadMore: () -> Void
+  let actionMovieDetail: (_ movieId: MoviePreview.ID) -> Void
 }
 
 // MARK: - VC class
@@ -25,7 +26,8 @@ final class MoviesCategoryVC: BaseVC<MoviesCategoryVCProps, StoreProvider<MainSt
                                     isLoadMoreInProgress: false,
                                     movies: [],
                                     actionReload: { },
-                                    actionLoadMore: { }) {
+                                    actionLoadMore: { },
+                                    actionMovieDetail: { _ in }) {
     didSet {
       if title == nil { title = props.categoryName }
       handleRefresh(props)
@@ -86,7 +88,7 @@ final class MoviesCategoryVC: BaseVC<MoviesCategoryVCProps, StoreProvider<MainSt
     categoryTableView.delegate   = self
     
     refreshControl.tintColor = Asset.Colors.refresh.color
-    refreshControl.attributedTitle = NSAttributedString(string: "Reload in progress...")
+    refreshControl.attributedTitle = NSAttributedString(string: L10n.App.Home.Movie.reloadInProgress)
     refreshControl.addTarget(self,
                              action: #selector(refreshControlSelector(sender:)),
                              for: .valueChanged)
@@ -139,5 +141,8 @@ extension MoviesCategoryVC: UITableViewDelegate, UITableViewDataSource {
     if deltaOffset <= 0 {
       props.actionLoadMore()
     }
+  }
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    props.actionMovieDetail(props.movies[indexPath.section].movieId)
   }
 }

@@ -8,4 +8,5 @@
 enum RouteType {
   case allCategories
   case category(_ categoryId: MovieCategory.ID)
+  case movie(_ movieId: MoviePreview.ID)
 }

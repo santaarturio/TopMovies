@@ -7,6 +7,7 @@
 
 final class CategoryVCConnector<Provider: StoreProviderProtocol>: BaseConnector<MoviesCategoryVCProps, Provider>
 where Provider.ExpectedStateType == MainState {
+  @Inject var router: RouterProtocol
   private let categoryId: MovieCategory.ID
   
   typealias StateUpdate = (Provider.ExpectedStateType) -> Void
@@ -39,7 +40,9 @@ where Provider.ExpectedStateType == MainState {
                                                                               requestType: .reload)) },
                                       actionLoadMore: { [unowned self] in provider
                                         .dispatch(RequestedPreviewsListAction(categoryId: categoryId,
-                                                                              requestType: .loadMore)) })
+                                                                              requestType: .loadMore)) },
+                                      actionMovieDetail: { [unowned self] movieId in
+                                        router.perform(route: .movie(movieId)) })
     _updateProps(props)
   }
 }
