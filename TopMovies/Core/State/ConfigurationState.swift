@@ -7,7 +7,7 @@
 
 import ReSwift
 
-enum ConfigurationState: StateType, Equatable {
+enum ConfigurationState: StateType, Equatable, AutoEnum {
   case initial
   case configuredAPIKey(String)
 }

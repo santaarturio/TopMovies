@@ -35,11 +35,11 @@ class MoviesUpdateStateSpec: QuickSpec {
         }
       }
       context("completed movie update action should be reduced") {
-        it("should add or update key&value pair into relational with value .updated") {
+        it("should add or update key&value pair into relational with value .isInitial") {
           let action = CompletedMovieUpdateAction(movie: mockUpdatedMovie)
           state = MoviesUpdateState.reduce(action: action, state: state)
           expect(state.relational.count) == 1
-          expect(state.relational[mockMoviePreview.id]?.isUpdated).to(beTrue())
+          expect(state.relational[mockMoviePreview.id]?.isInitial).to(beTrue())
         }
       }
       context("failed movie detail action should be reduced") {

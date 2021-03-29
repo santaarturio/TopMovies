@@ -7,18 +7,16 @@
 import ReSwift
 import Moya
 
-class MovieTarget: StoreSubscriber {
+class MovieTarget{
   @Inject private var mainStore: MainStore
   typealias StoreSubscriberStateType = MainState
   private let requestedCategory: RequestedCategory
-  private var key = ""
+  private var key: String {
+    mainStore.state.configurationState.configuredAPIKey ?? ""
+  }
   
   init(requestedCategory: RequestedCategory) {
     self.requestedCategory = requestedCategory
-    mainStore.subscribe(self)
-  }
-  deinit {
-    mainStore.unsubscribe(self)
   }
   
   enum RequestedCategory {
@@ -35,13 +33,6 @@ class MovieTarget: StoreSubscriber {
            let .upcoming(page):
         return page
       }
-    }
-  }
-  
-  func newState(state: MainState) {
-    switch state.configurationState {
-    case let .configuredAPIKey(key): self.key = key
-    default: break
     }
   }
 }

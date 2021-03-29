@@ -5,7 +5,11 @@
 //  Created by Macbook Pro  on 19.03.2021.
 //
 
+import UIKit
+
 enum RouteType {
   case allCategories
-  case category(_ categoryId: MovieCategory.ID)
+  case category(MovieCategory.ID)
+  case movie(MoviePreview.ID)
+  case dismiss(UIViewController)
 }

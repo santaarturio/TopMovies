@@ -48,10 +48,11 @@ where Provider.ExpectedStateType == MainState {
                 .compactMap{ MovieCollectionProps(
                   movie: state.moviesState.previewsRelational[$0]
                 ) } ?? [],
-              actionAllButton: { [unowned self] in router.perform(route: .category(categoryId)) })
+              actionAllButton: { [unowned self] in router.perform(route: .category(categoryId)) },
+              actionMovieDetail: { [unowned self] movieId in router.perform(route: .movie(movieId)) })
             }
         )
-      _updateProps(props)
+      updateProps(props)
       alreadyShown = updatedCategories
     }
   }

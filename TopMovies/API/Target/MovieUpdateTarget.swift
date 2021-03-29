@@ -8,24 +8,15 @@
 import Moya
 import ReSwift
 
-class MovieUpdateTarget: StoreSubscriber {
+class MovieUpdateTarget {
   @Inject private var mainStore: MainStore
   private let movieId: MoviePreview.ID
-  private var key = ""
+  private var key: String {
+    mainStore.state.configurationState.configuredAPIKey ?? ""
+  }
   
   init(movieId: MoviePreview.ID) {
     self.movieId = movieId
-    mainStore.subscribe(self)
-  }
-  deinit {
-    mainStore.unsubscribe(self)
-  }
-  
-  func newState(state: MainState) {
-    switch state.configurationState {
-    case let .configuredAPIKey(key): self.key = key
-    default: break
-    }
   }
 }
 

@@ -96,6 +96,6 @@ let mockMainStateSomeMovieUpdateCompleted
               movieCategoriesState: .init(relational: [mockMovieCategory.id: mockMovieCategory],
                                           categoriesList: .completed(data: [mockMovieCategory.id])),
               categoriesPaginationState: .init(paginated: [:]),
-              moviesUpdateState: .init(relational: [mockMoviePreview.id: .updated]),
+              moviesUpdateState: .init(relational: [mockMoviePreview.id: .initial]),
               moviesState: .init(previewsRelational: [mockMoviePreview.id: mockMoviePreview],
                                  moviesRelational: [mockUpdatedMovie.id: mockUpdatedMovie]))

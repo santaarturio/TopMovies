@@ -7,6 +7,7 @@
 
 final class CategoryVCConnector<Provider: StoreProviderProtocol>: BaseConnector<MoviesCategoryVCProps, Provider>
 where Provider.ExpectedStateType == MainState {
+  @Inject var router: RouterProtocol
   private let categoryId: MovieCategory.ID
   
   typealias StateUpdate = (Provider.ExpectedStateType) -> Void
@@ -34,12 +35,14 @@ where Provider.ExpectedStateType == MainState {
                                         .compactMap {
                                           MovieTableViewCellProps(movie: state.moviesState.previewsRelational[$0])
                                         },
-                                      actionReload: { [unowned self] in provider
-                                        .dispatch(RequestedPreviewsListAction(categoryId: categoryId,
-                                                                              requestType: .reload)) },
-                                      actionLoadMore: { [unowned self] in provider
-                                        .dispatch(RequestedPreviewsListAction(categoryId: categoryId,
-                                                                              requestType: .loadMore)) })
-    _updateProps(props)
+                                      actionReload: { [unowned self] in
+                                        provider.dispatch(RequestedPreviewsListAction(categoryId: categoryId,
+                                                                                      requestType: .reload)) },
+                                      actionLoadMore: { [unowned self] in
+                                        provider.dispatch(RequestedPreviewsListAction(categoryId: categoryId,
+                                                                                      requestType: .loadMore)) },
+                                      actionMovieDetail: { [unowned self] movieId in
+                                        router.perform(route: .movie(movieId)) })
+    updateProps(props)
   }
 }

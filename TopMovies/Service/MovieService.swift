@@ -18,7 +18,7 @@ where Provider.ExpectedStateType == MainState {
   override func newState(state: MainState) {
     requestAllCategoriesIfNeeded(state: state.movieCategoriesState)
     requestSomeCategoryIfNeeded(state: state.categoriesPaginationState)
-    requestMoviesUpdateIfNeeded(state: state.moviesUpdateState)
+    requestMoviesUpdateIfNeeded(state: state.moviesUpdateState, moviesRelational: state.moviesState.moviesRelational)
   }
   
   private func requestAllCategoriesIfNeeded(state: MovieCategoriesState) {
@@ -91,9 +91,10 @@ where Provider.ExpectedStateType == MainState {
     }
   }
   
-  private func requestMoviesUpdateIfNeeded(state: MoviesUpdateState) {
-    state.relational.forEach { movieId, state in
-      if state.isRequested {
+  private func requestMoviesUpdateIfNeeded(state: MoviesUpdateState, moviesRelational: MoviesRelational) {
+    state.relational.forEach { movieId, updateState in
+      if moviesRelational[movieId] != nil { return }
+      if updateState.isRequested {
         provider.dispatch(DownloadingMovieUpdateAction(movieId: movieId))
         movieAPI.movie(id: movieId) { [unowned self] result in
           switch result {

@@ -13,15 +13,18 @@ struct MovieCategoryProps {
   let categoryNameText: String
   let movies: [MovieCollectionProps]
   let actionAllButton: () -> Void
+  let actionMovieDetail: (MoviePreview.ID) -> Void
 }
 extension MovieCategoryProps {
   init?(categoryNameText: String?,
         movies: [MovieCollectionProps?],
-        actionAllButton: @escaping () -> Void) {
+        actionAllButton: @escaping () -> Void,
+        actionMovieDetail: @escaping (_ movieId: MoviePreview.ID) -> Void) {
     guard let categoryNameText = categoryNameText else { return nil }
     self.categoryNameText = categoryNameText
     self.movies = movies.compactMap { $0 }
     self.actionAllButton = actionAllButton
+    self.actionMovieDetail = actionMovieDetail
   }
 }
 // MARK: - Cell class -
@@ -36,7 +39,8 @@ final class MovieCategoryTableViewCell: UITableViewCell {
   private let infoStackView = UIStackView()
   private var props = MovieCategoryProps(categoryNameText: "",
                                          movies: [],
-                                         actionAllButton: { }) {
+                                         actionAllButton: { },
+                                         actionMovieDetail: { _ in }) {
     didSet { categoryNameLabel.text = props.categoryNameText }
   }
   
@@ -124,9 +128,8 @@ extension MovieCategoryTableViewCell: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension MovieCategoryTableViewCell: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    if indexPath.item == props.movies.count {
-      props.actionAllButton()
-    }
+    indexPath.item == props.movies.count ?
+      props.actionAllButton() : props.actionMovieDetail(props.movies[indexPath.item].movieId)
   }
 }
 // MARK: - UICollectionViewDelegateFlowLayout

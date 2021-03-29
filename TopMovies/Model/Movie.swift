@@ -17,7 +17,9 @@ struct Movie: Equatable {
   let productionCompanies: [ProductionCompany]
   let rating: Double
   let voteCount: Int
-  let releaseDate: String
+  let runtime: Int
+  let tagline: String
+  let releaseDate: Date
   let status: String
   let poster: URL?
 }
@@ -28,15 +30,41 @@ struct ProductionCompany: Equatable {
   let country: String
 }
 
-extension MoviePreview {
-  init(movie: Movie) {
-    id = movie.id
-    adult = movie.adult
-    title = movie.title
-    description = movie.description
-    rating = movie.rating
-    voteCount = movie.voteCount
-    releaseDate = movie.releaseDate
-    poster = movie.poster
+extension Movie {
+  init?(preview: MoviePreview?) {
+    guard let preview = preview else { return nil }
+    id = preview.id
+    adult = preview.adult
+    title = preview.title
+    description = preview.description
+    budget = 0
+    genres = []
+    productionCompanies = []
+    rating = preview.rating
+    voteCount = preview.voteCount
+    runtime = 0
+    tagline = ""
+    releaseDate = preview.releaseDate
+    status = ""
+    poster = preview.poster
+  }
+}
+
+extension Movie: Defaultable {
+  static var defaultValue: Movie {
+    Movie(id: .init(value: ""),
+          adult: false,
+          title: "",
+          description: "",
+          budget: 0,
+          genres: [],
+          productionCompanies: [],
+          rating: 0,
+          voteCount: 0,
+          runtime: 0,
+          tagline: "",
+          releaseDate: .init(),
+          status: "",
+          poster: nil)
   }
 }

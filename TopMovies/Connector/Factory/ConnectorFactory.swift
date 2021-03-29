@@ -27,4 +27,13 @@ final class ConnectorFactory: ConnectorFactoryProtocol {
         StoreProvider<MainState>
           .init(store: onStateUpdate: ))(mainStore))
   }
+  func createMovieVCConnector(_ movieId: MoviePreview.ID) -> MovieConnectorType {
+    flip(
+      curry(
+        MovieVCConnector
+          .init(movieId: updateProps: provider: ))(movieId)
+    )(curry(
+        StoreProvider<MainState>
+          .init(store: onStateUpdate: ))(mainStore))
+  }
 }

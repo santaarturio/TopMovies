@@ -14,10 +14,23 @@ struct MoviePreview: Hashable, Equatable {
   let description: String
   let rating: Double
   let voteCount: Int
-  let releaseDate: String
+  let releaseDate: Date
   let poster: URL?
   
   struct ID: Hashable {
     let value: String
+  }
+}
+
+extension MoviePreview {
+  init(movie: Movie) {
+    id = movie.id
+    adult = movie.adult
+    title = movie.title
+    description = movie.description
+    rating = movie.rating
+    voteCount = movie.voteCount
+    releaseDate = movie.releaseDate
+    poster = movie.poster
   }
 }

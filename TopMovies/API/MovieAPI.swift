@@ -5,16 +5,7 @@
 //  Created by anikolaenko on 02.02.2021.
 //
 
-import Foundation
 import Moya
-
-protocol MovieAPIProtocol {
-  func allMovieCategories(_ categories: @escaping (Result<[CategoryDTO], Error>) -> Void)
-  func category(_ requestedCategory: MovieCategoryRequest,
-                page: Int,
-                _ category: @escaping (Result<CategoryDTO, Error>) -> Void)
-  func movie(id: MoviePreview.ID, _ result: @escaping (Result<MovieDTO, Error>) -> Void)
-}
 
 struct MovieAPI: MovieAPIProtocol {
   private let previewProvider = MoyaProvider<MovieTarget>()
@@ -39,11 +30,14 @@ struct MovieAPI: MovieAPIProtocol {
       previewProvider.request(.init(requestedCategory: .init(category: requestedCategory))) { response in
         switch response {
         case let .success(data):
-          if var moviesListDTO = DataDecoder.decode(CategoryDTO.self, fromJSON: data.data) {
+          do {
+            var moviesListDTO = try JSONDecoder().decode(CategoryDTO.self, from: data.data)
             moviesListDTO.name = requestedCategory.rawValue
             categoriesDTO.append(moviesListDTO)
             requestsCounter += 1
-          } else { print("Decoder didn't decode CategoryDTO") }
+          } catch {
+            someError = error
+          }
         case let .failure(error):
           someError = error
           requestsCounter += 1
@@ -58,10 +52,13 @@ struct MovieAPI: MovieAPIProtocol {
                                                            page: page))) { response in
       switch response {
       case let .success(data):
-        if var moviesListDTO = DataDecoder.decode(CategoryDTO.self, fromJSON: data.data) {
+        do {
+          var moviesListDTO = try JSONDecoder().decode(CategoryDTO.self, from: data.data)
           moviesListDTO.name = requestedCategory.rawValue
           category(.success(moviesListDTO))
-        } else { print("Decoder didn't decode CategoryDTO") }
+        } catch {
+          category(.failure(error))
+        }
       case let .failure(error):
         category(.failure(error))
       }
@@ -71,9 +68,12 @@ struct MovieAPI: MovieAPIProtocol {
     movieProvider.request(.init(movieId: id)) { response in
       switch response {
       case let .success(response):
-        if let movie = DataDecoder.decode(MovieDTO.self, fromJSON: response.data) {
+        do {
+          let movie = try JSONDecoder().decode(MovieDTO.self, from: response.data)
           result(.success(movie))
-        } else { print("Decoder didn't decode MovieDTO") }
+        } catch {
+          result(.failure(error))
+        }
       case let .failure(error):
         result(.failure(error))
       }

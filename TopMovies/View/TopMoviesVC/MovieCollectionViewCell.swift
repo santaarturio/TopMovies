@@ -11,6 +11,7 @@ import Nuke
 
 // MARK: - Props struct -
 struct MovieCollectionProps {
+  let movieId: MoviePreview.ID
   let adultLabelText: String
   let ratingLabelText: String
   let titleLabelText: String
@@ -22,6 +23,7 @@ struct MovieCollectionProps {
 extension MovieCollectionProps {
   init?(movie: MoviePreview?) {
     guard let movie = movie else { return nil }
+    movieId = movie.id
     adultLabelText = "\(L10n.App.Home.Movie.adult): \(movie.adult ? L10n.App.Home.Movie.yes : L10n.App.Home.Movie.no)"
     ratingLabelText = "\(L10n.App.Home.Movie.rating): \(movie.rating)"
     titleLabelText = movie.title

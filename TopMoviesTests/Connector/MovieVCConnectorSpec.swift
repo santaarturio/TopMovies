@@ -35,7 +35,7 @@ class MovieVCConnectorSpec: QuickSpec {
         it("should create MovieVCProps with valid properties") {
           provider.onStateUpdate(mockMainStateSomeMovieUpdateCompleted)
           expect(newProps).notTo(beNil())
-          expect(newProps?.budgetLabelText) == mockUpdatedMovie.budget
+          expect(newProps?.taglineLabelText) == mockUpdatedMovie.tagline
           expect(newProps?.statusLabelText) == mockUpdatedMovie.status
           expect(newProps?.posterURL) == mockUpdatedMovie.poster
         }
