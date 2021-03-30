@@ -13,18 +13,15 @@ struct MovieCategoryProps {
   let categoryNameText: String
   let movies: [MovieCollectionProps]
   let actionAllButton: () -> Void
-  let actionMovieDetail: (MoviePreview.ID) -> Void
 }
 extension MovieCategoryProps {
   init?(categoryNameText: String?,
         movies: [MovieCollectionProps?],
-        actionAllButton: @escaping () -> Void,
-        actionMovieDetail: @escaping (_ movieId: MoviePreview.ID) -> Void) {
+        actionAllButton: @escaping () -> Void) {
     guard let categoryNameText = categoryNameText else { return nil }
     self.categoryNameText = categoryNameText
     self.movies = movies.compactMap { $0 }
     self.actionAllButton = actionAllButton
-    self.actionMovieDetail = actionMovieDetail
   }
 }
 // MARK: - Cell class -
@@ -39,8 +36,7 @@ final class MovieCategoryTableViewCell: UITableViewCell {
   private let infoStackView = UIStackView()
   private var props = MovieCategoryProps(categoryNameText: "",
                                          movies: [],
-                                         actionAllButton: { },
-                                         actionMovieDetail: { _ in }) {
+                                         actionAllButton: { }) {
     didSet { categoryNameLabel.text = props.categoryNameText }
   }
   
@@ -114,7 +110,7 @@ extension MovieCategoryTableViewCell: UICollectionViewDataSource {
               .dequeueReusableCell(withReuseIdentifier: movieCollectionViewCellIdentifier,
                                    for: indexPath) as? MovieCollectionViewCell
       else { return UICollectionViewCell() }
-      cell.configureWith(props: props.movies[indexPath.item])
+      cell.configure(with: props.movies[indexPath.item])
       return cell
     } else {
       guard let cell = collectionView
@@ -129,7 +125,7 @@ extension MovieCategoryTableViewCell: UICollectionViewDataSource {
 extension MovieCategoryTableViewCell: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     indexPath.item == props.movies.count ?
-      props.actionAllButton() : props.actionMovieDetail(props.movies[indexPath.item].movieId)
+      props.actionAllButton() : props.movies[indexPath.item].actionMovieDetail()
   }
 }
 // MARK: - UICollectionViewDelegateFlowLayout

@@ -32,17 +32,17 @@ where Provider.ExpectedStateType == MainState {
                                       isReloadInProgress: categoryState.reload.isDownloading,
                                       isLoadMoreInProgress: categoryState.loadMore.isDownloading,
                                       movies: categoryState.list
-                                        .compactMap {
-                                          MovieTableViewCellProps(movie: state.moviesState.previewsRelational[$0])
+                                        .compactMap { movieId in
+                                          MovieTableViewCellProps(movie: state.moviesState.previewsRelational[movieId],
+                                                                  actionMovieDetail: { [unowned self] in
+                                                                    router.perform(route: .movie(movieId)) })
                                         },
                                       actionReload: { [unowned self] in
                                         provider.dispatch(RequestedPreviewsListAction(categoryId: categoryId,
                                                                                       requestType: .reload)) },
                                       actionLoadMore: { [unowned self] in
                                         provider.dispatch(RequestedPreviewsListAction(categoryId: categoryId,
-                                                                                      requestType: .loadMore)) },
-                                      actionMovieDetail: { [unowned self] movieId in
-                                        router.perform(route: .movie(movieId)) })
+                                                                                      requestType: .loadMore)) })
     updateProps(props)
   }
 }
