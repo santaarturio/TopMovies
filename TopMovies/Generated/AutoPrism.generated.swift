@@ -14,6 +14,10 @@ extension AppFlowState {
   var isBackground: Bool { guard case .background = self else { return false }; return true }
   var isTerminating: Bool { guard case .terminating = self else { return false }; return true }
 }
+extension ConfigurationState {
+  var isInitial: Bool { guard case .initial = self else { return false }; return true }
+  var configuredAPIKey: String? { guard case let .configuredAPIKey(configuredAPIKey) = self else { return nil }; return configuredAPIKey }
+}
 extension EmptyRequestState {
   var isInitial: Bool { guard case .initial = self else { return false }; return true }
   var isRequested: Bool { guard case .requested = self else { return false }; return true }

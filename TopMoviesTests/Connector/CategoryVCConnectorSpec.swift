@@ -28,19 +28,19 @@ class CategoryVCConnectorSpec: QuickSpec {
       context("connector init") {
         it("should dispatch RequestedMoviesListAction()") {
           expect(provider.dispatchedActions.count) == 1
-          expect(provider.dispatchedActions.first).to(beAnInstanceOf(RequestedMoviesListAction.self))
+          expect(provider.dispatchedActions.first).to(beAnInstanceOf(RequestedPreviewsListAction.self))
         }
       }
       context("props should be created") {
         it("should create 1 TopMoviesProps with 2 MovieCategoryProps inside") {
           provider.onStateUpdate(mockMainStateSomeCategoryCompleted)
           expect(newProps?.categoryName) == mockMovieCategory.title
-          expect(newProps?.movies.first?.posterURL) == mockMovie.poster
+          expect(newProps?.movies.first?.posterURL) == mockMoviePreview.poster
         }
       }
       context("props shouldn't be created") {
         it("should be anything inside propsArray") {
-          provider.onStateUpdate(mockMainStateSomeCategoryReload) // random state
+          provider.onStateUpdate(mockMainStateSomeCategoryReload)
           expect(newProps).to(beNil())
         }
       }

@@ -8,7 +8,7 @@
 import ReSwift
 
 struct CategoriesPaginationState: StateType {
-  typealias CategoryState = PaginatedOperationState<Movie.ID, Int>
+  typealias CategoryState = PaginatedOperationState<MoviePreview.ID, Int>
   let paginated: [MovieCategory.ID: CategoryState]
 }
 
@@ -35,7 +35,7 @@ extension CategoriesPaginationState {
                                           loadMore: CategoryState.defaultValue.loadMore,
                                           pageInfo: CategoryState.defaultValue.pageInfo) })
     // MARK: - Reduce MoviesListActions
-    case let action as RequestedMoviesListAction:
+    case let action as RequestedPreviewsListAction:
       categoryId = action.categoryId
       newPaginated
         .updateValue(.init(list: categoryPaginatedState.list,
@@ -46,7 +46,7 @@ extension CategoriesPaginationState {
                            pageInfo: categoryPaginatedState.pageInfo),
                      forKey: categoryId)
       return CategoriesPaginationState(paginated: newPaginated)
-    case let action as DownloadingMoviesListAction:
+    case let action as DownloadingPreviewsListAction:
       categoryId = action.categoryId
       newPaginated
         .updateValue(.init(list: categoryPaginatedState.list,
@@ -57,7 +57,7 @@ extension CategoriesPaginationState {
                            pageInfo: categoryPaginatedState.pageInfo),
                      forKey: categoryId)
       return CategoriesPaginationState(paginated: newPaginated)
-    case let action as CompletedMoviesListAction:
+    case let action as CompletedPreviewsListAction:
       categoryId = action.categoryId
       let newList = action.list.map(\.id)
       var listIfLoadMore = categoryPaginatedState.list
@@ -72,7 +72,7 @@ extension CategoriesPaginationState {
                             .map(CategoryState.PageInfo.next) ?? CategoryState.PageInfo.lastPage),
                      forKey: categoryId)
       return CategoriesPaginationState(paginated: newPaginated)
-    case let action as FailedMoviesListAction:
+    case let action as FailedPreviewsListAction:
       categoryId = action.categoryId
       newPaginated
         .updateValue(.init(list: categoryPaginatedState .list,

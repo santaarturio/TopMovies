@@ -18,6 +18,7 @@ where Provider.ExpectedStateType == MainState {
   override func newState(state: MainState) {
     requestAllCategoriesIfNeeded(state: state.movieCategoriesState)
     requestSomeCategoryIfNeeded(state: state.categoriesPaginationState)
+    requestMoviesUpdateIfNeeded(state: state.moviesUpdateState, moviesRelational: state.moviesState.moviesRelational)
   }
   
   private func requestAllCategoriesIfNeeded(state: MovieCategoriesState) {
@@ -28,17 +29,17 @@ where Provider.ExpectedStateType == MainState {
         case let .success(categoriesList):
           provider.dispatch(CompletedMovieCategoriesAction(
                               categories: categoriesList.map(MovieCategory.init(dto:)),
-                              moviesRelational: categoriesList
-                                .map { $0.results.map(Movie.init(dto:)) }
+                              previewsRelational: categoriesList
+                                .map { $0.results.map(MoviePreview.init(dto:)) }
                                 .flatMap { $0 }
-                                .hashMap(into: MoviesRelational(), id: \.id),
+                                .hashMap(into: PreviewsRelational(), id: \.id),
                               relational: categoriesList
                                 .reduce(into: [:]) { dict, categoryDTO in
                                   dict[MovieCategory.ID(value: categoryDTO.name)]
                                     = categoryDTO.results
                                     .map(\.id)
                                     .map(String.init)
-                                    .map(Movie.ID.init(value:))
+                                    .map(MoviePreview.ID.init(value:))
                                 }))
         case let .failure(error):
           provider.dispatch(FailedMovieCategoriesAction(error: error))
@@ -53,37 +54,54 @@ where Provider.ExpectedStateType == MainState {
       if case .requested = paginatedState.loadMore,
          case let CategoriesPaginationState.CategoryState.PageInfo
           .next(requestedPage) = paginatedState.pageInfo {
-        provider.dispatch(DownloadingMoviesListAction(categoryId: categoryId,
-                                                      requestType: .loadMore))
+        provider.dispatch(DownloadingPreviewsListAction(categoryId: categoryId,
+                                                        requestType: .loadMore))
         movieAPI.category(categoryRequest, page: requestedPage) { [unowned self] result in
           switch result {
           case let .success(categoryDTO):
-            provider.dispatch(CompletedMoviesListAction(categoryId: categoryId,
-                                                        requestType: .loadMore,
-                                                        list: categoryDTO.results
-                                                          .map(Movie.init(dto:)),
-                                                        nextPage: categoryDTO.nextPage))
+            provider.dispatch(CompletedPreviewsListAction(categoryId: categoryId,
+                                                          requestType: .loadMore,
+                                                          list: categoryDTO.results
+                                                            .map(MoviePreview.init(dto:)),
+                                                          nextPage: categoryDTO.nextPage))
           case let .failure(error):
-            provider.dispatch(FailedMoviesListAction(categoryId: categoryId,
-                                                     requestType: .loadMore,
-                                                     error: error))
+            provider.dispatch(FailedPreviewsListAction(categoryId: categoryId,
+                                                       requestType: .loadMore,
+                                                       error: error))
           }
         }
       } else if case .requested = paginatedState.reload {
-        provider.dispatch(DownloadingMoviesListAction(categoryId: categoryId,
-                                                      requestType: .reload))
+        provider.dispatch(DownloadingPreviewsListAction(categoryId: categoryId,
+                                                        requestType: .reload))
         movieAPI.category(categoryRequest, page: 1) { [unowned self] result in
           switch result {
           case let .success(categoryDTO):
-            provider.dispatch(CompletedMoviesListAction(categoryId: categoryId,
-                                                        requestType: .reload,
-                                                        list: categoryDTO.results
-                                                          .map(Movie.init(dto:)),
-                                                        nextPage: categoryDTO.nextPage))
+            provider.dispatch(CompletedPreviewsListAction(categoryId: categoryId,
+                                                          requestType: .reload,
+                                                          list: categoryDTO.results
+                                                            .map(MoviePreview.init(dto:)),
+                                                          nextPage: categoryDTO.nextPage))
           case let .failure(error):
-            provider.dispatch(FailedMoviesListAction(categoryId: categoryId,
-                                                     requestType: .reload,
-                                                     error: error))
+            provider.dispatch(FailedPreviewsListAction(categoryId: categoryId,
+                                                       requestType: .reload,
+                                                       error: error))
+          }
+        }
+      }
+    }
+  }
+  
+  private func requestMoviesUpdateIfNeeded(state: MoviesUpdateState, moviesRelational: MoviesRelational) {
+    state.relational.forEach { movieId, updateState in
+      if moviesRelational[movieId] != nil { return }
+      if updateState.isRequested {
+        provider.dispatch(DownloadingMovieUpdateAction(movieId: movieId))
+        movieAPI.movie(id: movieId) { [unowned self] result in
+          switch result {
+          case let .success(movieDTO):
+            provider.dispatch(CompletedMovieUpdateAction(movie: .init(dto: movieDTO)))
+          case let .failure(error):
+            provider.dispatch(FailedMovieUpdateAction(movieId: movieId, error: error))
           }
         }
       }

@@ -12,5 +12,6 @@ struct MainState: StateType {
   let appFlowState: AppFlowState
   let movieCategoriesState: MovieCategoriesState
   let categoriesPaginationState: CategoriesPaginationState
+  let moviesUpdateState: MoviesUpdateState
   let moviesState: MoviesState
 }

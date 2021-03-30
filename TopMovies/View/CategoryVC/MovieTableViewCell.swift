@@ -11,6 +11,7 @@ import Nuke
 
 // MARK: - Props struct -
 struct MovieTableViewCellProps {
+  let movieId: MoviePreview.ID
   let posterURL: URL?
   let posterPlaceholderImage: UIImage
   let titleLabelText: String
@@ -21,32 +22,18 @@ struct MovieTableViewCellProps {
   let descriptionLabeltext: String
 }
 extension MovieTableViewCellProps {
-  init?(movie: Movie?) {
+  init?(movie: MoviePreview?) {
     guard let movie = movie else { return nil }
+    movieId = movie.id
     posterURL = movie.poster
     posterPlaceholderImage = Asset.Images.moviePlaceholder.image
     titleLabelText = movie.title
-    releaseDateLabelText = "Release: \(MovieTableViewCellProps.prettyDate(movie.releaseDate))"
-    ratingAndVotesLabelText = "\(movie.rating) / 10 out of \(movie.voteCount) votes"
-    movieIsNew = MovieTableViewCellProps.isNewMovie(dateString: movie.releaseDate)
+    releaseDateLabelText = "\(L10n.App.MovieDetail.release): \(Date.prettyDateString(from: movie.releaseDate))"
+    ratingAndVotesLabelText
+      = "\(movie.rating) / 10 \(L10n.App.MovieDetail.outOf) \(movie.voteCount) \(L10n.App.MovieDetail.votes)"
+    movieIsNew = Date.isNew(date: movie.releaseDate)
     movieForAdult = movie.adult
     descriptionLabeltext = movie.description
-  }
-  
-  static func prettyDate(_ dateString: String) -> String {
-    guard
-      let date = DateFormatter.cached(withFormat: "yyyy-mm-dd")
-        .date(from: dateString)
-    else { return "no date" }
-    return DateFormatter.cached(withFormat: "MMM, dd - yyyy")
-      .string(from: date)
-  }
-  static func isNewMovie(dateString: String) -> Bool {
-    return abs(
-      (DateFormatter
-        .cached(withFormat: "yyyy-mm-dd")
-        .date(from: dateString) ?? Date())
-        .months(from: Date())) < 3
   }
 }
 

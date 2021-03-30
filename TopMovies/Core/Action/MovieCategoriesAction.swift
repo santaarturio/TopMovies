@@ -11,8 +11,8 @@ struct RequestMovieCategoriesAction: Action { }
 struct DownloadingMovieCategoriesAction: Action { }
 struct CompletedMovieCategoriesAction: Action {
   let categories: [MovieCategory]
-  let moviesRelational: [Movie.ID: Movie]
-  let relational: [MovieCategory.ID: [Movie.ID]]
+  let previewsRelational: [MoviePreview.ID: MoviePreview]
+  let relational: [MovieCategory.ID: [MoviePreview.ID]]
 }
 struct FailedMovieCategoriesAction: Action {
   let error: Error

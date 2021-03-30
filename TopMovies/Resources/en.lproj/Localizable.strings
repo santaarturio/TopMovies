@@ -4,3 +4,18 @@
 "app.home.movie.yes" = "Yes";
 "app.home.movie.no" = "No";
 "app.home.movie.rating" = "Rating";
+"app.home.movie.overview" = "no overview";
+"app.home.movie.reloadInProgress" = "Reload in progress...";
+
+"app.movieDetail.overview" = "no overview";
+"app.movieDetail.rating" = "Rating";
+"app.movieDetail.outOf" = "out of";
+"app.movieDetail.votes" = "votes";
+"app.movieDetail.budget" = "Budget";
+"app.movieDetail.unknownBudget" = "unknown";
+"app.movieDetail.status" = "Status";
+"app.movieDetail.release" = "Release";
+"app.movieDetail.overview" = "no overview";
+"app.movieDetail.runtime" = "Runtime";
+"app.movieDetail.minutes" = "minutes";
+"app.movieDetail.genres" = "Genres";

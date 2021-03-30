@@ -15,8 +15,9 @@ class MovieCategoriesStateSpec: QuickSpec {
       
       var state: MovieCategoriesState!
       beforeEach {
-        state = .init(relational: [mockMovieCategory.id: mockMovieCategory],
-                      categoriesList: .initial)
+        state = MovieCategoriesState
+          .init(relational: [mockMovieCategory.id: mockMovieCategory],
+                categoriesList: .initial)
       }
       
       context("request movie categories action should be reduced") {
@@ -44,8 +45,8 @@ class MovieCategoriesStateSpec: QuickSpec {
       context("completed movie categories action should be reduced") {
         it("should replace 1 item in the relational and set categoriesList to .completed([mockMovieCategory2.id])") {
           let action = CompletedMovieCategoriesAction(categories: [mockMovieCategory2],
-                                                      moviesRelational: [mockMovie2.id: mockMovie2],
-                                                      relational: [mockMovieCategory2.id : [mockMovie2.id]])
+                                                      previewsRelational: [mockMoviePreview2.id: mockMoviePreview2],
+                                                      relational: [mockMovieCategory2.id : [mockMoviePreview2.id]])
           state = MovieCategoriesState.reduce(action: action,
                                               state: state)
           expect(state.relational.count == 1).to(beTrue())

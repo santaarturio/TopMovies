@@ -15,6 +15,10 @@ class MockSuccessfulMovieAPI: MovieAPIProtocol {
   func category(_ requestedCategory: MovieCategoryRequest, page: Int, _ category: @escaping (Result<CategoryDTO, Error>) -> Void) {
     category(.success(mockCategoryDTO))
   }
+  
+  func movie(id: MoviePreview.ID, _ result: @escaping (Result<MovieDTO, Error>) -> Void) {
+    result(.success(mockUpdatedMovieDTO))
+  }
 }
 
 class MockUnsuccessfulMovieAPI: MovieAPIProtocol {
@@ -24,5 +28,9 @@ class MockUnsuccessfulMovieAPI: MovieAPIProtocol {
   
   func category(_ requestedCategory: MovieCategoryRequest, page: Int, _ category: @escaping (Result<CategoryDTO, Error>) -> Void) {
     category(.failure(MockError(description: "failed movie category")))
+  }
+  
+  func movie(id: MoviePreview.ID, _ result: @escaping (Result<MovieDTO, Error>) -> Void) {
+    result(.failure(MockError(description: "failed movie update")))
   }
 }
