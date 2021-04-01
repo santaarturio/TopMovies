@@ -7,11 +7,11 @@
 
 import ReSwift
 
-let allActionsMiddleware: Middleware<MainState> = { dispatch, getState in
+let allActionsMiddleware: Middleware<MainState> = { _, _ in
   return { next in
     return { action in
       #if DEBUG
-      //print(">  \(action)")
+      print(">  \(action)")
       #endif
       next(action)
     }

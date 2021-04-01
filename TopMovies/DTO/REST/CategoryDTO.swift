@@ -5,12 +5,6 @@
 //  Created by anikolaenko on 05.02.2021.
 //
 
-struct CategoryDTOWrapper {
-  var id: String
-  var name: String
-  var dto: CategoryDTO
-}
-
 struct CategoryDTO: Decodable {
   let page: Int
   let results: [MoviePreviewDTO]
@@ -22,14 +16,15 @@ struct CategoryDTO: Decodable {
     case totalResults = "total_results"
   }
 }
-
 extension CategoryDTO {
-  var nextPage: Int? { page < totalPages ? page + 1 : nil }
+  var nextPage: String? { page < totalPages ? "\(page + 1)" : nil }
 }
 
-extension MovieCategory {
-  init(dtoWrapper: CategoryDTOWrapper) {
-    id = ID(value: dtoWrapper.id)
-    title = dtoWrapper.name
+extension CategoryDTOWrapper {
+  init(id: String, title: String, dto: CategoryDTO) {
+    self.id = id
+    self.title = title
+    movies = dto.results.map(MoviePreviewDTOWrapper.init(dto:))
+    next = dto.nextPage
   }
 }

@@ -1,0 +1,10 @@
+
+query Movie($id: Int!) {
+  movies {
+    movie(id: $id) {
+      details {
+        ...MovieDetailsFragment
+      }
+    }
+  }
+}

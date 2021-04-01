@@ -22,7 +22,8 @@ struct Assembler {
     }.inObjectScope(.container)
     
     // MARK: - Service
-    registrar.autoregister(MovieAPIProtocol.self, initializer: MovieAPI.init)
+    registrar.autoregister(MovieAPIProtocol.self, initializer: MovieAPIGraphQL.init)
+    
     registrar.register(MovieService<StoreProvider<MainState>>.self) { resolver in
       MovieService(
         movieAPI: resolver ~> MovieAPIProtocol.self,

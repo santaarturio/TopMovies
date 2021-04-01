@@ -26,10 +26,10 @@ extension MovieCategoriesState {
         categoriesList: .downloading
       )
     case let action as CompletedMovieCategoriesAction:
-      let categoriesIDArray = action.categories.map(\.id)
+      let categoriesIDArray = action.categories.map(\.category.id)
       return MovieCategoriesState(
         relational: Dictionary(uniqueKeysWithValues:
-                                zip(categoriesIDArray, action.categories)),
+                                zip(categoriesIDArray, action.categories.map(\.category))),
         categoriesList: .completed(data: categoriesIDArray)
       )
     case let action as FailedMovieCategoriesAction:

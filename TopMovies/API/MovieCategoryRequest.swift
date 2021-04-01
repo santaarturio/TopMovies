@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MovieCategoryRequest: String, CaseIterable {
+enum MovieCategoryRequest: String, CaseIterable, AutoEnum {
   case nowPlaying = "now_playing"
   case popular = "popular"
   case topRated = "top_rated"
@@ -26,7 +26,7 @@ extension CategoryDTO {
 }
 
 extension MoviesDBTarget {
-  init(category: MovieCategoryRequest, page: Int = 1) {
+  init(category: MovieCategoryRequest, page: String = "1") {
     self = .category(id: .init(value: category.rawValue),
                      page: page)
   }

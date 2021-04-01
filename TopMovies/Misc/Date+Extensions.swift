@@ -14,7 +14,10 @@ extension Date {
   
   static func prettyDate(from string: String) -> Date {
     guard
-      let date = DateFormatter.cached(withFormat: "yyyy-mm-dd")
+      let date = DateFormatter
+        .cached(withFormat: "yyyy-mm-dd")
+        .date(from: string) ?? ISO8601DateFormatter
+        .cached
         .date(from: string)
     else { return Date() }
     return date

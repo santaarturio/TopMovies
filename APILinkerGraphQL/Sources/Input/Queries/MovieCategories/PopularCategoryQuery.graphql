@@ -1,0 +1,8 @@
+
+query PopularCategory($cursor: String) {
+  movies {
+    popular(after: $cursor) {
+      ...MovieCategoryFragment
+    }
+  }
+}

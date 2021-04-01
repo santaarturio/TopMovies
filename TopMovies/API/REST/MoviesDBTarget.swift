@@ -4,7 +4,7 @@
 //
 //  Created by anikolaenko on 04.02.2021.
 //
-import ReSwift
+
 import Moya
 
 enum MoviesDBTarget {
@@ -13,10 +13,10 @@ enum MoviesDBTarget {
     MoviesDBTarget.store.state.configurationState.configuredAPIKey ?? ""
   }
   
-  case category(id: MovieCategory.ID, page: Int)
+  case category(id: MovieCategory.ID, page: String)
   case movie(id: MoviePreview.ID)
   
-  func requestedCategoryPage() -> Int? {
+  var requestedCategoryPage: String? {
     guard case let .category(_, page) = self else { return nil }
     return page
   }
@@ -45,8 +45,8 @@ extension MoviesDBTarget: TargetType {
       parameters: [
         "api_key": key,
         "language": "en"
-      ].merging(requestedCategoryPage() != nil ?
-                  ["page" : "\(requestedCategoryPage()!)"] : [:]) { $1 },
+      ].merging(requestedCategoryPage != nil ?
+                  ["page" : requestedCategoryPage!] : [:]) { $1 },
       encoding: URLEncoding.default)
   }
   var headers: [String : String]? {

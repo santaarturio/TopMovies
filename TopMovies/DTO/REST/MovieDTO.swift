@@ -21,8 +21,7 @@ struct MovieDTO: Decodable {
   let runtime: Int?
   let tagline: String?
   let status, title: String
-  let voteAverage: Double
-  let voteCount: Int
+  let rating: Double
   
   enum CodingKeys: String, CodingKey {
     case adult
@@ -32,14 +31,18 @@ struct MovieDTO: Decodable {
     case productionCompanies = "production_companies"
     case releaseDate = "release_date"
     case runtime, status, tagline, title
-    case voteAverage = "vote_average"
-    case voteCount = "vote_count"
+    case rating = "vote_average"
   }
 }
 
 // MARK: - Genre
 struct GenreDTO: Decodable {
   let name: String
+}
+extension GenreDTOWrapper {
+  init(restDTO: GenreDTO) {
+    name = restDTO.name
+  }
 }
 
 // MARK: - ProductionCompany
@@ -52,29 +55,33 @@ struct ProductionCompanyDTO: Decodable {
     case name
   }
 }
-
-// MARK: - DTO Parsing -
-extension ProductionCompany {
+extension ProductionCompanyDTOWrapper {
   init(dto: ProductionCompanyDTO) {
+    let urlManager = URLManager()
+    
     name = dto.name
-    logo = URLManager.companyLogoURL(for: dto.logoPath)
+    logo = urlManager.tmdbImageURL(for: dto.logoPath)
   }
 }
-extension Movie {
+
+// MARK: - MovieDTOWrapper
+extension MovieDTOWrapper {
   init(dto: MovieDTO) {
-    id = .init(value: String(dto.id))
-    adult = dto.adult
-    title = dto.title
-    description = dto.overview ?? L10n.App.MovieDetail.overview
+    let urlManager = URLManager()
+    
+    isAdult = dto.adult
+    backdrop = urlManager.tmdbImageURL(for: dto.backdropPath)
     budget = dto.budget
-    genres = dto.genres.map(\.name)
-    productionCompanies = dto.productionCompanies.map(ProductionCompany.init(dto: ))
-    rating = dto.voteAverage
-    voteCount = dto.voteCount
-    runtime = dto.runtime ?? 0
-    tagline = dto.tagline ?? ""
-    releaseDate = Date.prettyDate(from: dto.releaseDate)
+    genres = dto.genres.map(GenreDTOWrapper.init(restDTO:))
+    id = dto.id
+    overview = dto.overview
+    poster = urlManager.tmdbImageURL(for: dto.posterPath)
+    productionCompanies = dto.productionCompanies.map(ProductionCompanyDTOWrapper.init(dto:))
+    releaseDate = dto.releaseDate
+    runtime = dto.runtime
+    tagline = dto.tagline
     status = dto.status
-    poster = URLManager.moviePosterURL(for: dto.posterPath ?? dto.backdropPath)
+    title = dto.title
+    rating = dto.rating
   }
 }

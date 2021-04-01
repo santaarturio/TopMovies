@@ -1,0 +1,22 @@
+
+fragment MovieDetailsFragment on DetailedMovie {
+  id
+  title
+  overview
+  poster(size: W780)
+  backdrop(size: W780)
+  isAdult
+  releaseDate
+  rating
+  budget
+  runtime
+  tagline
+  status
+  genres {
+   name
+  }
+  productionCompanies {
+   name
+   logo(size: W500)
+  }
+}

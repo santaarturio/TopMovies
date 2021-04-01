@@ -13,7 +13,6 @@ struct MoviePreview: Hashable, Equatable {
   let title: String
   let description: String
   let rating: Double
-  let voteCount: Int
   let releaseDate: Date
   let poster: URL?
   
@@ -29,7 +28,6 @@ extension MoviePreview {
     title = movie.title
     description = movie.description
     rating = movie.rating
-    voteCount = movie.voteCount
     releaseDate = movie.releaseDate
     poster = movie.poster
   }

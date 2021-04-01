@@ -14,8 +14,7 @@ struct MoviePreviewDTO: Decodable {
   let overview: String?
   let posterPath: String?
   let releaseDate, title: String
-  let voteAverage: Double
-  let voteCount: Int
+  let rating: Double
   
   enum CodingKeys: String, CodingKey {
     case adult
@@ -25,20 +24,21 @@ struct MoviePreviewDTO: Decodable {
     case posterPath = "poster_path"
     case releaseDate = "release_date"
     case title
-    case voteAverage = "vote_average"
-    case voteCount = "vote_count"
+    case rating = "vote_average"
   }
 }
 
-extension MoviePreview {
+extension MoviePreviewDTOWrapper {
   init(dto: MoviePreviewDTO) {
-    id = ID(value: String(dto.id))
-    adult = dto.adult
+    let urlManager = URLManager()
+    
+    id = dto.id
     title = dto.title
-    description = dto.overview ?? L10n.App.Home.Movie.overview
-    rating = dto.voteAverage
-    voteCount = dto.voteCount
-    releaseDate = Date.prettyDate(from: dto.releaseDate) 
-    poster = URLManager.moviePosterURL(for: dto.posterPath ?? dto.backdropPath)
+    overview = dto.overview
+    releaseDate = dto.releaseDate
+    isAdult = dto.adult
+    rating = dto.rating
+    poster = urlManager.tmdbImageURL(for: dto.posterPath)
+    backdrop = urlManager.tmdbImageURL(for: dto.backdropPath)
   }
 }

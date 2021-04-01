@@ -10,7 +10,7 @@ import ReSwift
 struct RequestMovieCategoriesAction: Action { }
 struct DownloadingMovieCategoriesAction: Action { }
 struct CompletedMovieCategoriesAction: Action {
-  let categories: [MovieCategory]
+  let categories: [MovieCategoryWrapper]
   let previewsRelational: [MoviePreview.ID: MoviePreview]
   let relational: [MovieCategory.ID: [MoviePreview.ID]]
 }

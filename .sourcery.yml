@@ -2,4 +2,4 @@ sources:
     - TopMovies
 templates:
     - TopMovies/Resources/Prisms
-output: TopMovies/Generated
+output: TopMovies/Resources/Generated

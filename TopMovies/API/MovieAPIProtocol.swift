@@ -12,8 +12,8 @@ protocol MovieAPIProtocol {
   func allMovieCategories(callBackQueue queue: DispatchQueue,
                           categoriesResult: @escaping (Result<[CategoryDTOWrapper], Error>) -> Void)
   func category(request: MovieCategoryRequest,
-                page: Int,
+                page: String?,
                 categoryResult: @escaping (Result<CategoryDTOWrapper, Error>) -> Void)
   func movie(id: MoviePreview.ID,
-             movieResult: @escaping (Result<MovieDTO, Error>) -> Void)
+             movieResult: @escaping (Result<MovieDTOWrapper, Error>) -> Void)
 }
