@@ -12,22 +12,18 @@ import Overture
 
 typealias MainStore = Store<MainState>
 
-struct Assembler {
-  static func registerDependencies() {
-    let registrar = Container.default.registrar
-    
+final class Assembler: StoreSubscriber {
+  @Inject private var store: MainStore
+  @Inject private var passepartout: ServicesPassepartoutProtocol
+  private var registeredAPI: MoviesServiceState = .initial
+  private let registrar = Container.default.registrar
+  
+  static let `default` = Assembler()
+  
+  func registerDependencies() {
     // MARK: - Store
     registrar.register(MainStore.self) { _ in
       MainStore(reducer: mainReducer, state: nil, middleware: [allActionsMiddleware])
-    }.inObjectScope(.container)
-    
-    // MARK: - Service
-    registrar.autoregister(MovieAPIProtocol.self, initializer: MovieAPI.init)
-    registrar.register(MovieService<StoreProvider<MainState>>.self) { resolver in
-      MovieService(
-        movieAPI: resolver ~> MovieAPIProtocol.self,
-        storeProvider: curry(StoreProvider<MainState>.init(store: onStateUpdate:))(resolver.resolve(MainStore.self)!)
-      )
     }.inObjectScope(.container)
     
     // MARK: - Factory
@@ -37,5 +33,37 @@ struct Assembler {
     // MARK: - Router
     registrar.autoregister(RouterProtocol.self, initializer: Router.init)
       .inObjectScope(.container)
+    
+    // MARK: - Passepartout
+    registrar.autoregister(ServicesPassepartoutProtocol.self, initializer: ServicesPassepartout.init)
+    
+    store.subscribe(self)
+  }
+  
+  func newState(state: MainState) {
+    if state.moviesServiceState == registeredAPI { return }
+    
+    switch state.moviesServiceState {
+    case .initial: return
+    case .tmdb:
+      registrar.autoregister(MovieAPIProtocol.self, initializer: MovieAPI.init)
+    case .quintero:
+      registrar.autoregister(MovieAPIProtocol.self, initializer: MovieAPIGraphQL.init)
+    }
+    
+    registeredAPI = state.moviesServiceState
+    
+    registrar.register(MovieService<StoreProvider<MainState>>.self) { resolver in
+      MovieService(
+        movieAPI: resolver ~> MovieAPIProtocol.self,
+        storeProvider: curry(StoreProvider<MainState>.init(store: onStateUpdate:))(resolver.resolve(MainStore.self)!)
+      )
+    }.inObjectScope(.container)
+    
+    _ = Container.default.resolver.resolve(MovieService<StoreProvider<MainState>>.self)
+    
+    StreamingService
+      .init(state: state.moviesServiceState)
+      .map(passepartout.configureApiKey(for:))
   }
 }

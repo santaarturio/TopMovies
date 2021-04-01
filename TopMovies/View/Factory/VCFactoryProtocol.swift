@@ -6,6 +6,7 @@
 //
 
 protocol VCFactoryProtocol {
+  func createWelcomeVC() -> WelcomeVC
   func createAllCategoriesVC() -> TopMoviesVC
   func createCategoryVC() -> MoviesCategoryVC
   func createMovieVC() -> MovieVC

@@ -1,0 +1,8 @@
+
+query UpcomingCategory($cursor: String) {
+  movies {
+    upcoming(after: $cursor) {
+      ...MovieCategoryFragment
+    }
+  }
+}

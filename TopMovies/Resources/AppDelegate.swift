@@ -17,28 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
-    Assembler.registerDependencies()
-    createService()
-    configureAPIKey()
+    Assembler.default.registerDependencies()
     window = UIWindow(frame: UIScreen.main.bounds)
     router.setup(with: window)
     
     return true
   }
   
-  func configureAPIKey() {
-    var apiKey: String {
-      guard let filePath = Bundle.main.path(forResource: "TMDB-Info", ofType: "plist"),
-            let plist = NSDictionary(contentsOfFile: filePath),
-            let key = plist.object(forKey: "API_KEY") as? String
-      else { fatalError("File \"TMDB-Info\" doesn`t exist") }
-      return key
-    }
-    mainStore.dispatch(UpdateConfigurationAction.configureAPIKey(apiKey))
-  }
-  func createService() {
-    _ = Container.default.resolver.resolve(MovieService<StoreProvider<MainState>>.self)
-  }
   func applicationDidFinishLaunching(_ application: UIApplication) {
     mainStore.dispatch(AppFlowAction.applicationDidFinishLaunching)
   }

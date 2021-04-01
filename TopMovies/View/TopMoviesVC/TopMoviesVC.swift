@@ -46,6 +46,7 @@ final class TopMoviesVC: BaseVC<TopMoviesProps, StoreProvider<MainState>> {
     }
   }
   private func setupStyle() {
+    navigationController?.isNavigationBarHidden = false
     view.backgroundColor = Asset.Colors.mainBackground.color
     title = L10n.App.Home.title
     navigationController?.navigationBar.prefersLargeTitles = true

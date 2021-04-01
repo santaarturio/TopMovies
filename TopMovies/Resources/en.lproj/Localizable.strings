@@ -9,13 +9,11 @@
 
 "app.movieDetail.overview" = "no overview";
 "app.movieDetail.rating" = "Rating";
-"app.movieDetail.outOf" = "out of";
-"app.movieDetail.votes" = "votes";
+"app.movieDetail.tmdb" = "TMDB";
 "app.movieDetail.budget" = "Budget";
 "app.movieDetail.unknownBudget" = "unknown";
 "app.movieDetail.status" = "Status";
 "app.movieDetail.release" = "Release";
-"app.movieDetail.overview" = "no overview";
 "app.movieDetail.runtime" = "Runtime";
 "app.movieDetail.minutes" = "minutes";
 "app.movieDetail.genres" = "Genres";
@@ -24,3 +22,5 @@
 "app.category.name.popular" = "Popular";
 "app.category.name.topRated" = "Top Rated";
 "app.category.name.upcoming" = "Upcoming";
+
+"app.welcome.choose" = "Choose";

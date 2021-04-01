@@ -24,6 +24,17 @@ extension EmptyRequestState {
   var isDownloading: Bool { guard case .downloading = self else { return false }; return true }
   var failed: Error? { guard case let .failed(failed) = self else { return nil }; return failed }
 }
+extension MovieCategoryRequest {
+  var isNowPlaying: Bool { guard case .nowPlaying = self else { return false }; return true }
+  var isPopular: Bool { guard case .popular = self else { return false }; return true }
+  var isTopRated: Bool { guard case .topRated = self else { return false }; return true }
+  var isUpcoming: Bool { guard case .upcoming = self else { return false }; return true }
+}
+extension MoviesServiceState {
+  var isInitial: Bool { guard case .initial = self else { return false }; return true }
+  var isTmdb: Bool { guard case .tmdb = self else { return false }; return true }
+  var isQuintero: Bool { guard case .quintero = self else { return false }; return true }
+}
 extension RequestState {
   var isInitial: Bool { guard case .initial = self else { return false }; return true }
   var isRequested: Bool { guard case .requested = self else { return false }; return true }

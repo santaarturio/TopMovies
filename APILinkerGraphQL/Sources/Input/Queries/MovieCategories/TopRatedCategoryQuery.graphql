@@ -1,0 +1,8 @@
+
+query TopRatedCategory($cursor: String) {
+  movies {
+    topRated(after: $cursor) {
+      ...MovieCategoryFragment
+    }
+  }
+}

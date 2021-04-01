@@ -6,6 +6,9 @@
 //
 
 final class VCFactory: VCFactoryProtocol {
+  func createWelcomeVC() -> WelcomeVC {
+    WelcomeVC()
+  }
   func createAllCategoriesVC() -> TopMoviesVC {
     TopMoviesVC()
   }

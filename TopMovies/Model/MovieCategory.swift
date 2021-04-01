@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct MovieCategoryWrapper {
+  let category: MovieCategory
+  let next: String?
+}
+
 struct MovieCategory: Equatable {
   let id: ID
   let title: String

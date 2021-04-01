@@ -1,0 +1,17 @@
+
+query AllMovieCategories {
+  movies {
+    topRated {
+      ...MovieCategoryFragment
+    }
+    nowPlaying {
+      ...MovieCategoryFragment
+    }
+    popular {
+      ...MovieCategoryFragment
+    }
+    upcoming {
+      ...MovieCategoryFragment
+    }
+  }
+}

@@ -16,7 +16,6 @@ struct Movie: Equatable {
   let genres: [String]
   let productionCompanies: [ProductionCompany]
   let rating: Double
-  let voteCount: Int
   let runtime: Int
   let tagline: String
   let releaseDate: Date
@@ -40,7 +39,6 @@ extension Movie {
     genres = []
     productionCompanies = []
     rating = preview.rating
-    voteCount = preview.voteCount
     runtime = 0
     tagline = ""
     releaseDate = preview.releaseDate
@@ -59,7 +57,6 @@ extension Movie: Defaultable {
           genres: [],
           productionCompanies: [],
           rating: 0,
-          voteCount: 0,
           runtime: 0,
           tagline: "",
           releaseDate: .init(),

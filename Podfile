@@ -14,6 +14,8 @@ target 'TopMovies' do
   pod 'Overture', '~> 0.5'
   pod 'Swinject', '~> 2.7.1'
   pod 'SwinjectAutoregistration', '~> 2.7.0'
+  pod 'RxSwift', '6.1.0'
+  pod 'RxCocoa', '6.1.0'
   
   def testing_pods
   pod 'Quick', '~> 3.1.2'

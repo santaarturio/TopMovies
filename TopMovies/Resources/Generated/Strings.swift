@@ -49,8 +49,6 @@ internal enum L10n {
       internal static let genres = L10n.tr("Localizable", "app.movieDetail.genres")
       /// minutes
       internal static let minutes = L10n.tr("Localizable", "app.movieDetail.minutes")
-      /// out of
-      internal static let outOf = L10n.tr("Localizable", "app.movieDetail.outOf")
       /// no overview
       internal static let overview = L10n.tr("Localizable", "app.movieDetail.overview")
       /// Rating
@@ -61,10 +59,14 @@ internal enum L10n {
       internal static let runtime = L10n.tr("Localizable", "app.movieDetail.runtime")
       /// Status
       internal static let status = L10n.tr("Localizable", "app.movieDetail.status")
+      /// TMDB
+      internal static let tmdb = L10n.tr("Localizable", "app.movieDetail.tmdb")
       /// unknown
       internal static let unknownBudget = L10n.tr("Localizable", "app.movieDetail.unknownBudget")
-      /// votes
-      internal static let votes = L10n.tr("Localizable", "app.movieDetail.votes")
+    }
+    internal enum Welcome {
+      /// Choose
+      internal static let choose = L10n.tr("Localizable", "app.welcome.choose")
     }
   }
 }

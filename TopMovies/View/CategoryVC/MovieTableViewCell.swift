@@ -31,7 +31,7 @@ extension MovieTableViewCellProps {
     titleLabelText = movie.title
     releaseDateLabelText = "\(L10n.App.MovieDetail.release): \(Date.prettyDateString(from: movie.releaseDate))"
     ratingAndVotesLabelText
-      = "\(movie.rating) / 10 \(L10n.App.MovieDetail.outOf) \(movie.voteCount) \(L10n.App.MovieDetail.votes)"
+      = "\(L10n.App.MovieDetail.tmdb): \(movie.rating)"
     movieIsNew = Date.isNew(date: movie.releaseDate)
     movieForAdult = movie.adult
     descriptionLabeltext = movie.description
