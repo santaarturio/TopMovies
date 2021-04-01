@@ -20,9 +20,10 @@ struct MovieTableViewCellProps {
   let movieIsNew: Bool
   let movieForAdult: Bool
   let descriptionLabeltext: String
+  let actionMovieDetail: () -> Void
 }
 extension MovieTableViewCellProps {
-  init?(movie: MoviePreview?) {
+  init?(movie: MoviePreview?, actionMovieDetail: @escaping () -> Void) {
     guard let movie = movie else { return nil }
     movieId = movie.id
     posterURL = movie.poster
@@ -34,6 +35,7 @@ extension MovieTableViewCellProps {
     movieIsNew = Date.isNew(date: movie.releaseDate)
     movieForAdult = movie.adult
     descriptionLabeltext = movie.description
+    self.actionMovieDetail = actionMovieDetail
   }
 }
 

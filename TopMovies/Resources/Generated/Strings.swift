@@ -22,10 +22,10 @@ internal enum L10n {
         internal static let no = L10n.tr("Localizable", "app.home.movie.no")
         /// no overview
         internal static let overview = L10n.tr("Localizable", "app.home.movie.overview")
+        /// Pull to refresh
+        internal static let pullToRefresh = L10n.tr("Localizable", "app.home.movie.pullToRefresh")
         /// Rating
         internal static let rating = L10n.tr("Localizable", "app.home.movie.rating")
-        /// Reload in progress...
-        internal static let reloadInProgress = L10n.tr("Localizable", "app.home.movie.reloadInProgress")
         /// Yes
         internal static let yes = L10n.tr("Localizable", "app.home.movie.yes")
       }

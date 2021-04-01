@@ -18,10 +18,11 @@ struct MovieCollectionProps {
   let descriptionLabeltext: String
   let posterURL: URL?
   let posterPlaceholderImage: UIImage
+  let actionMovieDetail: () -> Void
 }
 
 extension MovieCollectionProps {
-  init?(movie: MoviePreview?) {
+  init?(movie: MoviePreview?, actionMovieDetail: @escaping () -> Void) {
     guard let movie = movie else { return nil }
     movieId = movie.id
     adultLabelText = "\(L10n.App.Home.Movie.adult): \(movie.adult ? L10n.App.Home.Movie.yes : L10n.App.Home.Movie.no)"
@@ -30,6 +31,7 @@ extension MovieCollectionProps {
     descriptionLabeltext = movie.description
     posterURL = movie.poster
     posterPlaceholderImage = Asset.Images.moviePlaceholder.image
+    self.actionMovieDetail = actionMovieDetail
   }
 }
 
@@ -45,8 +47,9 @@ final class MovieCollectionViewCell: UICollectionViewCell {
   private let shadowView = ANCollectionCellShadowView()
   private let contentStackView = UIStackView()
   private let containerView = UIView()
+  
   // MARK: - Cell configuration
-  public func configureWith(props: MovieCollectionProps) {
+  public func configure(with props: MovieCollectionProps) {
     posterImageView.image = props.posterPlaceholderImage
     if let url = props.posterURL {
       let options = ImageLoadingOptions(placeholder: props.posterPlaceholderImage,
@@ -60,6 +63,7 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     titleLabel.text = props.titleLabelText
     descriptionLabel.text = props.descriptionLabeltext
   }
+  
   // MARK: - UISetup
   override init(frame: CGRect) {
     super.init(frame: frame)

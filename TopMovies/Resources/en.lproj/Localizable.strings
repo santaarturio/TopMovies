@@ -5,7 +5,7 @@
 "app.home.movie.no" = "No";
 "app.home.movie.rating" = "Rating";
 "app.home.movie.overview" = "no overview";
-"app.home.movie.reloadInProgress" = "Reload in progress...";
+"app.home.movie.pullToRefresh" = "Pull to refresh";
 
 "app.movieDetail.overview" = "no overview";
 "app.movieDetail.rating" = "Rating";

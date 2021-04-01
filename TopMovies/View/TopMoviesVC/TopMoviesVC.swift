@@ -69,7 +69,7 @@ extension TopMoviesVC: UITableViewDataSource, UITableViewDelegate {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: movieCategoryCellIdentifier,
                                                    for: indexPath) as? MovieCategoryTableViewCell
     else { return UITableViewCell() }
-    cell.configureWith(props: topMoviesProps.movieCategories[indexPath.row])
+    cell.configure(with: topMoviesProps.movieCategories[indexPath.row])
     return cell
   }
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

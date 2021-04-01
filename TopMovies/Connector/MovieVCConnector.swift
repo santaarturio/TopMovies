@@ -7,7 +7,9 @@
 
 class MovieVCConnector<Provider: StoreProviderProtocol>: BaseConnector<MovieVCProps, Provider>
 where Provider.ExpectedStateType == MainState {
+  @Inject private var router: RouterProtocol
   private let movieId: MoviePreview.ID
+  private var isMovieSent = false
   
   typealias StateUpdate = (Provider.ExpectedStateType) -> Void
   init(movieId: MoviePreview.ID,
@@ -17,7 +19,21 @@ where Provider.ExpectedStateType == MainState {
     self.movieId = movieId
     super.init(updateProps: updateProps,
                provider: provider)
+    self.provider.dispatch(RequestMovieUpdateAction.init(movieId: movieId))
   }
   
-  override func newState(state: MainState) { }
+  override func newState(state: MainState) {
+    guard
+      let updateState = state.moviesUpdateState.relational[movieId],
+      updateState.isDownloading || state.moviesState.moviesRelational[movieId] != nil,
+      !isMovieSent
+    else { return }
+    
+    let props = MovieVCProps(downloadingInProgress: updateState.isDownloading,
+                             movie: state.moviesState.moviesRelational[movieId],
+                             preview: state.moviesState.previewsRelational[movieId],
+                             actionBackButton: { [unowned self] vc in router.perform(route: .dismiss(vc)) })
+    updateProps(props)
+    isMovieSent = state.moviesState.moviesRelational[movieId] != nil
+  }
 }
