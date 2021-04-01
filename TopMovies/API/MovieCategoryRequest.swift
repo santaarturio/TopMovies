@@ -8,19 +8,26 @@
 import Foundation
 
 enum MovieCategoryRequest: String, CaseIterable {
-  case nowPlaying = "Now Playing"
-  case popular = "Popular"
-  case topRated = "Top Rated"
-  case upcoming = "Upcoming"
+  case nowPlaying = "now_playing"
+  case popular = "popular"
+  case topRated = "top_rated"
+  case upcoming = "upcoming"
 }
 
-extension MovieTarget.RequestedCategory {
-  init(category: MovieCategoryRequest, page: Int = 1) {
-    switch category {
-    case .nowPlaying: self = .nowPlaying(page: page)
-    case .popular: self = .popular(page: page)
-    case .topRated: self = .topRated(page: page)
-    case .upcoming: self = .upcoming(page: page)
+extension CategoryDTO {
+  static func name(by request: MovieCategoryRequest) -> String {
+    switch request {
+    case .nowPlaying: return L10n.App.Category.Name.nowPlaying
+    case .popular: return L10n.App.Category.Name.popular
+    case .topRated: return L10n.App.Category.Name.topRated
+    case .upcoming: return L10n.App.Category.Name.upcoming
     }
+  }
+}
+
+extension MoviesDBTarget {
+  init(category: MovieCategoryRequest, page: Int = 1) {
+    self = .category(id: .init(value: category.rawValue),
+                     page: page)
   }
 }

@@ -19,3 +19,8 @@
 "app.movieDetail.runtime" = "Runtime";
 "app.movieDetail.minutes" = "minutes";
 "app.movieDetail.genres" = "Genres";
+
+"app.category.name.nowPlaying" = "Now Playing";
+"app.category.name.popular" = "Popular";
+"app.category.name.topRated" = "Top Rated";
+"app.category.name.upcoming" = "Upcoming";

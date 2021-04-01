@@ -24,7 +24,7 @@ where Provider.ExpectedStateType == MainState {
   private func requestAllCategoriesIfNeeded(state: MovieCategoriesState) {
     if state.categoriesList.isRequested {
       provider.dispatch(DownloadingMovieCategoriesAction())
-      movieAPI.allMovieCategories { [unowned self] result in
+      movieAPI.allMovieCategories(callBackQueue: serviceQueue) { [unowned self] result in
         switch result {
         case let .success(categoriesList):
           provider.dispatch(CompletedMovieCategoriesAction(
@@ -35,7 +35,7 @@ where Provider.ExpectedStateType == MainState {
                                 .hashMap(into: PreviewsRelational(), id: \.id),
                               relational: categoriesList
                                 .reduce(into: [:]) { dict, categoryDTO in
-                                  dict[MovieCategory.ID(value: categoryDTO.name)]
+                                  dict[MovieCategory.ID(value: categoryDTO.id)]
                                     = categoryDTO.results
                                     .map(\.id)
                                     .map(String.init)
@@ -56,7 +56,8 @@ where Provider.ExpectedStateType == MainState {
           .next(requestedPage) = paginatedState.pageInfo {
         provider.dispatch(DownloadingPreviewsListAction(categoryId: categoryId,
                                                         requestType: .loadMore))
-        movieAPI.category(categoryRequest, page: requestedPage) { [unowned self] result in
+        movieAPI.category(request: categoryRequest,
+                          page: requestedPage) { [unowned self] result in
           switch result {
           case let .success(categoryDTO):
             provider.dispatch(CompletedPreviewsListAction(categoryId: categoryId,
@@ -73,7 +74,7 @@ where Provider.ExpectedStateType == MainState {
       } else if case .requested = paginatedState.reload {
         provider.dispatch(DownloadingPreviewsListAction(categoryId: categoryId,
                                                         requestType: .reload))
-        movieAPI.category(categoryRequest, page: 1) { [unowned self] result in
+        movieAPI.category(request: categoryRequest, page: 1) { [unowned self] result in
           switch result {
           case let .success(categoryDTO):
             provider.dispatch(CompletedPreviewsListAction(categoryId: categoryId,
