@@ -12,6 +12,18 @@ import Foundation
 internal enum L10n {
 
   internal enum App {
+    internal enum Category {
+      internal enum Name {
+        /// Now Playing
+        internal static let nowPlaying = L10n.tr("Localizable", "app.category.name.nowPlaying")
+        /// Popular
+        internal static let popular = L10n.tr("Localizable", "app.category.name.popular")
+        /// Top Rated
+        internal static let topRated = L10n.tr("Localizable", "app.category.name.topRated")
+        /// Upcoming
+        internal static let upcoming = L10n.tr("Localizable", "app.category.name.upcoming")
+      }
+    }
     internal enum Home {
       /// TopMovies
       internal static let title = L10n.tr("Localizable", "app.home.title")

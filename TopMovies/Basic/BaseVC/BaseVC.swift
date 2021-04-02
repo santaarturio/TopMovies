@@ -13,7 +13,9 @@ class BaseVC<Props, Provider: StoreProviderProtocol>: UIViewController, Connecta
   
   typealias PropsUpdate = (Props) -> Void
   func configureConnection(with connector: (@escaping PropsUpdate) -> Connector) {
-    propsConnector = connector { [unowned self] props in connect(props: props) }
+    propsConnector = connector { [unowned self] props in
+      DispatchQueue.main.async { connect(props: props) }
+    }
   }
   
   func connect(props: Props) {

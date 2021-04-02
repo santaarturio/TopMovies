@@ -5,14 +5,18 @@
 //  Created by anikolaenko on 05.02.2021.
 //
 
+struct CategoryDTOWrapper {
+  var id: String
+  var name: String
+  var dto: CategoryDTO
+}
+
 struct CategoryDTO: Decodable {
-  var name: String!
   let page: Int
   let results: [MoviePreviewDTO]
   let totalPages, totalResults: Int
   
   enum CodingKeys: String, CodingKey {
-    case name
     case page, results
     case totalPages = "total_pages"
     case totalResults = "total_results"
@@ -24,8 +28,8 @@ extension CategoryDTO {
 }
 
 extension MovieCategory {
-  init(dto: CategoryDTO) {
-    id = ID(value: dto.name)
-    title = dto.name
+  init(dtoWrapper: CategoryDTOWrapper) {
+    id = ID(value: dtoWrapper.id)
+    title = dtoWrapper.name
   }
 }
