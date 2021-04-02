@@ -11,13 +11,13 @@ final class MovieAPI: MovieAPIProtocol {
   private let provider = MoyaProvider<MoviesDBTarget>()
   
   // MARK: - All Categories
-  public func allMovieCategories(categoriesResult: @escaping (Result<[CategoryDTO], Error>) -> Void) {
+  public func allMovieCategories(categoriesResult: @escaping (Result<[CategoryDTOWrapper], Error>) -> Void) {
     allMovieCategories(callBackQueue: DispatchQueue.defaultSerialQueue,
                        categoriesResult: categoriesResult)
   }
   public func allMovieCategories(callBackQueue queue: DispatchQueue,
-                                 categoriesResult: @escaping (Result<[CategoryDTO], Error>) -> Void) {
-    var categoriesDTO: [CategoryDTO] = []
+                                 categoriesResult: @escaping (Result<[CategoryDTOWrapper], Error>) -> Void) {
+    var categoriesDTO: [CategoryDTOWrapper] = []
     var someError: Error?
     
     let completionQueue = DispatchQueue(label: "com.topMovies.apiCompletion",
@@ -32,15 +32,15 @@ final class MovieAPI: MovieAPIProtocol {
             switch response {
             case let .success(data):
               do {
-                var moviesListDTO = try JSONDecoder().decode(CategoryDTO.self, from: data.data)
-                moviesListDTO.id = categoryRequest.rawValue
-                moviesListDTO.name = CategoryDTO.name(by: categoryRequest)
-                completionQueue.async { categoriesDTO.append(moviesListDTO) }
+                let moviesListDTO = try JSONDecoder().decode(CategoryDTO.self, from: data.data)
+                completionQueue.sync { categoriesDTO.append(.init(id: categoryRequest.rawValue,
+                                                                  name: CategoryDTO.name(by: categoryRequest),
+                                                                  dto: moviesListDTO)) }
               } catch {
-                completionQueue.async { someError = error }
+                completionQueue.sync { someError = error }
               }
             case let .failure(error):
-              completionQueue.async { someError = error }
+              completionQueue.sync { someError = error }
             }
             categoriesGroup.leave()
           }
@@ -58,15 +58,15 @@ final class MovieAPI: MovieAPIProtocol {
   // MARK: - Category
   public func category(request: MovieCategoryRequest,
                        page: Int,
-                       categoryResult: @escaping (Result<CategoryDTO, Error>) -> Void) {
+                       categoryResult: @escaping (Result<CategoryDTOWrapper, Error>) -> Void) {
     provider.request(.init(category: request, page: page)) { response in
       switch response {
       case let .success(data):
         do {
-          var moviesListDTO = try JSONDecoder().decode(CategoryDTO.self, from: data.data)
-          moviesListDTO.id = request.rawValue
-          moviesListDTO.name = CategoryDTO.name(by: request)
-          categoryResult(.success(moviesListDTO))
+          let moviesListDTO = try JSONDecoder().decode(CategoryDTO.self, from: data.data)
+          categoryResult(.success(.init(id: request.rawValue,
+                                        name: CategoryDTO.name(by: request),
+                                        dto: moviesListDTO)))
         } catch {
           categoryResult(.failure(error))
         }

@@ -45,12 +45,11 @@ struct GenreDTO: Decodable {
 // MARK: - ProductionCompany
 struct ProductionCompanyDTO: Decodable {
   let logoPath: String?
-  let name, originCountry: String
+  let name: String
   
   enum CodingKeys: String, CodingKey {
     case logoPath = "logo_path"
     case name
-    case originCountry = "origin_country"
   }
 }
 
@@ -59,7 +58,6 @@ extension ProductionCompany {
   init(dto: ProductionCompanyDTO) {
     name = dto.name
     logo = URLManager.companyLogoURL(for: dto.logoPath)
-    country = dto.originCountry
   }
 }
 extension Movie {

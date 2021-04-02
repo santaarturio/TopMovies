@@ -27,7 +27,6 @@ struct Movie: Equatable {
 struct ProductionCompany: Equatable {
   let name: String
   let logo: URL?
-  let country: String
 }
 
 extension Movie {

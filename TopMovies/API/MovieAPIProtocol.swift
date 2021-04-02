@@ -8,12 +8,12 @@
 import Foundation
 
 protocol MovieAPIProtocol {
-  func allMovieCategories(categoriesResult: @escaping (Result<[CategoryDTO], Error>) -> Void)
+  func allMovieCategories(categoriesResult: @escaping (Result<[CategoryDTOWrapper], Error>) -> Void)
   func allMovieCategories(callBackQueue queue: DispatchQueue,
-                          categoriesResult: @escaping (Result<[CategoryDTO], Error>) -> Void)
+                          categoriesResult: @escaping (Result<[CategoryDTOWrapper], Error>) -> Void)
   func category(request: MovieCategoryRequest,
                 page: Int,
-                categoryResult: @escaping (Result<CategoryDTO, Error>) -> Void)
+                categoryResult: @escaping (Result<CategoryDTOWrapper, Error>) -> Void)
   func movie(id: MoviePreview.ID,
              movieResult: @escaping (Result<MovieDTO, Error>) -> Void)
 }
