@@ -64,6 +64,10 @@ internal enum L10n {
       /// unknown
       internal static let unknownBudget = L10n.tr("Localizable", "app.movieDetail.unknownBudget")
     }
+    internal enum Welcome {
+      /// Choose your favorire service
+      internal static let chooseService = L10n.tr("Localizable", "app.welcome.chooseService")
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

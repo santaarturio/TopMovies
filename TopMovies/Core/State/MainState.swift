@@ -10,6 +10,7 @@ import ReSwift
 struct MainState: StateType {
   let configurationState: ConfigurationState
   let appFlowState: AppFlowState
+  let moviesServiceState: MoviesServiceState
   let movieCategoriesState: MovieCategoriesState
   let categoriesPaginationState: CategoriesPaginationState
   let moviesUpdateState: MoviesUpdateState

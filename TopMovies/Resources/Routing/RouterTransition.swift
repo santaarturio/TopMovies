@@ -8,6 +8,7 @@
 import UIKit
 
 enum RouteType {
+  case welcome
   case allCategories
   case category(MovieCategory.ID)
   case movie(MoviePreview.ID)
