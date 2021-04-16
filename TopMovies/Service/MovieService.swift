@@ -28,15 +28,16 @@ where Provider.ExpectedStateType == MainState {
         switch result {
         case let .success(categoriesList):
           provider.dispatch(CompletedMovieCategoriesAction(
-                              categories: categoriesList.map(MovieCategory.init(dtoWrapper: )),
+                              categories: categoriesList.map { MovieCategoryWrapper(category: .init(dto: $0),
+                                                                                    next: $0.next) },
                               previewsRelational: categoriesList
-                                .map { $0.dto.results.map(MoviePreview.init(dto:)) }
+                                .map { $0.movies.map(MoviePreview.init(dto:)) }
                                 .flatMap { $0 }
                                 .hashMap(into: PreviewsRelational(), id: \.id),
                               relational: categoriesList
-                                .reduce(into: [:]) { dict, categoryDTOWrapper in
-                                  dict[MovieCategory.ID(value: categoryDTOWrapper.id)]
-                                    = categoryDTOWrapper.dto.results
+                                .reduce(into: [:]) { dict, categoryDTO in
+                                  dict[MovieCategory.ID(value: categoryDTO.id)]
+                                    = categoryDTO.movies
                                     .map(\.id)
                                     .map(String.init)
                                     .map(MoviePreview.ID.init(value:))
@@ -59,12 +60,12 @@ where Provider.ExpectedStateType == MainState {
         movieAPI.category(request: categoryRequest,
                           page: requestedPage) { [unowned self] result in
           switch result {
-          case let .success(categoryDTOWrapper):
+          case let .success(categoryDTO):
             provider.dispatch(CompletedPreviewsListAction(categoryId: categoryId,
                                                           requestType: .loadMore,
-                                                          list: categoryDTOWrapper.dto.results
+                                                          list: categoryDTO.movies
                                                             .map(MoviePreview.init(dto:)),
-                                                          nextPage: categoryDTOWrapper.dto.nextPage))
+                                                          nextPage: categoryDTO.next))
           case let .failure(error):
             provider.dispatch(FailedPreviewsListAction(categoryId: categoryId,
                                                        requestType: .loadMore,
@@ -74,14 +75,15 @@ where Provider.ExpectedStateType == MainState {
       } else if case .requested = paginatedState.reload {
         provider.dispatch(DownloadingPreviewsListAction(categoryId: categoryId,
                                                         requestType: .reload))
-        movieAPI.category(request: categoryRequest, page: 1) { [unowned self] result in
+        movieAPI.category(request: categoryRequest,
+                          page: nil) { [unowned self] result in
           switch result {
-          case let .success(categoryDTOWrapper):
+          case let .success(categoryDTO):
             provider.dispatch(CompletedPreviewsListAction(categoryId: categoryId,
                                                           requestType: .reload,
-                                                          list: categoryDTOWrapper.dto.results
+                                                          list: categoryDTO.movies
                                                             .map(MoviePreview.init(dto:)),
-                                                          nextPage: categoryDTOWrapper.dto.nextPage))
+                                                          nextPage: categoryDTO.next))
           case let .failure(error):
             provider.dispatch(FailedPreviewsListAction(categoryId: categoryId,
                                                        requestType: .reload,

@@ -1,0 +1,11 @@
+
+fragment MoviePreviewFragment on IMovie {
+  id
+  title
+  overview
+  poster(size: W780)
+  backdrop(size: W780)
+  isAdult
+  releaseDate
+  rating
+}

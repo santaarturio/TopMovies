@@ -18,3 +18,11 @@ extension DateFormatter {
     return formatter
   }
 }
+
+private let cachedISO8601Formatter = ISO8601DateFormatter()
+
+extension ISO8601DateFormatter {
+  static var cached: ISO8601DateFormatter {
+    cachedISO8601Formatter
+  }
+}

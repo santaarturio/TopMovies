@@ -21,7 +21,7 @@ struct CompletedPreviewsListAction: Action {
   let categoryId: MovieCategory.ID
   let requestType: RequestType
   let list: [MoviePreview]
-  let nextPage: Int?
+  let nextPage: String?
 }
 struct FailedPreviewsListAction: Action {
   let categoryId: MovieCategory.ID

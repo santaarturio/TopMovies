@@ -1,0 +1,12 @@
+
+fragment MovieCategoryFragment on MovieConnection {
+  edges {
+    cursor
+    node {
+      ...MoviePreviewFragment
+    }
+  }
+  pageInfo {
+    hasNextPage
+  }
+}

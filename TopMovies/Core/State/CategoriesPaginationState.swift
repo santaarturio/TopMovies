@@ -8,13 +8,13 @@
 import ReSwift
 
 struct CategoriesPaginationState: StateType {
-  typealias CategoryState = PaginatedOperationState<MoviePreview.ID, Int>
+  typealias CategoryState = PaginatedOperationState<MoviePreview.ID, String>
   let paginated: [MovieCategory.ID: CategoryState]
 }
 
 extension CategoriesPaginationState.CategoryState: Defaultable {
   static var defaultValue: CategoriesPaginationState.CategoryState {
-    .init(list: [], reload: .initial, loadMore: .initial, pageInfo: .next(2))
+    .init(list: [], reload: .initial, loadMore: .initial, pageInfo: .next("2"))
   }
 }
 // MARK: - Reducer -
@@ -28,12 +28,21 @@ extension CategoriesPaginationState {
     switch action {
     // MARK: - Reduce MovieCategoriesAction
     case let action as CompletedMovieCategoriesAction:
+      let tupleArray = action.relational
+        .map { (key: MovieCategory.ID, value: [MoviePreview.ID]) -> (MovieCategory.ID, CategoryState) in
+          let newTuple =
+            (key, CategoryState.init(list: value,
+                                     reload: CategoryState.defaultValue.reload,
+                                     loadMore: CategoryState.defaultValue.loadMore,
+                                     pageInfo: .next(action.categories
+                                                      .first(where: { (wrapper: MovieCategoryWrapper) -> Bool in
+                                                        wrapper.category.id == key
+                                                      })?.next ?? "")))
+          return newTuple
+        }
       return CategoriesPaginationState(
-        paginated: action.relational
-          .mapValues { CategoryState.init(list: $0,
-                                          reload: CategoryState.defaultValue.reload,
-                                          loadMore: CategoryState.defaultValue.loadMore,
-                                          pageInfo: CategoryState.defaultValue.pageInfo) })
+        paginated: Dictionary(uniqueKeysWithValues: tupleArray)
+      )
     // MARK: - Reduce MoviesListActions
     case let action as RequestedPreviewsListAction:
       categoryId = action.categoryId

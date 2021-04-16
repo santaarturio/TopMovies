@@ -46,7 +46,7 @@ extension MovieVCProps {
     taglineLabelText = movie.tagline
     overviewLabelText = movie.description
     ratingAndVotesLabelText
-      = "\(movie.rating) / 10 \(L10n.App.MovieDetail.outOf) \(movie.voteCount) \(L10n.App.MovieDetail.votes)"
+      = "\(movie.rating)"
     budgetLabelText = movie.budget > 0 ? "\(movie.budget) $" : L10n.App.MovieDetail.unknownBudget
     statusLabelText = movie.status
     releaseDateLabelText = Date.prettyDateString(from: movie.releaseDate)
