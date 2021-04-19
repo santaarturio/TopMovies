@@ -7,13 +7,22 @@
 
 import ReSwift
 
-enum StreamingService {
+enum StreamingService: String {
   case tmdb
   case quintero
 }
 
 struct ChooseServiceAction: Action {
   let service: StreamingService
+}
+
+extension MoviesServiceState {
+  init(service: StreamingService) {
+    switch service {
+    case .quintero: self = .quintero
+    case .tmdb: self = .tmdb
+    }
+  }
 }
 
 extension StreamingService {

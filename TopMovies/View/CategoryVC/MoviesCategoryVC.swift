@@ -72,8 +72,9 @@ final class MoviesCategoryVC: BaseVC<MoviesCategoryVCProps, StoreProvider<MainSt
     }
   }
   private func setupStyle() {
-    navigationController?.navigationBar.prefersLargeTitles = true
     view.backgroundColor = Asset.Colors.mainBackground.color
+    navigationController?.navigationBar.prefersLargeTitles = true
+    navigationController?.navigationBar.tintColor = Asset.Colors.barButton.color
     
     categoryTableView.backgroundColor = .clear
     categoryTableView.showsVerticalScrollIndicator = false

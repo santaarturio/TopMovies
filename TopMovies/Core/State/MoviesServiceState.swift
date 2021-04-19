@@ -7,7 +7,7 @@
 
 import ReSwift
 
-enum MoviesServiceState: StateType, AutoEnum {
+enum MoviesServiceState: StateType {
   case initial
   case tmdb
   case quintero

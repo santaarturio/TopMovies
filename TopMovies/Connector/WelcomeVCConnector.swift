@@ -10,6 +10,8 @@ import Foundation
 final class WelcomeVCConnector<Provider: StoreProviderProtocol>: BaseConnector<WelcomeVCProps, Provider>
 where Provider.ExpectedStateType == MainState {
   @Inject private var router: RouterProtocol
+  @AppProgressStorage(key: AppProgressPassepartout.choosenServiceKey)
+  private var choosenService: String?
   
   override init(updateProps: @escaping (BaseConnector<WelcomeVCProps, Provider>.Props) -> Void,
                 provider: (@escaping BaseConnector<WelcomeVCProps, Provider>.StateUpdate) -> Provider) {
@@ -22,12 +24,14 @@ where Provider.ExpectedStateType == MainState {
               chooseServiceAction: { [unowned self] in
                 self.provider.dispatch(ChooseServiceAction(service: .tmdb))
                 router.perform(route: .allCategories)
+                choosenService = StreamingService.tmdb.rawValue
               }),
         .init(serviceBackground: Asset.Images.quinteroBackground.image,
               serviceCellProps: .init(serviceLogoImage: Asset.Images.quinteroLogo.image),
               chooseServiceAction: { [unowned self] in
                 self.provider.dispatch(ChooseServiceAction(service: .quintero))
                 router.perform(route: .allCategories)
+                choosenService = StreamingService.quintero.rawValue
               })
       ],
       chooseServiveLabelText: L10n.App.Welcome.chooseService,

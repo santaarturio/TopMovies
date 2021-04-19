@@ -12,11 +12,17 @@ final class Router: RouterProtocol {
   private var navigationVC: UINavigationController?
   @Inject private var vcFactory: VCFactoryProtocol
   @Inject private var connectorFactory: ConnectorFactoryProtocol
+  @AppProgressStorage(key: AppProgressPassepartout.choosenServiceKey)
+  private var choosenService: String?
+  
+  private var isServiceChoosen: Bool {
+    choosenService != nil
+  }
   
   func setup(with window: UIWindow?) {
     self.window = window
     self.navigationVC = UINavigationController()
-    perform(route: .welcome)
+    perform(route: isServiceChoosen ? .allCategories : .welcome)
     self.window?.rootViewController = navigationVC
     self.window?.makeKeyAndVisible()
   }
@@ -28,12 +34,12 @@ final class Router: RouterProtocol {
       let connector = connectorFactory.createWelcomeConnector()
       vc.configureConnection(with: connector)
       navigationVC?.setViewControllers([vc], animated: true)
-    
+      
     case .allCategories:
       let vc = vcFactory.createAllCategoriesVC()
       let connector = connectorFactory.createTopMoviesConnector()
       vc.configureConnection(with: connector)
-      navigationVC?.pushViewController(vc, animated: true)
+      navigationVC?.setViewControllers([vc], animated: true)
       
     case let .category(categoryId):
       let vc = vcFactory.createCategoryVC()

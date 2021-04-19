@@ -111,7 +111,10 @@ final class WelcomeVC: BaseVC<WelcomeVCProps, StoreProvider<MainState>> {
         subitems: [item])
       let section = NSCollectionLayoutSection(group: group)
       section.orthogonalScrollingBehavior = .groupPaging
-      section.contentInsets = .init(top: 0, leading: 8, bottom: 0, trailing: view.bounds.width * 0.15)
+      section.contentInsets = .init(top: 0,
+                                    leading: 8,
+                                    bottom: 0,
+                                    trailing: view.bounds.width * 0.15)
       section.visibleItemsInvalidationHandler =
         { [unowned self] _, point, _ in handleScroll(to: point) }
       let compositionalLayout = UICollectionViewCompositionalLayout(section: section)

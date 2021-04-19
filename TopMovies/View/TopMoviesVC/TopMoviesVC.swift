@@ -11,11 +11,12 @@ import SnapKit
 // MARK: - Props struct
 struct TopMoviesProps {
   let movieCategories: [MovieCategoryProps]
+  let rechooseServiceAction: () -> Void
 }
 
 // MARK: - VC class
 final class TopMoviesVC: BaseVC<TopMoviesProps, StoreProvider<MainState>> {
-  private var topMoviesProps = TopMoviesProps(movieCategories: []) {
+  private var topMoviesProps = TopMoviesProps(movieCategories: [], rechooseServiceAction: { }) {
     didSet {
       movieCategoriesTableView.reloadData()
     }
@@ -46,10 +47,11 @@ final class TopMoviesVC: BaseVC<TopMoviesProps, StoreProvider<MainState>> {
     }
   }
   private func setupStyle() {
-    navigationController?.isNavigationBarHidden = false
     view.backgroundColor = Asset.Colors.mainBackground.color
-    title = L10n.App.Home.title
+    navigationController?.isNavigationBarHidden = false
     navigationController?.navigationBar.prefersLargeTitles = true
+    title = L10n.App.Home.title
+    navigationItem.rightBarButtonItem = createRechooseServiceItem()
     
     movieCategoriesTableView.backgroundColor = .clear
     movieCategoriesTableView.separatorStyle = .none
@@ -58,6 +60,17 @@ final class TopMoviesVC: BaseVC<TopMoviesProps, StoreProvider<MainState>> {
                                       forCellReuseIdentifier: movieCategoryCellIdentifier)
     movieCategoriesTableView.dataSource = self
     movieCategoriesTableView.delegate   = self
+  }
+  private func createRechooseServiceItem() -> UIBarButtonItem {
+    let item = UIBarButtonItem(image: Asset.Images.rechooseButton.image,
+                               style: .plain,
+                               target: self,
+                               action: #selector(rechooseServiceSelector(sender:)))
+    item.tintColor = Asset.Colors.barButton.color
+    return item
+  }
+  @objc private func rechooseServiceSelector(sender: UIBarButtonItem) {
+    topMoviesProps.rechooseServiceAction()
   }
 }
 

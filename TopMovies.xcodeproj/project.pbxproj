@@ -75,6 +75,7 @@
 		523FA96A25E800BD0083939D /* CategoryVCConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523FA96925E800BD0083939D /* CategoryVCConnector.swift */; };
 		5241C440260A33D800482A6F /* MovieUpdateAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241C43F260A33D800482A6F /* MovieUpdateAction.swift */; };
 		5241C44E260A7D3A00482A6F /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241C44D260A7D3A00482A6F /* Movie.swift */; };
+		5244FDFD262E028B000F0C44 /* AppProgressPassepartout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5244FDFC262E028B000F0C44 /* AppProgressPassepartout.swift */; };
 		524672D42608C83F00DAB213 /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524672D32608C83F00DAB213 /* RouterProtocol.swift */; };
 		524B294126049FD000071DF0 /* RouterTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524B294026049FD000071DF0 /* RouterTransition.swift */; };
 		524B294B2604A17200071DF0 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524B294A2604A17200071DF0 /* Router.swift */; };
@@ -212,6 +213,7 @@
 		523FA96925E800BD0083939D /* CategoryVCConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryVCConnector.swift; sourceTree = "<group>"; };
 		5241C43F260A33D800482A6F /* MovieUpdateAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieUpdateAction.swift; sourceTree = "<group>"; };
 		5241C44D260A7D3A00482A6F /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		5244FDFC262E028B000F0C44 /* AppProgressPassepartout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppProgressPassepartout.swift; sourceTree = "<group>"; };
 		524672D32608C83F00DAB213 /* RouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
 		524B294026049FD000071DF0 /* RouterTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterTransition.swift; sourceTree = "<group>"; };
 		524B294A2604A17200071DF0 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -507,6 +509,15 @@
 			path = TopMoviesVC;
 			sourceTree = "<group>";
 		};
+		5244FDFB262E0140000F0C44 /* Passepartout */ = {
+			isa = PBXGroup;
+			children = (
+				52C27EAB262230FB0035C269 /* ServicesPassepartout.swift */,
+				5244FDFC262E028B000F0C44 /* AppProgressPassepartout.swift */,
+			);
+			path = Passepartout;
+			sourceTree = "<group>";
+		};
 		524B293D26049F7C00071DF0 /* Routing */ = {
 			isa = PBXGroup;
 			children = (
@@ -619,7 +630,7 @@
 				524B293D26049F7C00071DF0 /* Routing */,
 				52A4D8D825C308E500810667 /* AppDelegate.swift */,
 				524B29522604DAD300071DF0 /* ContainerWrapper.swift */,
-				52C27EAB262230FB0035C269 /* ServicesPassepartout.swift */,
+				5244FDFB262E0140000F0C44 /* Passepartout */,
 				52E54C4A26055C6400E7C995 /* Assembler */,
 				52A4D8E325C308E900810667 /* LaunchScreen.storyboard */,
 				52A4D8E625C308E900810667 /* Info.plist */,
@@ -987,6 +998,7 @@
 				523FA95525E7D1EC0083939D /* MoviesCategoryVC.swift in Sources */,
 				524B294B2604A17200071DF0 /* Router.swift in Sources */,
 				52E54C5326055D8200E7C995 /* ConnectableVC.swift in Sources */,
+				5244FDFD262E028B000F0C44 /* AppProgressPassepartout.swift in Sources */,
 				266B93AF25D1523300194050 /* MovieCollectionViewCell.swift in Sources */,
 				52C11A312608F4470086EBB6 /* MovieVC.swift in Sources */,
 				5299AAD8261E556F00DDE21A /* CategoryFragmentParsing.swift in Sources */,
