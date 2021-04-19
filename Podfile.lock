@@ -9,6 +9,12 @@ PODS:
   - Overture (0.5.0)
   - Quick (3.1.2)
   - ReSwift (6.0.0)
+  - RxCocoa (6.1.0):
+    - RxRelay (= 6.1.0)
+    - RxSwift (= 6.1.0)
+  - RxRelay (6.1.0):
+    - RxSwift (= 6.1.0)
+  - RxSwift (6.1.0)
   - SnapKit (5.0.1)
   - Swinject (2.7.1)
   - SwinjectAutoregistration (2.7.0):
@@ -21,6 +27,8 @@ DEPENDENCIES:
   - Overture (~> 0.5)
   - Quick (~> 3.1.2)
   - ReSwift (~> 6.0.0)
+  - RxCocoa (= 6.1.0)
+  - RxSwift (= 6.1.0)
   - SnapKit (~> 5.0.0)
   - Swinject (~> 2.7.1)
   - SwinjectAutoregistration (~> 2.7.0)
@@ -34,6 +42,9 @@ SPEC REPOS:
     - Overture
     - Quick
     - ReSwift
+    - RxCocoa
+    - RxRelay
+    - RxSwift
     - SnapKit
     - Swinject
     - SwinjectAutoregistration
@@ -46,10 +57,13 @@ SPEC CHECKSUMS:
   Overture: 2e6252ead5da6d3347f758047f27a31cb469d59d
   Quick: 60f0ea3b8e0cfc0df3259a5c06a238ad8b3c46e0
   ReSwift: 14e6f9409fe6bdc635e588208296a01f43b959c9
+  RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
+  RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
+  RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   SwinjectAutoregistration: 330f5012642a8b5c89a8a4adb0c5e52df07382c0
 
-PODFILE CHECKSUM: 4b00eb25bd54b97d829794fe148b7633c5a289bd
+PODFILE CHECKSUM: bec45d140f177b1f566bd205141103afbc0828ae
 
 COCOAPODS: 1.10.1

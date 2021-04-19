@@ -7,7 +7,7 @@
 
 import ReSwift
 
-enum AppFlowAction: Action {
+enum AppFlowAction: Action, ANAction {
   case applicationDidFinishLaunching
   case applicationWillEnterForeground
   case applicationDidEnterBackground
