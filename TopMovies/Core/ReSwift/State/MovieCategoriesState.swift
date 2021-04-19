@@ -12,8 +12,13 @@ struct MovieCategoriesState: StateType {
   let categoriesList: RequestState<[MovieCategory.ID]>
 }
 
+extension MovieCategoriesState: ANState {
+  static var defaultValue: MovieCategoriesState = .init(relational: [:],
+                                                        categoriesList: .initial)
+}
+
 extension MovieCategoriesState {
-  static func reduce(action: Action, state: MovieCategoriesState) -> MovieCategoriesState {
+  static func reduce(action: ANAction, state: MovieCategoriesState) -> MovieCategoriesState {
     switch action {
     case is RequestMovieCategoriesAction:
       return MovieCategoriesState(

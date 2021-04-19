@@ -7,6 +7,6 @@
 
 import ReSwift
 
-enum UpdateConfigurationAction: Action, ANAction {
+enum UpdateConfigurationAction: ANAction {
   case configureAPIKey(_: String)
 }

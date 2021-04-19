@@ -7,16 +7,16 @@
 
 import ReSwift
 
-struct RequestMovieUpdateAction: Action {
+struct RequestMovieUpdateAction: ANAction {
   let movieId: MoviePreview.ID
 }
-struct DownloadingMovieUpdateAction: Action {
+struct DownloadingMovieUpdateAction: ANAction {
   let movieId: MoviePreview.ID
 }
-struct CompletedMovieUpdateAction: Action {
+struct CompletedMovieUpdateAction: ANAction {
   let movie: Movie
 }
-struct FailedMovieUpdateAction: Action {
+struct FailedMovieUpdateAction: ANAction {
   let movieId: MoviePreview.ID
   let error: Error
 }

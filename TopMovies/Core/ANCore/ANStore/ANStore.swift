@@ -11,20 +11,20 @@ import RxCocoa
 final class ANStore<State: ANState> where State.Value == State {
   typealias Reducer = (ANAction, State) -> State
   
-  private var state: State {
-    didSet { stateSubject.onNext(state) }
-  }
   private let reducer: Reducer
+  private let stateSubject = BehaviorRelay(value: State.defaultValue)
   
-  var stateObservable: Observable<State> { Observable.just(state) }
-  let stateSubject = BehaviorSubject<State>(value: State.defaultValue)
+  var currentState: State { stateSubject.value }
+  var observableState: Observable<State> {
+    stateSubject.asObservable()
+    .observe(on: MainScheduler.asyncInstance)
+  }
   
-  init(_ state: State, _ reducer: @escaping Reducer) {
-    self.state = state
+  init(_ reducer: @escaping Reducer) {
     self.reducer = reducer
   }
 
   func dispatch(_ action: ANAction) {
-    state = reducer(action, state)
+    stateSubject.accept(reducer(action, currentState))
   }
 }

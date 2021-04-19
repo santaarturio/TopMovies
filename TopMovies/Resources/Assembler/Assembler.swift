@@ -11,6 +11,7 @@ import ReSwift
 import Overture
 
 typealias MainStore = Store<MainState>
+typealias AppStore = ANStore<MainState>
 
 final class Assembler: StoreSubscriber {
   @Inject private var store: MainStore
@@ -23,8 +24,10 @@ final class Assembler: StoreSubscriber {
   func registerDependencies() {
     // MARK: - Store
     registrar.register(MainStore.self) { _ in
-      MainStore(reducer: mainReducer, state: nil, middleware: [allActionsMiddleware])
+      MainStore(reducer: mainReducer, state: MainState.defaultValue, middleware: [allActionsMiddleware])
     }.inObjectScope(.container)
+    
+    registrar.register(AppStore.self) { _ in AppStore(anReducer) }.inObjectScope(.container)
     
     // MARK: - Factory
     registrar.autoregister(VCFactoryProtocol.self, initializer: VCFactory.init)

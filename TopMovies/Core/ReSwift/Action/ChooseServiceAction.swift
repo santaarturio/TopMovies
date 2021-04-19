@@ -12,7 +12,7 @@ enum StreamingService: String {
   case quintero
 }
 
-struct ChooseServiceAction: Action {
+struct ChooseServiceAction: ANAction {
   let service: StreamingService
 }
 

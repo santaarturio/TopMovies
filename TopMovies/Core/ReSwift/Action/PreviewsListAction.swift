@@ -9,21 +9,21 @@ import ReSwift
 
 enum RequestType { case reload, loadMore }
 
-struct RequestedPreviewsListAction: Action {
+struct RequestedPreviewsListAction: ANAction {
   let categoryId: MovieCategory.ID
   let requestType: RequestType
 }
-struct DownloadingPreviewsListAction: Action {
+struct DownloadingPreviewsListAction: ANAction {
   let categoryId: MovieCategory.ID
   let requestType: RequestType
 }
-struct CompletedPreviewsListAction: Action {
+struct CompletedPreviewsListAction: ANAction {
   let categoryId: MovieCategory.ID
   let requestType: RequestType
   let list: [MoviePreview]
   let nextPage: String?
 }
-struct FailedPreviewsListAction: Action {
+struct FailedPreviewsListAction: ANAction {
   let categoryId: MovieCategory.ID
   let requestType: RequestType
   let error: Error

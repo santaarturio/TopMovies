@@ -16,3 +16,14 @@ struct MainState: StateType {
   let moviesUpdateState: MoviesUpdateState
   let moviesState: MoviesState
 }
+
+extension MainState: ANState {
+  static var defaultValue: MainState =
+    .init(configurationState: ConfigurationState.defaultValue,
+          appFlowState: AppFlowState.defaultValue,
+          moviesServiceState: MoviesServiceState.defaultValue,
+          movieCategoriesState: MovieCategoriesState.defaultValue,
+          categoriesPaginationState: CategoriesPaginationState.defaultValue,
+          moviesUpdateState: MoviesUpdateState.defaultValue,
+          moviesState: MoviesState.defaultValue)
+}
