@@ -15,7 +15,7 @@ struct TopMoviesProps {
 }
 
 // MARK: - VC class
-final class TopMoviesVC: BaseVC<TopMoviesProps, StoreProvider<MainState>> {
+final class TopMoviesVC: BaseVC<TopMoviesProps, ANStoreProvider> {
   private var topMoviesProps = TopMoviesProps(movieCategories: [], rechooseServiceAction: { }) {
     didSet {
       movieCategoriesTableView.reloadData()

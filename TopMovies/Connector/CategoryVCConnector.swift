@@ -18,8 +18,6 @@ where Provider.ExpectedStateType == MainState {
     self.categoryId = categoryId
     super.init(updateProps: updateProps,
                provider: provider)
-    self.provider.dispatch(RequestedPreviewsListAction(categoryId: categoryId,
-                                                       requestType: .loadMore))
   }
   
   override func newState(state: MainState) {

@@ -5,8 +5,6 @@
 //  Created by Macbook Pro  on 23.03.2021.
 //
 
-import ReSwift
-
 struct RequestMovieUpdateAction: ANAction {
   let movieId: MoviePreview.ID
 }

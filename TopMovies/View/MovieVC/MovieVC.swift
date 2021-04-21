@@ -10,7 +10,7 @@ import SnapKit
 import Nuke
 
 // MARK: - MovieVC -
-final class MovieVC: BaseVC<MovieVCProps, StoreProvider<MainState>> {
+final class MovieVC: BaseVC<MovieVCProps, ANStoreProvider> {
   private let posterImageView = UIImageView()
   private let posterImageLoader = UIActivityIndicatorView()
   

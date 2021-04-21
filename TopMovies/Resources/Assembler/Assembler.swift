@@ -7,27 +7,24 @@
 
 import Swinject
 import SwinjectAutoregistration
-import ReSwift
+import RxSwift
 import Overture
 
-typealias MainStore = Store<MainState>
 typealias AppStore = ANStore<MainState>
 
-final class Assembler: StoreSubscriber {
-  @Inject private var store: MainStore
+final class Assembler {
+  @Inject private var store: AppStore
   @Inject private var passepartout: ServicesPassepartoutProtocol
   private var registeredAPI: MoviesServiceState = .initial
   private let registrar = Container.default.registrar
+  private let disposeBag = DisposeBag()
   
   static let `default` = Assembler()
   
   func registerDependencies() {
     // MARK: - Store
-    registrar.register(MainStore.self) { _ in
-      MainStore(reducer: mainReducer, state: MainState.defaultValue, middleware: [allActionsMiddleware])
-    }.inObjectScope(.container)
-    
-    registrar.register(AppStore.self) { _ in AppStore(anReducer) }.inObjectScope(.container)
+    registrar.register(AppStore.self) { _ in AppStore(anReducer) }
+      .inObjectScope(.container)
     
     // MARK: - Factory
     registrar.autoregister(VCFactoryProtocol.self, initializer: VCFactory.init)
@@ -40,7 +37,9 @@ final class Assembler: StoreSubscriber {
     // MARK: - Passepartout
     registrar.autoregister(ServicesPassepartoutProtocol.self, initializer: ServicesPassepartout.init)
     
-    store.subscribe(self)
+    store.observableState.subscribe(onNext: { [weak self] state in
+      self?.newState(state: state)
+    }).disposed(by: disposeBag)
   }
   
   func newState(state: MainState) {
@@ -57,14 +56,14 @@ final class Assembler: StoreSubscriber {
     
     registeredAPI = state.moviesServiceState
     
-    registrar.register(MovieService<StoreProvider<MainState>>.self) { resolver in
+    registrar.register(MovieService<ANStoreProvider>.self) { resolver in
       MovieService(
         movieAPI: resolver ~> MovieAPIProtocol.self,
-        storeProvider: curry(StoreProvider<MainState>.init(store: onStateUpdate:))(resolver.resolve(MainStore.self)!)
+        storeProvider: ANStoreProvider.init(stateUpdate:)
       )
     }.inObjectScope(.container)
     
-    _ = Container.default.resolver.resolve(MovieService<StoreProvider<MainState>>.self)
+    _ = Container.default.resolver.resolve(MovieService<ANStoreProvider>.self)
     
     StreamingService
       .init(state: state.moviesServiceState)

@@ -8,9 +8,9 @@
 import Moya
 
 enum MoviesDBTarget {
-  @Inject static private var store: MainStore
+  @Inject static private var store: AppStore
   private var key: String {
-    MoviesDBTarget.store.state.configurationState.configuredAPIKey ?? ""
+    MoviesDBTarget.store.currentState.configurationState.configuredAPIKey ?? ""
   }
   
   case category(id: MovieCategory.ID, page: String)
