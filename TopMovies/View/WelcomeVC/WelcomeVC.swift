@@ -18,7 +18,7 @@ struct WelcomeVCProps {
   let chooseServiveImage: UIImage
 }
 
-final class WelcomeVC: BaseVC<WelcomeVCProps, StoreProvider<MainState>> {
+final class WelcomeVC: BaseVC<WelcomeVCProps, ANStoreProvider> {
   private let topBackgroundImageView = UIImageView()
   private let servicesCollectionView = UICollectionView(frame: .zero,
                                                         collectionViewLayout: .init())

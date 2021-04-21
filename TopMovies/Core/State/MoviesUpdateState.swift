@@ -5,8 +5,6 @@
 //  Created by Macbook Pro  on 24.03.2021.
 //
 
-import ReSwift
-
 struct MoviesUpdateState {
   let relational: [MoviePreview.ID: EmptyRequestState]
 }

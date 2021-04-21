@@ -11,7 +11,7 @@ import Swinject
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
-  @Inject var mainStore: MainStore
+  @Inject var store: AppStore
   @Inject var router: RouterProtocol
   @AppProgressStorage(key: AppProgressPassepartout.choosenServiceKey)
   private var choosenService: String?
@@ -31,18 +31,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     choosenService
       .flatMap(StreamingService.init(rawValue:))
       .map(ChooseServiceAction.init(service:))
-      .map(mainStore.dispatch(_:))
+      .map(store.dispatch(_:))
   }
   func applicationDidFinishLaunching(_ application: UIApplication) {
-    mainStore.dispatch(AppFlowAction.applicationDidFinishLaunching)
+    store.dispatch(AppFlowAction.applicationDidFinishLaunching)
   }
   func applicationWillEnterForeground(_ application: UIApplication) {
-    mainStore.dispatch(AppFlowAction.applicationWillEnterForeground)
+    store.dispatch(AppFlowAction.applicationWillEnterForeground)
   }
   func applicationDidEnterBackground(_ application: UIApplication) {
-    mainStore.dispatch(AppFlowAction.applicationDidEnterBackground)
+    store.dispatch(AppFlowAction.applicationDidEnterBackground)
   }
   func applicationWillTerminate(_ application: UIApplication) {
-    mainStore.dispatch(AppFlowAction.applicationWillTerminate)
+    store.dispatch(AppFlowAction.applicationWillTerminate)
   }
 }

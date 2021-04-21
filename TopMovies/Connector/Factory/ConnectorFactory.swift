@@ -8,8 +8,6 @@
 import Overture
 
 final class ConnectorFactory: ConnectorFactoryProtocol {
-  @Inject private var mainStore: MainStore
-  
   func createWelcomeConnector() -> WelcomeConnectorType {
     connector(curry(WelcomeVCConnector.init(updateProps: provider:)))
   }
@@ -24,10 +22,9 @@ final class ConnectorFactory: ConnectorFactoryProtocol {
   }
   
   private func connector<Props>(_ base: @escaping (@escaping (Props) -> Void)
-                                  -> (@escaping (@escaping (MainState) -> Void) -> StoreProvider<MainState>)
-                                  -> BaseConnector<Props, StoreProvider<MainState>>)
-  -> (@escaping (Props) -> Void) -> BaseConnector<Props, StoreProvider<MainState>> {
-    flip(base)(curry(StoreProvider<MainState>
-                      .init(store: onStateUpdate:))(mainStore))
+                                  -> (@escaping (@escaping (MainState) -> Void) -> ANStoreProvider)
+                                  -> BaseConnector<Props, ANStoreProvider>)
+  -> (@escaping (Props) -> Void) -> BaseConnector<Props, ANStoreProvider> {
+    flip(base)(ANStoreProvider.init(stateUpdate:))
   }
 }

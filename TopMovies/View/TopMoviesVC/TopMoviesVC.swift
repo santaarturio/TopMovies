@@ -15,7 +15,7 @@ struct TopMoviesProps {
 }
 
 // MARK: - VC class
-final class TopMoviesVC: BaseVC<TopMoviesProps, StoreProvider<MainState>> {
+final class TopMoviesVC: BaseVC<TopMoviesProps, ANStoreProvider> {
   private var topMoviesProps = TopMoviesProps(movieCategories: [], rechooseServiceAction: { }) {
     didSet {
       movieCategoriesTableView.reloadData()
@@ -23,7 +23,7 @@ final class TopMoviesVC: BaseVC<TopMoviesProps, StoreProvider<MainState>> {
   }
   private let movieCategoriesTableView = UITableView()
   private let movieCategoryCellIdentifier = String(describing: MovieCategoryTableViewCell.self)
-  private let movieCategoryCellIHeight: CGFloat = 220.0
+  private let movieCategoryCellIHeight: CGFloat = 210.0
   
   // MARK: - Setup Connection
   override func connect(props: TopMoviesProps) {

@@ -5,9 +5,7 @@
 //  Created by Macbook Pro  on 10.04.2021.
 //
 
-import ReSwift
-
-enum MoviesServiceState: StateType {
+enum MoviesServiceState {
   case initial
   case tmdb
   case quintero

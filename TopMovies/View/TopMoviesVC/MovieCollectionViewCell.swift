@@ -89,7 +89,7 @@ final class MovieCollectionViewCell: UICollectionViewCell {
   private func setupLayout() {
     containerView.snp.makeConstraints { make in
       make.centerX.top.equalToSuperview()
-      make.height.width.equalToSuperview().offset(-10.0)
+      make.height.width.equalToSuperview().offset(-16.0)
     }
     shadowView.snp.makeConstraints { make in
       make.edges.equalTo(containerView)

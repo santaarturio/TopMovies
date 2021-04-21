@@ -6,13 +6,13 @@
 //
 
 typealias WelcomeConnectorType
-  = (@escaping (WelcomeVCProps) -> Void) -> BaseConnector<WelcomeVCProps, StoreProvider<MainState>>
+  = (@escaping (WelcomeVCProps) -> Void) -> BaseConnector<WelcomeVCProps, ANStoreProvider>
 typealias TopMoviesConnectorType
-  = (@escaping (TopMoviesProps) -> Void) -> BaseConnector<TopMoviesProps, StoreProvider<MainState>>
+  = (@escaping (TopMoviesProps) -> Void) -> BaseConnector<TopMoviesProps, ANStoreProvider>
 typealias MoviesCategoryConnectorType
-  = (@escaping (MoviesCategoryVCProps) -> Void) -> BaseConnector<MoviesCategoryVCProps, StoreProvider<MainState>>
+  = (@escaping (MoviesCategoryVCProps) -> Void) -> BaseConnector<MoviesCategoryVCProps, ANStoreProvider>
 typealias MovieConnectorType
-  = (@escaping (MovieVCProps) -> Void) -> BaseConnector<MovieVCProps, StoreProvider<MainState>>
+  = (@escaping (MovieVCProps) -> Void) -> BaseConnector<MovieVCProps, ANStoreProvider>
 
 protocol ConnectorFactoryProtocol {
   func createWelcomeConnector()

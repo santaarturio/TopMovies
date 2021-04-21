@@ -26,7 +26,7 @@ extension MovieCategoryProps {
 }
 // MARK: - Cell class -
 final class MovieCategoryTableViewCell: UITableViewCell {
-  private let categoryNameLabel = ANPaddingLabel(withInsets: 0, 8, 0, 8)
+  private let categoryNameLabel = ANPaddingLabel(withInsets: 0, 16, 0, 8)
   private let moviesCollectionView
     = UICollectionView(frame: CGRect(), collectionViewLayout: UICollectionViewLayout())
   private let movieCollectionViewCellIdentifier
@@ -82,11 +82,13 @@ final class MovieCategoryTableViewCell: UITableViewCell {
     backgroundColor = .clear
     
     infoStackView.axis = .vertical
+    infoStackView.spacing = 12.0
     
     categoryNameLabel.font = .boldSystemFont(ofSize: 22)
     categoryNameLabel.textColor = Asset.Colors.title.color
     categoryNameLabel.textAlignment = .left
     
+    moviesCollectionView.contentInset = .init(top: 0, left: 13, bottom: 0, right: 7)
     moviesCollectionView.backgroundColor = .clear
     moviesCollectionView.dataSource = self
     moviesCollectionView.delegate = self
@@ -135,7 +137,7 @@ extension MovieCategoryTableViewCell: UICollectionViewDelegateFlowLayout {
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
     if indexPath.item < props.movies.count {
-      return CGSize(width: collectionView.bounds.width / 2.1,
+      return CGSize(width: collectionView.bounds.width / 1.7,
                     height: collectionView.bounds.height)
     } else {
       return CGSize(width: collectionView.bounds.width / 6.3,

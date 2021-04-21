@@ -5,8 +5,6 @@
 //  Created by Macbook Pro  on 21.02.2021.
 //
 
-import ReSwift
-
 enum RequestType { case reload, loadMore }
 
 struct RequestedPreviewsListAction: ANAction {
