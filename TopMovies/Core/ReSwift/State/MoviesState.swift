@@ -15,8 +15,13 @@ struct MoviesState: StateType {
   let moviesRelational: MoviesRelational
 }
 
+extension MoviesState: ANState {
+  static var defaultValue: MoviesState = .init(previewsRelational: [:],
+                                               moviesRelational: [:])
+}
+
 extension MoviesState {
-  static func reduce(action: Action, state: MoviesState) -> MoviesState {
+  static func reduce(action: ANAction, state: MoviesState) -> MoviesState {
     switch action {
     case let action as CompletedMovieCategoriesAction:
       let movies = updatedMovies(state.moviesRelational,

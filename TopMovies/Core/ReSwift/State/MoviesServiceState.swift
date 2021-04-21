@@ -13,8 +13,12 @@ enum MoviesServiceState: StateType {
   case quintero
 }
 
+extension MoviesServiceState: ANState {
+  static var defaultValue: MoviesServiceState = .initial
+}
+
 extension MoviesServiceState {
-  static func reduce(action: Action, state: MoviesServiceState) -> MoviesServiceState {
+  static func reduce(action: ANAction, state: MoviesServiceState) -> MoviesServiceState {
     guard let action = action as? ChooseServiceAction else { return state }
     
     switch action.service {

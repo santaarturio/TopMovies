@@ -17,9 +17,14 @@ extension CategoriesPaginationState.CategoryState: Defaultable {
     .init(list: [], reload: .initial, loadMore: .initial, pageInfo: .next("2"))
   }
 }
+
+extension CategoriesPaginationState: ANState {
+  static var defaultValue: CategoriesPaginationState = .init(paginated: [:])
+}
+
 // MARK: - Reducer -
 extension CategoriesPaginationState {
-  static func reduce(action: Action, state: CategoriesPaginationState) -> CategoriesPaginationState {
+  static func reduce(action: ANAction, state: CategoriesPaginationState) -> CategoriesPaginationState {
     var newPaginated = state.paginated
     var categoryId: MovieCategory.ID
     var categoryPaginatedState: CategoryState {

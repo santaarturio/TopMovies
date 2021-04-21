@@ -14,8 +14,12 @@ enum AppFlowState: AutoEnum {
   case terminating
 }
 
+extension AppFlowState: ANState {
+  static var defaultValue: AppFlowState = .launching
+}
+
 extension AppFlowState {
-  static func reduce(action: Action, state: AppFlowState) -> AppFlowState {
+  static func reduce(action: ANAction, state: AppFlowState) -> AppFlowState {
     switch action {
     case AppFlowAction.applicationDidFinishLaunching, AppFlowAction.applicationWillEnterForeground:
       return .foreground

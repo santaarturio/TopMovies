@@ -12,8 +12,12 @@ enum ConfigurationState: StateType, Equatable, AutoEnum {
   case configuredAPIKey(String)
 }
 
+extension ConfigurationState: ANState {
+  static var defaultValue: ConfigurationState = .initial
+}
+
 extension ConfigurationState {
-  static func reduce(action: Action, state: ConfigurationState) -> ConfigurationState {
+  static func reduce(action: ANAction, state: ConfigurationState) -> ConfigurationState {
     switch action {
     case let UpdateConfigurationAction.configureAPIKey(key):
       return configuredAPIKey(key)

@@ -7,13 +7,13 @@
 
 import ReSwift
 
-struct RequestMovieCategoriesAction: Action { }
-struct DownloadingMovieCategoriesAction: Action { }
-struct CompletedMovieCategoriesAction: Action {
+struct RequestMovieCategoriesAction: ANAction { }
+struct DownloadingMovieCategoriesAction: ANAction { }
+struct CompletedMovieCategoriesAction: ANAction {
   let categories: [MovieCategoryWrapper]
   let previewsRelational: [MoviePreview.ID: MoviePreview]
   let relational: [MovieCategory.ID: [MoviePreview.ID]]
 }
-struct FailedMovieCategoriesAction: Action {
+struct FailedMovieCategoriesAction: ANAction {
   let error: Error
 }

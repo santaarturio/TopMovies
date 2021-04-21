@@ -11,8 +11,12 @@ struct MoviesUpdateState {
   let relational: [MoviePreview.ID: EmptyRequestState]
 }
 
+extension MoviesUpdateState: ANState {
+  static var defaultValue: MoviesUpdateState = .init(relational: [:])
+}
+
 extension MoviesUpdateState {
-  static func reduce(action: Action, state: MoviesUpdateState) -> MoviesUpdateState {
+  static func reduce(action: ANAction, state: MoviesUpdateState) -> MoviesUpdateState {
     var relational = state.relational
     switch action {
     
