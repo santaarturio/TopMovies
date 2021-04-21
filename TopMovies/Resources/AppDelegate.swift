@@ -13,31 +13,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   @Inject var mainStore: MainStore
   @Inject var router: RouterProtocol
+  @AppProgressStorage(key: AppProgressPassepartout.choosenServiceKey)
+  private var choosenService: String?
   
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
-    Assembler.registerDependencies()
-    createService()
-    configureAPIKey()
+    Assembler.default.registerDependencies()
+    checkAppProgress()
     window = UIWindow(frame: UIScreen.main.bounds)
     router.setup(with: window)
     
     return true
   }
   
-  func configureAPIKey() {
-    var apiKey: String {
-      guard let filePath = Bundle.main.path(forResource: "TMDB-Info", ofType: "plist"),
-            let plist = NSDictionary(contentsOfFile: filePath),
-            let key = plist.object(forKey: "API_KEY") as? String
-      else { fatalError("File \"TMDB-Info\" doesn`t exist") }
-      return key
-    }
-    mainStore.dispatch(UpdateConfigurationAction.configureAPIKey(apiKey))
-  }
-  func createService() {
-    _ = Container.default.resolver.resolve(MovieService<StoreProvider<MainState>>.self)
+  func checkAppProgress() {
+    choosenService
+      .flatMap(StreamingService.init(rawValue:))
+      .map(ChooseServiceAction.init(service:))
+      .map(mainStore.dispatch(_:))
   }
   func applicationDidFinishLaunching(_ application: UIApplication) {
     mainStore.dispatch(AppFlowAction.applicationDidFinishLaunching)

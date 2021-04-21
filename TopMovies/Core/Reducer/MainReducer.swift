@@ -11,6 +11,7 @@ func mainReducer(action: Action, state: MainState?) -> MainState {
   let state = state ??
     MainState(configurationState: .initial,
               appFlowState: .launching,
+              moviesServiceState: .initial,
               movieCategoriesState:
                 MovieCategoriesState(relational: [:],
                                      categoriesList: .initial),
@@ -29,6 +30,10 @@ func mainReducer(action: Action, state: MainState?) -> MainState {
                     AppFlowState
                     .reduce(action: action,
                             state: state.appFlowState),
+                   moviesServiceState:
+                    MoviesServiceState
+                    .reduce(action: action,
+                            state: state.moviesServiceState),
                    movieCategoriesState:
                     MovieCategoriesState
                     .reduce(action: action,

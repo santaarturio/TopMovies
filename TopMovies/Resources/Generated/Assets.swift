@@ -23,6 +23,7 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 internal enum Asset {
   internal static let accentColor = ColorAsset(name: "AccentColor")
   internal enum Colors {
+    internal static let barButton = ColorAsset(name: "Colors/barButton")
     internal static let mainBackground = ColorAsset(name: "Colors/main-background")
     internal static let refresh = ColorAsset(name: "Colors/refresh")
     internal static let secondaryBackground = ColorAsset(name: "Colors/secondary-background")
@@ -32,6 +33,12 @@ internal enum Asset {
     internal static let title = ColorAsset(name: "Colors/title")
   }
   internal enum Images {
+    internal static let tmdbBackground = ImageAsset(name: "Images/TMDB-background")
+    internal static let tmdbLogo = ImageAsset(name: "Images/TMDB-logo")
+    internal static let chooseButton = ImageAsset(name: "Images/choose-button")
+    internal static let quinteroBackground = ImageAsset(name: "Images/quintero-background")
+    internal static let quinteroLogo = ImageAsset(name: "Images/quintero-logo")
+    internal static let rechooseButton = ImageAsset(name: "Images/rechoose-button")
     internal static let censored = ImageAsset(name: "Images/censored")
     internal static let close = ImageAsset(name: "Images/close")
     internal static let logoPlaceholder = ImageAsset(name: "Images/logo-placeholder")

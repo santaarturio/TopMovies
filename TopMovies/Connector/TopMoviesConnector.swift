@@ -5,12 +5,16 @@
 //  Created by anikolaenko on 10.02.2021.
 //
 
+import Foundation
+
 final class TopMoviesConnector<Provider: StoreProviderProtocol>: BaseConnector<TopMoviesProps, Provider>
 where Provider.ExpectedStateType == MainState {
   @Inject var router: RouterProtocol
   private typealias CategoriesRelational = [MovieCategory.ID: [MoviePreview.ID]]
   private let numberOfVisiableMoviesInCategory = 13
   private var alreadyShown: CategoriesRelational = [:]
+  @AppProgressStorage(key: AppProgressPassepartout.choosenServiceKey)
+  private var choosenService: String?
   
   typealias StateUpdate = (Provider.ExpectedStateType) -> Void
   override init(updateProps: @escaping (TopMoviesProps) -> Void,
@@ -50,7 +54,11 @@ where Provider.ExpectedStateType == MainState {
                   actionMovieDetail: { [unowned self] in router.perform(route: .movie(movieId)) }
                 ) } ?? [],
               actionAllButton: { [unowned self] in router.perform(route: .category(categoryId)) })
-            }
+            },
+          rechooseServiceAction: { [unowned self] in
+            router.perform(route: .welcome)
+            choosenService = nil
+          }
         )
       updateProps(props)
       alreadyShown = updatedCategories

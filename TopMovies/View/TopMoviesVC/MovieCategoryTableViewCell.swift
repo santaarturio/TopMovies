@@ -48,6 +48,7 @@ final class MovieCategoryTableViewCell: UITableViewCell {
   // MARK: - UISetup
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+    
     setupViewHierarchy()
     setupStyle()
     setupLayout()

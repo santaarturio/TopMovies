@@ -22,3 +22,5 @@
 "app.category.name.popular" = "Popular";
 "app.category.name.topRated" = "Top Rated";
 "app.category.name.upcoming" = "Upcoming";
+
+"app.welcome.chooseService" = "Choose your favorire service";
