@@ -8,6 +8,35 @@
 import UIKit
 import SnapKit
 import Nuke
+import RxSwift
+import RxCocoa
+
+final class MovieCollectionViewModel {
+  let movie: MoviePreview
+  
+  init(movie: MoviePreview) {
+    self.movie = movie
+  }
+  
+  func transform() -> Output {
+    Output.init(adultLabelText: Driver.just("\(L10n.App.Home.Movie.adult): \(movie.adult ? L10n.App.Home.Movie.yes : L10n.App.Home.Movie.no)"),
+                ratingLabelText: Driver.just("\(L10n.App.Home.Movie.rating): \(movie.rating)"),
+                titleLabelText: Driver.just(movie.title),
+                descriptionLabeltext: Driver.just(movie.description),
+                posterURL: Driver.just(movie.poster),
+                posterPlaceholderImage: Driver.just(Asset.Images.moviePlaceholder.image))
+  }
+}
+extension MovieCollectionViewModel {
+  struct Output {
+    let adultLabelText: Driver<String>
+    let ratingLabelText: Driver<String>
+    let titleLabelText: Driver<String>
+    let descriptionLabeltext: Driver<String>
+    let posterURL: Driver<URL?>
+    let posterPlaceholderImage: Driver<UIImage>
+  }
+}
 
 // MARK: - Props struct -
 struct MovieCollectionProps {
@@ -37,6 +66,9 @@ extension MovieCollectionProps {
 
 // MARK: - Cell class -
 final class MovieCollectionViewCell: UICollectionViewCell {
+  private var viewModel: MovieCollectionViewModel?
+  private let bag = DisposeBag()
+  
   private let posterImageView = UIImageView()
   private let adultLabel = UILabel()
   private let ratingLabel = UILabel()
@@ -49,19 +81,31 @@ final class MovieCollectionViewCell: UICollectionViewCell {
   private let containerView = UIView()
   
   // MARK: - Cell configuration
-  public func configure(with props: MovieCollectionProps) {
-    posterImageView.image = props.posterPlaceholderImage
-    if let url = props.posterURL {
-      let options = ImageLoadingOptions(placeholder: props.posterPlaceholderImage,
-                                        transition: .fadeIn(duration: 0.2))
-      Nuke.loadImage(with: url,
-                     options: options,
-                     into: posterImageView)
-    }
-    adultLabel.text = props.adultLabelText
-    ratingLabel.text = props.ratingLabelText
-    titleLabel.text = props.titleLabelText
-    descriptionLabel.text = props.descriptionLabeltext
+  public func connect(viewModel: MovieCollectionViewModel) {
+    self.viewModel = viewModel
+    bindViewModel()
+  }
+  private func bindViewModel() {
+    guard let output = viewModel?.transform() else { return }
+    
+    let posterComponents = Driver.combineLatest(output.posterPlaceholderImage, output.posterURL)
+    posterComponents.drive(onNext: { [unowned self] placeholder, url in
+                                        posterImageView.image = placeholder
+                                        if let url = url {
+                                          let options = ImageLoadingOptions(placeholder: placeholder,
+                                                                            transition: .fadeIn(duration: 0.2))
+                                          Nuke.loadImage(with: url,
+                                                         options: options,
+                                                         into: posterImageView)
+                                        }}).disposed(by: bag)
+    output.adultLabelText.drive(adultLabel.rx.text)
+      .disposed(by: bag)
+    output.ratingLabelText.drive(ratingLabel.rx.text)
+      .disposed(by: bag)
+    output.titleLabelText.drive(titleLabel.rx.text)
+      .disposed(by: bag)
+    output.descriptionLabeltext.drive(descriptionLabel.rx.text)
+      .disposed(by: bag)
   }
   
   // MARK: - UISetup

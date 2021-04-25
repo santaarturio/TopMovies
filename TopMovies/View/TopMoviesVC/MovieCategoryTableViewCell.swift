@@ -7,6 +7,48 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
+
+final class MovieCategoryViewModel {
+  private let categoryId: MovieCategory.ID
+  private let categoryName: String
+  private let movies: BehaviorRelay<[MoviePreview]>
+  private let router: RouterProtocol
+  private let bag = DisposeBag()
+  
+  init(categoryId: MovieCategory.ID,
+       categoryName: String,
+       movies: BehaviorRelay<[MoviePreview]>,
+       router: RouterProtocol)
+  {
+    self.categoryId = categoryId
+    self.categoryName = categoryName
+    self.movies = movies
+    self.router = router
+  }
+  
+  func transform(input: Input) -> Output {
+    input.actionMovieDetail.subscribe(onNext: { [unowned self] indexPath in
+                                        router.perform(route: .movie(movies.value[indexPath.item].id)) })
+      .disposed(by: bag)
+    input.actionAllButton.subscribe(onNext: { [unowned self] in
+                                      router.perform(route: .category(categoryId)) })
+      .disposed(by: bag)
+    return Output.init(categoryNameText: Driver.just(categoryName),
+                       movies: movies.map)
+  }
+}
+extension MovieCategoryViewModel {
+  struct Input {
+    let actionMovieDetail: ControlEvent<IndexPath>
+    let actionAllButton: ControlEvent<Void>
+  }
+  struct Output {
+    let categoryNameText: Driver<String>
+    let movies: BehaviorRelay<[MovieCollectionViewModel]>
+  }
+}
 
 // MARK: - Props struct -
 struct MovieCategoryProps {

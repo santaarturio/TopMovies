@@ -13,6 +13,7 @@ final class SeeAllMoviesCollectionViewCell: UICollectionViewCell {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
+    
     setupViewHierarchy()
     setupLayout()
     setupStyle()

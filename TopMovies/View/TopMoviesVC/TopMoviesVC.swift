@@ -7,6 +7,31 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
+
+final class TopMoviesVCViewModel {
+  private let store: ANStore<MainState>
+  private let bag = DisposeBag()
+  private let router: RouterProtocol
+  
+  init(store: ANStore<MainState>, router: RouterProtocol) {
+    self.store = store
+    self.router = router
+  }
+  
+  func transform(input: Input) -> Output {
+    
+  }
+}
+extension TopMoviesVCViewModel {
+  struct Input {
+    let rechooseServiceAction: ControlEvent<Void>
+  }
+  struct Output {
+    let movieCategories: Observable<[MovieCategoryViewModel]>
+  }
+}
 
 // MARK: - Props struct
 struct TopMoviesProps {

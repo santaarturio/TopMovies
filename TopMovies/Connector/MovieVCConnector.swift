@@ -32,7 +32,7 @@ where Provider.ExpectedStateType == MainState {
     let props = MovieVCProps(downloadingInProgress: updateState.isDownloading,
                              movie: state.moviesState.moviesRelational[movieId],
                              preview: state.moviesState.previewsRelational[movieId],
-                             actionBackButton: { [unowned self] vc in router.perform(route: .dismiss(vc)) })
+                             actionBackButton: { [unowned self] _ in router.perform(route: .dismiss) })
     updateProps(props)
     isMovieSent = state.moviesState.moviesRelational[movieId] != nil
   }

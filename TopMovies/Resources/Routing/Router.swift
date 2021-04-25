@@ -53,8 +53,10 @@ final class Router: RouterProtocol {
       vc.configureConnection(with: connector)
       navigationVC?.present(vc, animated: true, completion: nil)
       
-    case let .dismiss(vc):
-      vc.dismiss(animated: true, completion: nil)
+    case .dismiss:
+      if let vc = UIApplication.shared.topMostViewController() {
+        vc.dismiss(animated: true, completion: nil)
+      }
     }
   }
 }
