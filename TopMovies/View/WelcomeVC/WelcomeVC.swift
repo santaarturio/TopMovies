@@ -7,6 +7,8 @@
 
 import UIKit
 import Nuke
+import RxSwift
+import RxCocoa
 
 struct WelcomeVCProps {
   let services: [Service]; struct Service {
@@ -29,21 +31,15 @@ final class WelcomeVC: BaseVC<WelcomeVCProps, ANStoreProvider> {
   private let serviceCellIdentifier = String(describing: ServiceCollectionViewCell.self)
   private lazy var collectionCellSize: CGSize = .init(width: servicesCollectionView.frame.width * 0.85,
                                                       height: servicesCollectionView.frame.height)
-  
-  private var props = WelcomeVCProps(services: [],
-                                     chooseServiveLabelText: .init(),
-                                     chooseServiveImage: .init()) {
-    didSet {
-      servicesCollectionView.reloadData()
-      topBackgroundImageView.image = props.services.first?.serviceBackground
-      chooseServiveLabel.text = props.chooseServiveLabelText
-      chooseServiveImageView.image = props.chooseServiveImage
-    }
+  private var viewModel: WelcomeVCViewModel!
+  private let bag = DisposeBag()
+  private var servicesBackground: [UIImage] = []
+  private var services: [ServiceCellViewModel] = []
+  private var input: WelcomeVCViewModel.Input {
+    .init(chooseServiceAction: servicesCollectionView.rx.itemSelected)
   }
   
-  override func connect(props: WelcomeVCProps) {
-    self.props = props
-  }
+  override func connect(props: WelcomeVCProps) { }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -51,6 +47,22 @@ final class WelcomeVC: BaseVC<WelcomeVCProps, ANStoreProvider> {
     setupViewHierarchy()
     setupLayout()
     setupStyle()
+    
+    bindViewModel(output: viewModel.transform(input: input))
+  }
+  
+  private func bindViewModel(output: WelcomeVCViewModel.Output) {
+    output.services.drive(onNext: { [unowned self] servicesArray in
+      servicesBackground = servicesArray.map(\.serviceBackground)
+      services = servicesArray.map(\.serviceCellViewModel)
+      servicesCollectionView.reloadData()
+    }).disposed(by: bag)
+    output.chooseServiveLabelText
+      .drive(chooseServiveLabel.rx.text)
+      .disposed(by: bag)
+    output.chooseServiveImage
+      .drive(chooseServiveImageView.rx.image)
+      .disposed(by: bag)
   }
   
   private func setupViewHierarchy() {
@@ -132,7 +144,7 @@ final class WelcomeVC: BaseVC<WelcomeVCProps, ANStoreProvider> {
 extension WelcomeVC: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView,
                       numberOfItemsInSection section: Int) -> Int {
-    props.services.count
+    services.count
   }
   
   func collectionView(_ collectionView: UICollectionView,
@@ -142,7 +154,7 @@ extension WelcomeVC: UICollectionViewDataSource {
         .dequeueReusableCell(withReuseIdentifier: serviceCellIdentifier,
                              for: indexPath) as? ServiceCollectionViewCell
     else { return UICollectionViewCell() }
-    cell.configure(with: props.services[indexPath.item].serviceCellProps)
+    cell.connect(viewModel: services[indexPath.item])
     return cell
   }
   func collectionView(_ collectionView: UICollectionView,
@@ -160,9 +172,6 @@ extension WelcomeVC: UICollectionViewDataSource {
 }
 
 extension WelcomeVC: UICollectionViewDelegate {
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    props.services[indexPath.item].chooseServiceAction()
-  }
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     handleScroll(to: scrollView.contentOffset)
   }
@@ -177,14 +186,14 @@ extension WelcomeVC: UICollectionViewDelegate {
     
     if Int(halfCellOffset) % 2 == 0 {
       let index = Int(halfCellOffset / 2)
-      topBackgroundImageView.image = props.services[validated(index)].serviceBackground
+      topBackgroundImageView.image = servicesBackground[validated(index)]
     } else {
       let index = Int(halfCellOffset / 2) + 1
-      topBackgroundImageView.image = props.services[validated(index)].serviceBackground
+      topBackgroundImageView.image = servicesBackground[validated(index)]
     }
   }
   private func validated(_ index: Int) -> Int {
-    (0..<props.services.count).contains(index) ? index : props.services.count - 1
+    (0..<services.count).contains(index) ? index : services.count - 1
   }
 }
 
