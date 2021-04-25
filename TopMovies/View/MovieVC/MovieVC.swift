@@ -8,9 +8,17 @@
 import UIKit
 import SnapKit
 import Nuke
+import RxSwift
+import RxCocoa
 
 // MARK: - MovieVC -
 final class MovieVC: BaseVC<MovieVCProps, ANStoreProvider> {
+  @Inject var store: ANStore<MainState>
+  @Inject var router: RouterProtocol
+  
+  private let bag = DisposeBag()
+  private var viewModel: MovieVCViewModel!
+  
   private let posterImageView = UIImageView()
   private let posterImageLoader = UIActivityIndicatorView()
   
@@ -61,41 +69,67 @@ final class MovieVC: BaseVC<MovieVCProps, ANStoreProvider> {
   
   private let logoCellIdentifier = String(describing: CompanyLogoTableViewCell.self)
   private let logoCellHeight: CGFloat = 50
-  
-  private var props: MovieVCProps = .init(downloadingInProgress: false,
-                                          movie: nil,
-                                          preview: nil,
-                                          actionBackButton: { _ in })
-  {
-    didSet {
-      posterImageView.image = props.posterPlaceholderImage
-      if let url = props.posterURL {
-        posterImageView.image = nil
-        posterImageLoader.startAnimating()
-        let options = ImageLoadingOptions(transition: .fadeIn(duration: 0.3),
-                                          failureImage: props.posterPlaceholderImage)
-        Nuke.loadImage(with: url,
-                       options: options,
-                       into: posterImageView,
-                       completion: { [unowned posterImageLoader] _ in posterImageLoader.stopAnimating() })
-      }
-      UIView.animate(withDuration: 0.5) { [unowned self] in
-        adultMovieImageView.image = props.adultImage
-        newMovieImageView.image = props.newImage
-        
-        productionCompaniesLogos = props.productionCompaniesLogosURL.compactMap { $0 }
-        titleLabel.text = props.titleLabelText
-        taglineLabel.text = props.taglineLabelText
-        releaseDateLabel.text = props.releaseDateLabelText
-        ratingAndVotesLabel.text = props.ratingAndVotesLabelText
-        genresLabel.text = props.genresLabelTextArray.joined(separator: ",\n")
-        budgetLabel.text = props.budgetLabelText
-        statusLabel.text = props.statusLabelText
-        runtimeLabel.text = props.runtimeLabelText
-        overviewTextView.text = props.overviewLabelText
-      }
-      companiesLogosTableView.reloadData()
-    }
+
+  private var input: MovieVCViewModel.Input {
+    .init(actionBackButton: backButton.rx.tap)
+  }
+  func bindViewModel(output: MovieVCViewModel.Output) {
+    output.posterPlaceholderImage
+      .drive(posterImageView.rx.image)
+      .disposed(by: bag)
+    output.posterURL
+      .bind(onNext: { [unowned self] url in
+        if let url = url {
+          posterImageView.image = nil
+          posterImageLoader.startAnimating()
+          let options = ImageLoadingOptions(transition: .fadeIn(duration: 0.3))
+          Nuke.loadImage(with: url,
+                         options: options,
+                         into: posterImageView,
+                         completion: { [unowned posterImageLoader] _ in posterImageLoader.stopAnimating() })
+        }
+      })
+      .disposed(by: bag)
+    output.adultImage
+      .drive(adultMovieImageView.rx.image)
+      .disposed(by: bag)
+    output.newImage
+      .drive(newMovieImageView.rx.image)
+      .disposed(by: bag)
+    output.productionCompaniesLogosURL
+      .drive(onNext: { [unowned self] urls in
+        productionCompaniesLogos = urls
+        companiesLogosTableView.reloadData()
+      })
+      .disposed(by: bag)
+    output.titleLabelText
+      .drive(titleLabel.rx.text)
+      .disposed(by: bag)
+    output.taglineLabelText
+      .drive(taglineLabel.rx.text)
+      .disposed(by: bag)
+    output.releaseDateLabelText
+      .drive(releaseDateLabel.rx.text)
+      .disposed(by: bag)
+    output.ratingAndVotesLabelText
+      .drive(ratingAndVotesLabel.rx.text)
+      .disposed(by: bag)
+    output.genresLabelTextArray
+      .map { genress in genress.joined(separator: ",\n") }
+      .drive(genresLabel.rx.text)
+      .disposed(by: bag)
+    output.budgetLabelText
+      .drive(budgetLabel.rx.text)
+      .disposed(by: bag)
+    output.statusLabelText
+      .drive(statusLabel.rx.text)
+      .disposed(by: bag)
+    output.runtimeLabelText
+      .drive(runtimeLabel.rx.text)
+      .disposed(by: bag)
+    output.overviewLabelText
+      .drive(overviewTextView.rx.text)
+      .disposed(by: bag)
   }
   
   override func viewDidLoad() {
@@ -105,12 +139,12 @@ final class MovieVC: BaseVC<MovieVCProps, ANStoreProvider> {
     setupLayout()
     setupStyle()
     setupLogosTableView()
+    viewModel = .init(store: store, router: router, movieId: .init(value: "460465"))
+    bindViewModel(output: viewModel.transform(input: input))
   }
   
   // MARK: - Connect Props
-  override func connect(props: MovieVCProps) {
-    self.props = props
-  }
+  override func connect(props: MovieVCProps) { }
   
   // MARK: - Setup LogosTableView
   private func setupLogosTableView() {
@@ -248,10 +282,6 @@ final class MovieVC: BaseVC<MovieVCProps, ANStoreProvider> {
     overviewTextView.textColor = Asset.Colors.secondaryText.color
     
     backButton.setBackgroundImage(Asset.Images.close.image, for: .normal)
-    backButton.addTarget(self, action: #selector(backButtonSelector), for: .allTouchEvents)
-  }
-  @objc func backButtonSelector(_ sender: UIButton) {
-    props.actionBackButton(self)
   }
   
   // MARK: - SetupL ayout

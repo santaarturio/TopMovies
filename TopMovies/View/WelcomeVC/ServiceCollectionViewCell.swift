@@ -6,6 +6,25 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+
+final class ServiceCellViewModel {
+  private let serviceLogoImage: Single<UIImage>
+  
+  init(serviceLogoImage: Single<UIImage>) {
+    self.serviceLogoImage = serviceLogoImage
+  }
+  
+  func transform() -> Output {
+    Output.init(serviceLogoImage: serviceLogoImage.asDriver(onErrorJustReturn: .init()))
+  }
+}
+extension ServiceCellViewModel {
+  struct Output {
+    let serviceLogoImage: Driver<UIImage>
+  }
+}
 
 struct ServiceCellProps {
   let serviceLogoImage: UIImage
@@ -22,14 +41,24 @@ final class ServiceCollectionViewCell: UICollectionViewCell {
           .init(scaleX: 0.95, y: 0.95) : .identity }
     }
   }
+  private var viewModel: ServiceCellViewModel?
+  private let bag = DisposeBag()
+  
   private var props = ServiceCellProps(serviceLogoImage: .init()) {
     didSet {
       serviceLogoImageView.image = props.serviceLogoImage
     }
   }
   
-  func configure(with props: ServiceCellProps) {
-    self.props = props
+  func connect(viewModel: ServiceCellViewModel) {
+    self.viewModel = viewModel
+    bindViewModel()
+  }
+  
+  private func bindViewModel() {
+    viewModel?.transform().serviceLogoImage
+      .drive(serviceLogoImageView.rx.image)
+      .disposed(by: bag)
   }
   
   // MARK: - UISetup

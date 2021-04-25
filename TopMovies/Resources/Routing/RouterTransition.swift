@@ -12,5 +12,5 @@ enum RouteType {
   case allCategories
   case category(MovieCategory.ID)
   case movie(MoviePreview.ID)
-  case dismiss(UIViewController)
+  case dismiss
 }
