@@ -5,9 +5,7 @@
 //  Created by anikolaenko on 04.02.2021.
 //
 
-import ReSwift
-
-enum ConfigurationState: StateType, Equatable, AutoEnum {
+enum ConfigurationState: Equatable, AutoEnum {
   case initial
   case configuredAPIKey(String)
 }

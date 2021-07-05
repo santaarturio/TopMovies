@@ -19,7 +19,7 @@ struct MoviesCategoryVCProps {
 }
 
 // MARK: - VC class
-final class MoviesCategoryVC: BaseVC<MoviesCategoryVCProps, StoreProvider<MainState>> {
+final class MoviesCategoryVC: BaseVC<MoviesCategoryVCProps, ANStoreProvider> {
   var props = MoviesCategoryVCProps(categoryName: "",
                                     isReloadInProgress: false,
                                     isLoadMoreInProgress: false,

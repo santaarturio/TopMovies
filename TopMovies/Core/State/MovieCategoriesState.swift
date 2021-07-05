@@ -5,9 +5,7 @@
 //  Created by anikolaenko on 11.02.2021.
 //
 
-import ReSwift
-
-struct MovieCategoriesState: StateType {
+struct MovieCategoriesState {
   let relational: [MovieCategory.ID: MovieCategory]
   let categoriesList: RequestState<[MovieCategory.ID]>
 }

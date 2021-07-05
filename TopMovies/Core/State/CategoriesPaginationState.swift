@@ -5,9 +5,7 @@
 //  Created by Macbook Pro  on 19.02.2021.
 //
 
-import ReSwift
-
-struct CategoriesPaginationState: StateType {
+struct CategoriesPaginationState {
   typealias CategoryState = PaginatedOperationState<MoviePreview.ID, String>
   let paginated: [MovieCategory.ID: CategoryState]
 }

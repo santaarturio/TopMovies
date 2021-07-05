@@ -5,8 +5,6 @@
 //  Created by Macbook Pro  on 09.04.2021.
 //
 
-import ReSwift
-
 enum StreamingService: String {
   case tmdb
   case quintero

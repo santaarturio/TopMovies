@@ -12,7 +12,7 @@ protocol ServicesPassepartoutProtocol {
 }
 
 final class ServicesPassepartout: ServicesPassepartoutProtocol {
-  @Inject private var store: MainStore
+  @Inject private var store: AppStore
   
   func configureApiKey(for service: StreamingService) {
     switch service {

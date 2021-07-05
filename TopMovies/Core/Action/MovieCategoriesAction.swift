@@ -5,8 +5,6 @@
 //  Created by anikolaenko on 11.02.2021.
 //
 
-import ReSwift
-
 struct RequestMovieCategoriesAction: ANAction { }
 struct DownloadingMovieCategoriesAction: ANAction { }
 struct CompletedMovieCategoriesAction: ANAction {

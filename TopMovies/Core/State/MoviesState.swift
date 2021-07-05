@@ -5,12 +5,10 @@
 //  Created by anikolaenko on 11.02.2021.
 //
 
-import ReSwift
-
 typealias PreviewsRelational = [MoviePreview.ID: MoviePreview]
 typealias MoviesRelational = [MoviePreview.ID: Movie]
 
-struct MoviesState: StateType {
+struct MoviesState {
   let previewsRelational: PreviewsRelational
   let moviesRelational: MoviesRelational
 }

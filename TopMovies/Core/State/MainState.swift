@@ -5,9 +5,7 @@
 //  Created by anikolaenko on 02.02.2021.
 //
 
-import ReSwift
-
-struct MainState: StateType {
+struct MainState {
   let configurationState: ConfigurationState
   let appFlowState: AppFlowState
   let moviesServiceState: MoviesServiceState
